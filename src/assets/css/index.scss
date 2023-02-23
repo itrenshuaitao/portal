@@ -1,0 +1,282 @@
+@import './manager.scss';
+@import './transition.scss';
+
+html,
+body,
+p,
+ul,
+h1,
+h2,
+h3,
+h4,
+h5 {
+  margin: 0;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+body {
+  font-size: 14px;
+  line-height: 1.1;
+  height: 100vh;
+  font-family: 'Microsoft YaHei', 'PingFang SC', 'Helvetica Neue', Helvetica, arial, STHeiTi, sans-serif;
+}
+
+.el-textarea__inner {
+  font-family: 'Microsoft YaHei', 'PingFang SC', 'Helvetica Neue', Helvetica, arial, STHeiTi, sans-serif;
+}
+
+.fontBase {
+  font-size: 18px;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.clearfix:after,
+.clearfix:before {
+  display: table;
+  content: ' ';
+  height: 0;
+  line-height: 0;
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+.pull-left {
+  float: left;
+}
+
+.pull-right {
+  float: right;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-auto {
+  flex: auto;
+}
+
+.flex-none {
+  flex: none;
+}
+
+.space-bet {
+  justify-content: space-between;
+}
+
+.center {
+  justify-content: center;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.fixed {
+  position: fixed;
+}
+
+.text-left {
+  text-align: left !important;
+}
+
+.text-right {
+  text-align: right !important;
+}
+
+.text-center {
+  text-align: center !important;
+}
+
+.f-bold {
+  font-weight: bold;
+}
+
+.mt-10 {
+  margin-top: 10px !important;
+}
+
+.mt-16 {
+  margin-top: 16px !important;
+}
+
+.mt-20 {
+  margin-top: 20px !important;
+}
+
+.mt-24 {
+  margin-top: 24px !important;
+}
+
+.mt-30 {
+  margin-top: 30px !important;
+}
+
+.mt-40 {
+  margin-top: 40px !important;
+}
+
+.mt-50 {
+  margin-top: 50px !important;
+}
+
+.mb-10 {
+  margin-bottom: 10px !important;
+}
+
+.mb-16 {
+  margin-bottom: 16px !important;
+}
+
+.mb-20 {
+  margin-bottom: 20px !important;
+}
+
+.mb-30 {
+  margin-bottom: 30px !important;
+}
+
+.mb-40 {
+  margin-bottom: 40px !important;
+}
+
+.mb-50 {
+  margin-bottom: 50px !important;
+}
+
+.ml-10 {
+  margin-left: 10px !important;
+}
+
+.ml-16 {
+  margin-left: 16px !important;
+}
+
+.ml-20 {
+  margin-left: 20px !important;
+}
+
+.ml-24 {
+  margin-left: 24px !important;
+}
+
+.ml-30 {
+  margin-left: 30px !important;
+}
+
+.ml-40 {
+  margin-left: 40px !important;
+}
+
+.ml-50 {
+  margin-left: 50px !important;
+}
+
+.mr-10 {
+  margin-right: 10px !important;
+}
+
+.mr-16 {
+  margin-right: 16px !important;
+}
+
+.mr-20 {
+  margin-right: 20px !important;
+}
+
+.mr-24 {
+  margin-right: 24px !important;
+}
+
+.mr-30 {
+  margin-right: 30px !important;
+}
+
+.mr-40 {
+  margin-right: 40px !important;
+}
+
+.mr-50 {
+  margin-right: 50px !important;
+}
+
+.pb-18 {
+  padding-bottom: 18px;
+}
+
+// 文字按钮样式
+.el-button--text {
+  padding: 10px 2px !important;
+  box-sizing: border-box;
+}
+
+th.gutter {
+  display: table-cell !important;
+}
+
+.space-20 {
+  padding: 20px;
+}
+
+.el-divider--horizontal {
+  margin: 12px 0;
+}
+
+.width-full {
+  width: 100% !important;
+}
+
+@font-face {
+  font-family: "alibb-normal";
+  src: url("../fonts/AlibabaPuHuiTi-2-65-Medium.ttf");
+}
+
+@font-face {
+  font-family: "alibb-bold";
+  src: url("../fonts/AlibabaPuHuiTi-2-85-Bold.ttf");
+}
+
+@font-face {
+  font-family: "alibb-regular";
+  src: url("../fonts/AlibabaPuHuiTi-2-55-Regular.ttf");
+}
+
+@font-face {
+  font-family: "alibb-SemiBold";
+  src: url("../fonts/AlibabaPuHuiTi-2-75-SemiBold.ttf");
+}
+
+//按钮
+.big-btn {
+  width: 170px;
+  height: 48px;
+  border-radius: 8px;
+  font-size: 18px;
+}

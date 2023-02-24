@@ -35,8 +35,7 @@ const handleClick = () => {
 
 <style lang='scss' scoped>
 .el-main {
-    height: 1000px;
-    width: 1000px;
     background-color: pink;
+    margin-top: 58px;
 }
 </style>

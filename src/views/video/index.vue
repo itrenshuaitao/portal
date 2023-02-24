@@ -19,7 +19,7 @@ const initVideo = () => {
         height: 400,
         language: 'zh-CN', // 设置语言
         controls: true, // 是否显示控制条
-        preload: 'auto', // 预加载
+        // preload: 'auto', // 预加载
         autoplay: true, // 是否自动播放
         fluid: false, // 自适应宽高
         muted: true,//设置静音
@@ -27,6 +27,7 @@ const initVideo = () => {
     }
     if (videoRef.value) {
         // 创建 video 实例
+        console.log('video')
         videoPlayer = videojs(videoRef.value, options, onPlayerReady)
     }
 }

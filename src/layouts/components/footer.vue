@@ -1,46 +1,62 @@
 <template>
-      <div class="footer  clearfix" v-show="isShow">
-        <div class="footer-content">
-          <ul class="content-nav">
-            <li>
-              <p>走进科建</p>
-              <span>发展历程</span>
-              <span>企业文化</span>
-              <span>资质荣誉</span>
-              <span>合作伙伴</span>
-            </li>
-            <li>
-              <p>新闻资讯</p>
-              <span>公司新闻</span>
-              <span>行业动态</span>
-            </li>
-            <li>
-              <p>产品中心</p>
-              <span>介绍视频</span>
-              <span>管理模式</span>
-              <span>平台目标</span>
-              <span>功能模块</span>
-            </li>
-            <li>
-              <p>联系我们</p>
-              <span>邮箱：kejianlml@163.com</span>
-              <span>电话：021-55802368</span>
-              <span>地址：上海市杨浦区翔殷路128号12号楼101</span>
-            </li>
-          </ul>
-          <img src="./assets/img/ercode.png" alt />
-        </div>
-        <div class="copyright">
-          <span>科建版权所有</span>
-        </div>
+  <div class="footer  clearfix" v-show="isShow">
+    <div class="footer-content">
+      <ul class="content-nav">
+
+        <li>
+          <p>产品</p>
+          <span>PMS</span>
+          <span>CDS</span>
+          <span>IPS</span>
+          <span>MCM</span>
+          <span>TOM</span>
+          <span>机床联网</span>
+          <span>生产执行系统</span>
+        </li>
+        <li>
+          <p>案例分享</p>
+          <span>3C行业</span>
+          <span>汽车行业</span>
+          <span>医疗行业</span>
+          <span>航天航空/军工行业</span>
+          <span>模具行业</span>
+          <span>其他通用行业</span>
+        </li>
+        <li>
+          <p>活动中心</p>
+          <span>新闻中心</span>
+          <span>视频中心</span>
+        </li>
+        <li>
+          <p>关于友机</p>
+          <span>公司简介</span>
+          <span>人才招聘</span>
+          <span>联系我们</span>
+        </li>
+      </ul>
+      <div class="line"></div>
+      <div class="info">
+        <p>400-631-9969</p>
+        <p>info@ujoin-tech.com</p>
+        <!-- <img src="./assets/img/ercode.png" alt /> -->
+
+        <img alt />
+        <p>杭州产研基地： <br />杭州市上城区鸿泰路128</p>
+        <p>无锡产研基地： <br />无锡市新吴区灵江路7号</p>
+
       </div>
+
+    </div>
+
+  </div>
 </template>
 
 <script>
 export default {
-    data() {
+  data() {
     return {
-        isShow: true,
+      isShow: true,
+
     };
   },
 }
@@ -48,52 +64,62 @@ export default {
 
 <style lang='scss' scoped>
 .footer {
-    position: relative;
-    bottom: 0;
+  position: relative;
+  bottom: 0;
   width: 100%;
-  height: 216px;
+  height: 100%;
   overflow: hidden;
-  background-color: #14679f;
+  background-color: #3E4954;
+
   &-content {
-    width: 1240px;
     margin: 0 auto;
     padding-top: 20px;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
+    height: 100%;
     .content-nav {
       display: flex;
       justify-content: space-around;
+      font-size: 16px;
+      font-family: Helvetica;
+      color: #FFFFFF;
+      line-height: 19px;
+
       li {
         display: flex;
         flex-direction: column;
         padding: 0 20px;
         //justify-content: center;
         align-items: flex-start;
+
         p {
-          font-size: 20px;
-          color: #d4edff;
-          padding: 10px 0;
+          padding: 24px 0;
         }
+
         span {
-          color: #f7f7f7;
-          font-weight: 300;
-          padding: 5px 0;
+          padding: 18px 0;
+          line-height: 16px;
         }
       }
     }
-    img {
-      width: 170px;
-      height: 170px;
+
+    .line {
+      position: absolute;
+      right: 35%;
+      width: 0.5px;
+      height: 90%;
+      background: #D8D8D8;
+    }
+    .info{
+      img {
+      width: 100px;
+      height: 100px;
       padding: 10px;
+      background-color: pink;
     }
-  }
-  .copyright {
-    height: 30px;
-    background: #125688;
-    span {
-      color: #fff;
-      line-height: 30px;
     }
+
+    
   }
 }
 </style>

@@ -2,24 +2,10 @@ import { createRouter, createWebHashHistory } from 'vue-router';
 import Layout from '@/layouts/index.vue';
 
 export const constantRoutes = [
-  // {
-  //   path: '/login',
-  //   name: 'Login',
-  //   component: () => import('@/views/login/index.vue'),
-  //   meta: {
-  //     title: '登录',
-  //   },
-  //   hidden: true,
-  // },
-  // {
-  //   path: '/401',
-  //   name: '401',
-  //   component: () => import('@/views/errorPage/401.vue'),
-  //   hidden: true,
-  // },
 {
   path: '/',
   component: Layout,
+  redirect: '/home',
   children: [
    
     {

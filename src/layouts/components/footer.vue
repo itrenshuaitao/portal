@@ -1,5 +1,5 @@
 <template>
-  <div class="footer  clearfix" v-show="isShow">
+  <el-footer class="footer  clearfix" v-show="isShow">
     <div class="footer-content">
       <ul class="content-nav">
 
@@ -48,7 +48,7 @@
 
     </div>
 
-  </div>
+  </el-footer>
 </template>
 
 <script>

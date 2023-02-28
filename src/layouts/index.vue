@@ -2,10 +2,8 @@
     <HeaderPage />
     <el-main>
         <router-view />
-        <div>
-            <el-button @click="handleClick"> test</el-button>
-        </div>
     </el-main>
+    <AsidePage />
     <FooterPage />
 </template>
 
@@ -14,6 +12,7 @@ import { ref, onMounted, getCurrentInstance } from 'vue'
 import { useStore } from "vuex";
 import HeaderPage from './components/header.vue';
 import FooterPage from './components/footer.vue';
+import AsidePage from './components/aside.vue';
 const { proxy } = getCurrentInstance();
 const store = useStore();
 const handleClick = () => {
@@ -35,7 +34,8 @@ const handleClick = () => {
 
 <style lang='scss' scoped>
 .el-main {
-    background-color: pink;
-    margin-top: 58px;
+    padding: 0;
+    background-color: rgba(220, 220, 220, 0.5);
+    // margin-top: 58px;
 }
 </style>

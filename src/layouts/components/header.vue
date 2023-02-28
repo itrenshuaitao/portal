@@ -48,5 +48,8 @@ export default {
       width: 100%;
     }
   }
+  .el-menu-demo{
+    border: none;
+  }
 }
 </style>

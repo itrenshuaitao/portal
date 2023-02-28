@@ -35,7 +35,8 @@ const handleClick = () => {
 <style lang='scss' scoped>
 .el-main {
     padding: 0;
-    background-color: rgba(220, 220, 220, 0.5);
+    // background-color: rgba(220, 220, 220, 0.5);
+    overflow: hidden;
     // margin-top: 58px;
 }
 </style>

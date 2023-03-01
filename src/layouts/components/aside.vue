@@ -29,7 +29,10 @@
 
 <script setup>
 const handleToTop = ()=>{
-    document.documentElement.scrollTop = 0
+    window.scrollTo({
+        top:0,
+        behavior: "smooth"
+    });
 }
 </script>
 
@@ -54,7 +57,6 @@ const handleToTop = ()=>{
 
         li {
             font-size: 14px;
-            font-family: Helvetica;
             margin: 8px;
             width: 40px;
             height: 40px;

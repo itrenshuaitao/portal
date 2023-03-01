@@ -9,7 +9,7 @@
                     <vue3VideoPlay :id="'myVideoPlayer' + index" v-bind="data.options" :src="item.url" @play="onPlay"
                         @pause="onPause" @timeupdate="onTimeupdate" @canplay="onCanplay" @ended="onEnded" />
                 </div>
-                <div class="text-position">
+                <div v-if="data.nowIndex===index" class="text-position">
                     <div class="title">
                         <Transition name="my-transition" appear>
                             <p>友机 · 智能加工过程监控系统</p>
@@ -57,7 +57,7 @@ import MyTransition from "@/components/Transition.vue"
 const { proxy } = getCurrentInstance()
 const refCarousel = ref(null);
 let data = reactive({
-    autoplay: false,//是否自动切换
+    autoplay: true,//是否自动切换
     isPlay: false,//播放状态
     isIn: false,//鼠标是否位于播放器内
     cutTime: 3000,//轮播时间，单位毫秒
@@ -120,8 +120,7 @@ onMounted(() => {
 // 获取走马灯的索引
 const handleChange = (nowIndex, oldIndex) => {
 
-
-
+data.nowIndex = nowIndex
     if (data.list[nowIndex].type === '1') {
         if (data.list[oldIndex].type === '1') {
             let video = document.getElementById(`myVideoPlayer${oldIndex}`)

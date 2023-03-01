@@ -81,7 +81,6 @@ export default {
       display: flex;
       justify-content: space-around;
       font-size: 16px;
-      font-family: Helvetica;
       color: #FFFFFF;
       line-height: 19px;
 

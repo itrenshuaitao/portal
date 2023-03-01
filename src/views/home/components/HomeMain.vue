@@ -1,16 +1,21 @@
 <template>
     <div class="main-container">
         <div class="tab">
-            <el-button :type="plain" link :class="active == '产品' && 'active'" @click="active = '产品'">产品概览</el-button>
-            <el-button :type="plain" link class="news" :class="active == '新闻' && 'active'"
-                @click="active = '新闻'">新闻中心</el-button>
-            <el-button :type="plain" link :class="active == '合作' && 'active'" @click="active = '合作'">合作伙伴</el-button>
+            <el-button :type="plain" link :class="active == 'products' && 'active'"
+                @click="() => handleTabClick('products')">产品概览</el-button>
+            <el-button :type="plain" link class="news" :class="active == 'news' && 'active'"
+                @click="() => handleTabClick('news')">新闻中心</el-button>
+            <el-button :type="plain" link :class="active == 'partners' && 'active'" @click="() => handleTabClick('partners')">合作伙伴</el-button>
         </div>
+        <div class="title title-products">产品概览</div>
+
         <div class="products-main">
             <div class="products">
                 <img :class="activeProducts == 0 && 'active'" src="@/assets/img/test1.jpg">
                 <img :class="activeProducts == 1 && 'active'" src="@/assets/img/test2.jpg">
                 <img :class="activeProducts == 2 && 'active'" src="@/assets/img/test3.webp">
+                <img :class="activeProducts == 3 && 'active'" src="@/assets/img/test1.jpg">
+                <img :class="activeProducts == 4 && 'active'" src="@/assets/img/test2.jpg">
             </div>
             <ul class="slide">
                 <li>
@@ -46,26 +51,66 @@
                         </div>
                     </div>
                 </li>
+                <li>
+                    <div>
+                        <h2>电子行业</h2>
+                        <P>电子行业的MES系统需求主要集中在收集关键数据，及时反馈异常，防错防呆，一次做对，提升生产过程的品质稳定性，质量事故的责任界定，实现人机料法环的全面管控。</P>
+                        <div class="to-detail">
+
+                            <router-link to="/">查看详情</router-link>
+
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <h2>电子行业</h2>
+                        <P>电子行业的MES系统需求主要集中在收集关键数据，及时反馈异常，防错防呆，一次做对，提升生产过程的品质稳定性，质量事故的责任界定，实现人机料法环的全面管控。</P>
+                        <div class="to-detail">
+
+                            <router-link to="/">查看详情</router-link>
+
+                        </div>
+                    </div>
+                </li>
             </ul>
         </div>
-
+        <!-- 核心数据 -->
         <CoreData />
+        <div class="title title-news">新闻中心</div>
+        <NewsCenter />
+        <div class="title title-partners">合作伙伴</div>
+        <Partners/>
+
     </div>
 </template>
 
 <script setup>
 import CoreData from './CoreData.vue';
+import NewsCenter from './NewsCenter.vue';
+import Partners from './Partners.vue';
 
-import { ref, onMounted } from "vue"
-const active = ref("产品")
+import { ref, onMounted, computed, watch, toRaw } from "vue"
+const active = ref("products")
 const activeProducts = ref(0)
+
 onMounted(() => {
     sildeAddEvent()
 })
+
+const handleTabClick = (type) => {
+    active.value = type
+    let toHeight = document.querySelector(`.title-${type}`).offsetTop
+
+    window.scrollTo({
+        top: toHeight - 90,
+        behavior: "smooth"
+    });
+}
 const sildeAddEvent = () => {
-    console.log("silde add event")
     document.getElementsByClassName('slide')[0].addEventListener("mouseover", handleMouseover, false)
 }
+
 const handleMouseover = (e) => {
     const ul = document.getElementsByClassName('slide')[0];
     const arr = Array.from(ul.children);
@@ -86,7 +131,6 @@ const handleMouseover = (e) => {
         border: 1px solid #E5E5E5;
         padding: 0 120px;
         font-size: 14px;
-        font-family: AppleSystemUIFont;
         color: #3E4954;
         line-height: 17px;
 
@@ -105,8 +149,19 @@ const handleMouseover = (e) => {
         }
     }
 
+    .title {
+        height: 56px;
+        font-size: 40px;
+        color: #3E4954;
+        line-height: 47px;
+        text-align: center;
+        margin: 40px 0;
+    }
+
     .products-main {
         position: relative;
+
+
 
         .products {
 
@@ -116,11 +171,12 @@ const handleMouseover = (e) => {
                 display: none;
                 opacity: 0;
                 width: 100%;
+                height: 80vh;
+                transition: all 2s;
 
                 &.active {
                     display: block;
                     opacity: 1;
-                    transition: all .8s;
 
                 }
 
@@ -134,13 +190,15 @@ const handleMouseover = (e) => {
         position: absolute;
         top: 0;
         height: 100%;
+        overflow: hidden;
+
 
         li {
             overflow: hidden;
             position: relative;
             height: 100%;
             display: inline-block;
-            width: 33%;
+            width: 20%;
 
             &:hover {
                 div {
@@ -154,7 +212,7 @@ const handleMouseover = (e) => {
 
             div {
                 position: relative;
-                top: 35%;
+                top: 45%;
                 color: #fff;
                 text-align: center;
                 transition: all .3s;

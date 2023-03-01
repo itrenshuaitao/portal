@@ -2,19 +2,21 @@
     <div class="core-data">
         <div>
             <span>核心数据</span>
-            <number class="number" ref="number1" :from="0" :to="1000" :duration="5" :delay="2" easing="Power1.easeOut" />
+            <number class="number" :ref="'number' + 1" :from="1000" :to="1000" :duration="5" easing="Power1.easeOut"
+                animationPaused />
+        </div>
+        <div>
+            <span>核心数据</span>
+
+            <number class="number" :ref="'number' + 2" :from="1000" :to="1000" :duration="5" easing="Power1.easeOut"
+                animationPaused />
 
         </div>
         <div>
             <span>核心数据</span>
 
-            <number class="number" ref="number1" :from="0" :to="1000" :duration="5" :delay="2" easing="Power1.easeOut" />
-
-        </div>
-        <div>
-            <span>核心数据</span>
-
-            <number class="number" ref="number1" :from="0" :to="1000" :duration="5" :delay="2" easing="Power1.easeOut" />
+            <number class="number" :ref="'number' + 3" :from="1000" :to="1000" :duration="5" easing="Power1.easeOut"
+                animationPaused />
 
         </div>
 
@@ -22,6 +24,40 @@
 </template>
   
 <script setup>
+import { ref, onMounted, onUnmounted, getCurrentInstance } from "vue"
+const { proxy } = getCurrentInstance()
+
+const number1 = ref(null)
+const number2 = ref(null)
+const number3 = ref(null)
+const divTop = ref(0)
+
+
+onMounted(() => {
+    divTop.value = document.querySelector('.core-data').offsetTop
+    // window.addEventListener("scroll", showDiv);
+})
+
+//页面卸载
+onUnmounted(() => {
+    window.removeEventListener("scroll", showDiv);
+});
+const showDiv = () => {
+    //获取滚动条距离页面顶部的距离，如果滚动条距离页面距离大于目标元素距离页面顶部的距离，则目标元素已经往上滚动，且超出了当前可视区域，则给该元素添加fixed属性
+    const offset = proxy.$el.getBoundingClientRect(); // vue中，使用this.$el获取当前组件的根元素
+    const offsetTop = offset.top;
+    const offsetBottom = offset.bottom;
+    const offsetHeight = offset.height;
+    // 进入可视区域
+    if (offsetTop <= window.innerHeight && offsetBottom >= 0) {
+        [1, 2, 3].map(item => {
+            proxy.$refs[`number${item}`].play()
+        })
+    } else {
+        // proxy.$refs.number1.pause()
+    }
+
+}
 
 </script>
 <style lang='scss' scoped>
@@ -35,13 +71,15 @@
     border: 2px solid #FFFFFF;
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: flex-start;
     align-items: center;
+    flex-wrap: wrap;
 
     div {
+        width: 33%;
+        text-align: center;
         span {
             font-size: 18px;
-            font-family: PingFangSC-Regular, PingFang SC;
             font-weight: 400;
             color: #6C7B8B;
             line-height: 25px;

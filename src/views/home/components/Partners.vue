@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="partners-container">
         <div class="box to-left">
             <div class="imgList ">
                 <img src="https://easyv.assets.dtstack.com/homepage/common/assets/images/home-partners-logo/logo_1.png"
@@ -109,9 +109,13 @@
 </script>
 
 <style lang='scss' scoped>
+.partners-container {
+    background: #F2F5F8 linear-gradient(180deg, #FAFBFD 0%, #F2F3F5 100%);
+    padding: 40px 0;
+}
+
 .box {
-    width: 100%;
-    height: 64px;
+    height: 78px;
     margin: 0 auto;
     overflow: hidden;
     position: relative;
@@ -120,33 +124,30 @@
 .imgList {
     position: absolute;
     display: flex;
-    margin-bottom: 24px;
 }
 
 .to-left {
-
-    margin-left: 132px;
-    margin-right: 132px;
+    width: 80%;
 
     .imgList {
-        animation: to-left 18s linear infinite;
+        animation: to-left 28s linear infinite;
 
     }
 
 }
 
 .to-right {
-    margin-left: 66px;
-    margin-right: 66px;
+    width: 90%;
 
     .imgList {
-        animation: to-right 18s linear infinite;
+        animation: to-right 28s linear infinite;
     }
 
 }
 
 img {
-    height: 64px;
+    height: 54px;
+    width: 120px;
     float: left;
     margin-right: 16px;
     box-shadow: 5px 2px 24px 0px rgba(220, 220, 220, 0.5);
@@ -172,5 +173,4 @@ img {
     to {
         transform: translateX(0);
     }
-}
-</style>
+}</style>

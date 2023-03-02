@@ -5,7 +5,8 @@
                 @click="() => handleTabClick('products')">产品概览</el-button>
             <el-button :type="plain" link class="news" :class="active == 'news' && 'active'"
                 @click="() => handleTabClick('news')">新闻中心</el-button>
-            <el-button :type="plain" link :class="active == 'partners' && 'active'" @click="() => handleTabClick('partners')">合作伙伴</el-button>
+            <el-button :type="plain" link :class="active == 'partners' && 'active'"
+                @click="() => handleTabClick('partners')">合作伙伴</el-button>
         </div>
         <div class="title title-products">产品概览</div>
 
@@ -80,7 +81,7 @@
         <div class="title title-news">新闻中心</div>
         <NewsCenter />
         <div class="title title-partners">合作伙伴</div>
-        <Partners/>
+        <Partners />
 
     </div>
 </template>
@@ -166,16 +167,19 @@ const handleMouseover = (e) => {
         .products {
 
             position: relative;
+            height: 80vh;
 
             img {
-                display: none;
+                display: block;
+                position: absolute;
+                visibility: hidden;
                 opacity: 0;
                 width: 100%;
                 height: 80vh;
                 transition: all 2s;
 
                 &.active {
-                    display: block;
+                    visibility: visible;
                     opacity: 1;
 
                 }

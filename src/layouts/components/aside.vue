@@ -5,32 +5,40 @@
                 <el-icon><Service /></el-icon>
                 <p>在线咨询</p>
             </li> -->
-            <li>
-                <el-icon size="20">
-                    <ChatDotRound />
-                </el-icon>
-                <p>预约<br />体验</p>
+            <li class="booking" @click="$emit('openBookingDialog')">
+
             </li>
-            <li>
-                <el-icon size="20">
-                    <PhoneFilled />
-                </el-icon>
-            </li>
-            <li>
-                <el-icon size="20">
-                    <PictureFilled />
-                </el-icon>
-            </li>
+            <el-popover placement="left" title="咨询热线" :width="200" trigger="hover" content="400 631 9969">
+                <template #reference>
+                    <li class="phone"> </li>
+                </template>
+            </el-popover>
+
+            <el-popover placement="left" title="关注我们" :width="200" trigger="hover" content="400 631 9969">
+                <template #reference>
+                    <li class="ico">
+
+                    </li>
+                </template>
+                <img src="@/assets/img/ico.jpg" style="width: 138px;" />
+            </el-popover>
+
+
         </ul>
-        <el-button class="top" type="primary" circle icon="top" @click="handleToTop"></el-button>
+        <div class="top" @click="handleToTop">
+
+        </div>
+        <!-- <el-button class="top" type="primary" circle icon="top" @click="handleToTop"></el-button> -->
 
     </el-aside>
 </template>
 
 <script setup>
-const handleToTop = ()=>{
+
+
+const handleToTop = () => {
     window.scrollTo({
-        top:0,
+        top: 0,
         behavior: "smooth"
     });
 }
@@ -41,7 +49,7 @@ const handleToTop = ()=>{
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 80px;
+    width: 60px;
     position: fixed;
     top: 50%;
     right: 10px;
@@ -49,40 +57,68 @@ const handleToTop = ()=>{
     transform: translateY(-50%);
 
     ul {
-        padding: 8px 0;
-        width: 56px;
+        padding: 14px 0;
+        width: 44px;
         background: #FFFFFF;
         border-radius: 28px;
 
 
         li {
-            font-size: 14px;
-            margin: 8px;
+
+            margin: 0 auto;
             width: 40px;
             height: 40px;
-            box-shadow: 0px 2px 4px 0px rgba(220, 220, 220, 0.5), inset 0px -1px 4px 0px rgba(200, 232, 255, 0.41);
-            border-radius: 28px;
-            backdrop-filter: blur(8px);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-evenly;
-            align-items: center;
+            background-repeat: no-repeat;
+            background-size: 40px;
+            cursor: pointer;
 
-            &:first-child {
-                height: 80px;
+
+            &.booking {
+
+                background-image: url(@/assets/img/booking.png);
+
+                &:hover {
+                    background-image: url(@/assets/img/booking-hover.png);
+                    height: 72px;
+
+                }
+
             }
 
-            &:hover {
-                background-color: #148FFA;
-                color: #FFFFFF;
+            &.phone {
+                background-image: url(@/assets/img/phone.png);
+
+                &:hover {
+                    background-image: url(@/assets/img/phone-hover.png);
+
+                }
+            }
+
+            &.ico {
+                background-image: url(@/assets/img/ico.png);
+
+                &:hover {
+                    background-image: url(@/assets/img/ico-hover.png);
+
+                }
             }
         }
     }
 
     .top {
+        cursor: pointer;
+
         margin-top: 24px;
         width: 40px;
         height: 40px;
+        background-image: url(@/assets/img/top.png);
+        background-repeat: no-repeat;
+        background-size: 40px;
+
+        &:hover {
+            background-image: url(@/assets/img/top-hover.png);
+
+        }
     }
 
 

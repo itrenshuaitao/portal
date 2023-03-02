@@ -1,9 +1,9 @@
 <template>
-    <HeaderPage />
+    <HeaderPage ref="refHeader" />
     <el-main>
         <router-view />
     </el-main>
-    <AsidePage />
+    <AsidePage @open-booking-dialog="openBookingDialog" />
     <FooterPage />
 </template>
 
@@ -15,17 +15,19 @@ import FooterPage from './components/footer.vue';
 import AsidePage from './components/aside.vue';
 const { proxy } = getCurrentInstance();
 const store = useStore();
+const refHeader = ref(null)
+const openBookingDialog = () => {
+    console.log("openBookingDialog");
+    proxy.$refs.refHeader.openDialog()
+}
 const handleClick = () => {
-    console.log('handleClick', proxy)
-    store.commit('increment')
-    console.log(store.state.count)
+
     const params = {
-    url: "http://jsonplaceholder.typicode.com/posts/2",
-  };
-    proxy.$get(params).then((data) => 
-    {
+        url: "http://jsonplaceholder.typicode.com/posts/2",
+    };
+    proxy.$get(params).then((data) => {
         console.log(data)
-    }).catch((e) =>{
+    }).catch((e) => {
 
     })
 }

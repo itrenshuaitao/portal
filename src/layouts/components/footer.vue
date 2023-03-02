@@ -40,7 +40,7 @@
         <p>info@ujoin-tech.com</p>
         <!-- <img src="./assets/img/ercode.png" alt /> -->
 
-        <img alt />
+        <img src="@/assets/img/ico.jpg" alt />
         <p>杭州产研基地： <br />杭州市上城区鸿泰路128</p>
         <p>无锡产研基地： <br />无锡市新吴区灵江路7号</p>
 
@@ -105,7 +105,7 @@ export default {
     .line {
       position: absolute;
       right: 35%;
-      width: 0.5px;
+      width: 1px;
       height: 90%;
       background: #D8D8D8;
     }

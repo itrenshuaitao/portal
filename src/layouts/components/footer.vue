@@ -1,5 +1,8 @@
 <template>
   <el-footer class="footer  clearfix" v-show="isShow">
+    <div class="footer-booking">
+
+    </div>
     <div class="footer-content">
       <ul class="content-nav">
 
@@ -68,8 +71,19 @@ export default {
   bottom: 0;
   width: 100%;
   height: 100%;
+  padding: 0;
   overflow: hidden;
   background-color: #3E4954;
+
+  .footer-booking {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    z-index: 10;
+    width: 100%;
+    height: 282px;
+    background-color: #2f78c2;
+  }
 
   &-content {
     margin: 0 auto;
@@ -77,6 +91,7 @@ export default {
     display: flex;
     justify-content: space-evenly;
     height: 100%;
+
     .content-nav {
       display: flex;
       justify-content: space-around;
@@ -109,16 +124,16 @@ export default {
       height: 90%;
       background: #D8D8D8;
     }
-    .info{
+
+    .info {
       img {
-      width: 100px;
-      height: 100px;
-      padding: 10px;
-      background-color: pink;
-    }
+        width: 100px;
+        height: 100px;
+        padding: 10px;
+        background-color: pink;
+      }
     }
 
-    
+
   }
-}
-</style>
+}</style>

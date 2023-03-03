@@ -3,7 +3,7 @@
     <div class="logo">
       <img src="@/assets/img/toplogo.png" alt />
     </div>
-    <el-menu default-active="/home" class="el-menu-demo" mode="horizontal" background-color="rgba(255,255,255,0)"
+    <el-menu :default-active="router.currentRoute.value?.matched[1]?.path" class="el-menu-demo" mode="horizontal" background-color="rgba(255,255,255,0)"
       :ellipsis="false" :router="true">
       <el-menu-item index="/home">首页</el-menu-item>
       <el-menu-item index="/products">产品</el-menu-item>
@@ -81,8 +81,9 @@
 </template>
 
 <script setup>
-import { reactive, ref } from 'vue'
-
+import { reactive, ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router';
+let router = useRouter()
 const dialogFormVisible = ref(false)
 const formLabelWidth = '140px'
 
@@ -96,7 +97,7 @@ const form = reactive({
   resource: '',
   desc: '',
 })
-const openDialog=()=>{
+const openDialog = () => {
   dialogFormVisible.value = true
 }
 defineExpose({
@@ -155,4 +156,5 @@ defineExpose({
       }
     }
   }
-}</style>
+}
+</style>

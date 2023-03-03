@@ -1,5 +1,5 @@
 <template>
-    <div class="card">
+    <div class="card" @click="()=>router.push('/case/detail/123')">
         <div class="img">
             <img src="https://www.orbitmes.com/dist/images/plan-03.jpg" alt="">
         </div>
@@ -20,7 +20,8 @@
 </template>
 
 <script setup>
-
+import { useRouter } from 'vue-router'
+const router = useRouter()
 </script>
 
 <style lang='scss' scoped>
@@ -28,8 +29,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 440px;
-    margin-bottom: 40px;
+    height: 408px;
     padding: 16px;
     background-color: #f7f7f7;
     border: 1px solid rgb(255, 255, 255);

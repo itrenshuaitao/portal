@@ -14,16 +14,18 @@
                 </span>
             </div>
             <div class="case-list">
-                <div class="item" v-for="item in 9">
-                    <ItemCard/>
+                <div class="item" v-for="item in 8">
+                    <ItemCard />
                 </div>
             </div>
         </div>
     </div>
+    <router-view />
+    
 </template>
     
 <script setup>
-import ItemCard from "@/components/ItemCard.vue"
+import ItemCard from "@/components/caseCard.vue"
 import Banner from "@/components/Banner.vue"
 import { ref } from "vue"
 const active = ref("1")
@@ -64,14 +66,17 @@ const items = ref([
         .case-list {
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-between;
+            justify-content: flex-start;
 
             .item {
-                width: 32%;
-                height: 440px;
+                width: calc((100% - 32px) / 3);
+                margin-right: 16px;
                 margin-bottom: 40px;
+
+                &:nth-of-type(3n+0) {
+                    margin-right: 0;
+                }
             }
         }
     }
-}
-</style>
+}</style>

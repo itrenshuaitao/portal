@@ -1,23 +1,20 @@
 <template>
     <div class="news-center">
         <el-carousel indicator-position="none" :autoplay="false">
-            <el-carousel-item v-for="item in 3" :key="item">
+            <el-carousel-item v-for="item in props.newsList" :key="item">
                 <div class="text">
                     <p class="news-title">
-                        {{ item }}用科技让复杂的制造更简单 友机技术 助力
+                        {{ item.newsName }}
                     </p>
                     <p class="news-desc">
-                        此次MES项目正是优宝爱驾审时度势、认真研究、慎重作出的一项重大决定，希望借助华磊迅拓在制造行业23年的实施成功经验，帮助优宝爱驾将已上线的信息化系统连接起来，实现流程规范化管理，数据可视化管控，打开生产黑箱，实现数据协同一体化，从而达到降本增效，成就优宝爱驾数字化发展新格局。
-
-                        会议要求，全体员工统一思想，明确目标，抱着积极的态度拥抱数字化变革，高度协同、全力以赴，确保项目早上线、早见效，最终推动优宝爱驾质量变革、效率变革和生产方式变革。
-                    </p>
+                     {{ item.newsTitle }}    </p>
                     <p class="time">
-                        2013/01/17
+                        {{item.newsTime}}
                     </p>
                     <div class="to-desc">查看详情</div>
                 </div>
                 <div>
-                    <img src="@/assets/img/test1.jpg" />
+                    <img :src="item.newsImg" />
                 </div>
             </el-carousel-item>
         </el-carousel>
@@ -29,6 +26,7 @@
 
 <script setup>
 import { getCurrentInstance } from "vue"
+const props = defineProps(['newsList'])
 const { proxy } = getCurrentInstance()
 const toNews = () => {
     proxy.$router.push("./news")

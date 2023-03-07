@@ -1,103 +1,11 @@
 <template>
     <div class="partners-container">
-        <div class="box to-left">
+        <div v-for="(list, index) in props.partnerList" :class="`box to-${index % 2 === 0 ? 'right' : 'left'}`">
             <div class="imgList ">
-                <img src="https://easyv.assets.dtstack.com/homepage/common/assets/images/home-partners-logo/logo_1.png"
-                    alt="">
-                <img src="https://easyv.assets.dtstack.com/homepage/common/assets/images/home-partners-logo/logo_2.png"
-                    alt="">
-                <img src="https://easyv.assets.dtstack.com/homepage/common/assets/images/home-partners-logo/logo_3.png"
-                    alt="">
-                <img src="https://easyv.assets.dtstack.com/homepage/common/assets/images/home-partners-logo/logo_4.png"
-                    alt="">
-                <img src="https://easyv.assets.dtstack.com/homepage/common/assets/images/home-partners-logo/logo_5.png"
-                    alt="">
-                <img src="https://easyv.assets.dtstack.com/homepage/common/assets/images/home-partners-logo/logo_6.png"
-                    alt="">
-                <img src="https://easyv.assets.dtstack.com/homepage/common/assets/images/home-partners-logo/logo_6.png"
-                    alt="">
-                <img src="https://easyv.assets.dtstack.com/homepage/common/assets/images/home-partners-logo/logo_7.png"
-                    alt="">
-                <img src="https://easyv.assets.dtstack.com/homepage/common/assets/images/home-partners-logo/logo_8.png"
-                    alt="">
-                <img src="https://easyv.assets.dtstack.com/homepage/common/assets/images/home-partners-logo/logo_9.png"
-                    alt="">
-                <img src="https://easyv.assets.dtstack.com/homepage/common/assets/images/home-partners-logo/logo_10.png"
-                    alt="">
-                <img src="https://easyv.assets.dtstack.com/homepage/common/assets/images/home-partners-logo/logo_1.png"
-                    alt="">
-                <img src="https://easyv.assets.dtstack.com/homepage/common/assets/images/home-partners-logo/logo_2.png"
-                    alt="">
-                <img src="https://easyv.assets.dtstack.com/homepage/common/assets/images/home-partners-logo/logo_3.png"
-                    alt="">
-                <img src="https://easyv.assets.dtstack.com/homepage/common/assets/images/home-partners-logo/logo_4.png"
-                    alt="">
-                <img src="https://easyv.assets.dtstack.com/homepage/common/assets/images/home-partners-logo/logo_5.png"
-                    alt="">
-                <img src="https://easyv.assets.dtstack.com/homepage/common/assets/images/home-partners-logo/logo_6.png"
-                    alt="">
-                <img src="https://easyv.assets.dtstack.com/homepage/common/assets/images/home-partners-logo/logo_6.png"
-                    alt="">
-                <img src="https://easyv.assets.dtstack.com/homepage/common/assets/images/home-partners-logo/logo_7.png"
-                    alt="">
-                <img src="https://easyv.assets.dtstack.com/homepage/common/assets/images/home-partners-logo/logo_8.png"
-                    alt="">
-                <img src="https://easyv.assets.dtstack.com/homepage/common/assets/images/home-partners-logo/logo_9.png"
-                    alt="">
-                <img src="https://easyv.assets.dtstack.com/homepage/common/assets/images/home-partners-logo/logo_10.png"
-                    alt="">
-
+                <img v-for="item in [...list, ...list]" :src="item.partnerImg" :alt="item.partnerName">
             </div>
         </div>
-        <div class="box to-right">
-            <div class="imgList ">
-                <img src="https://easyv.assets.dtstack.com/homepage/common/assets/images/home-partners-logo/logo_1.png"
-                    alt="">
-                <img src="https://easyv.assets.dtstack.com/homepage/common/assets/images/home-partners-logo/logo_2.png"
-                    alt="">
-                <img src="https://easyv.assets.dtstack.com/homepage/common/assets/images/home-partners-logo/logo_3.png"
-                    alt="">
-                <img src="https://easyv.assets.dtstack.com/homepage/common/assets/images/home-partners-logo/logo_4.png"
-                    alt="">
-                <img src="https://easyv.assets.dtstack.com/homepage/common/assets/images/home-partners-logo/logo_5.png"
-                    alt="">
-                <img src="https://easyv.assets.dtstack.com/homepage/common/assets/images/home-partners-logo/logo_6.png"
-                    alt="">
-                <img src="https://easyv.assets.dtstack.com/homepage/common/assets/images/home-partners-logo/logo_6.png"
-                    alt="">
-                <img src="https://easyv.assets.dtstack.com/homepage/common/assets/images/home-partners-logo/logo_7.png"
-                    alt="">
-                <img src="https://easyv.assets.dtstack.com/homepage/common/assets/images/home-partners-logo/logo_8.png"
-                    alt="">
-                <img src="https://easyv.assets.dtstack.com/homepage/common/assets/images/home-partners-logo/logo_9.png"
-                    alt="">
-                <img src="https://easyv.assets.dtstack.com/homepage/common/assets/images/home-partners-logo/logo_10.png"
-                    alt="">
-                <img src="https://easyv.assets.dtstack.com/homepage/common/assets/images/home-partners-logo/logo_1.png"
-                    alt="">
-                <img src="https://easyv.assets.dtstack.com/homepage/common/assets/images/home-partners-logo/logo_2.png"
-                    alt="">
-                <img src="https://easyv.assets.dtstack.com/homepage/common/assets/images/home-partners-logo/logo_3.png"
-                    alt="">
-                <img src="https://easyv.assets.dtstack.com/homepage/common/assets/images/home-partners-logo/logo_4.png"
-                    alt="">
-                <img src="https://easyv.assets.dtstack.com/homepage/common/assets/images/home-partners-logo/logo_5.png"
-                    alt="">
-                <img src="https://easyv.assets.dtstack.com/homepage/common/assets/images/home-partners-logo/logo_6.png"
-                    alt="">
-                <img src="https://easyv.assets.dtstack.com/homepage/common/assets/images/home-partners-logo/logo_6.png"
-                    alt="">
-                <img src="https://easyv.assets.dtstack.com/homepage/common/assets/images/home-partners-logo/logo_7.png"
-                    alt="">
-                <img src="https://easyv.assets.dtstack.com/homepage/common/assets/images/home-partners-logo/logo_8.png"
-                    alt="">
-                <img src="https://easyv.assets.dtstack.com/homepage/common/assets/images/home-partners-logo/logo_9.png"
-                    alt="">
-                <img src="https://easyv.assets.dtstack.com/homepage/common/assets/images/home-partners-logo/logo_10.png"
-                    alt="">
 
-            </div>
-        </div>
 
 
 
@@ -105,7 +13,7 @@
 </template>
 
 <script setup>
-
+const props = defineProps(['partnerList'])
 </script>
 
 <style lang='scss' scoped>
@@ -173,4 +81,5 @@ img {
     to {
         transform: translateX(0);
     }
-}</style>
+}
+</style>

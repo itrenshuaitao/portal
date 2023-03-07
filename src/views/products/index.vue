@@ -12,8 +12,8 @@
     </div>
     <div class="title1 title">产品集合</div>
     <div class="product-list">
-      <div class="item" v-for="item in 7">
-        <productCard />
+      <div class="item" v-for="item in productsList">
+        <productCard :products="item" />
       </div>
     </div>
     <div class="title2 title">产品亮点</div>
@@ -67,10 +67,10 @@
 
     <div class="title3 title">产品案例</div>
     <div class="case-list">
-      <div class="item" v-for="item in 3">
-        <CaseCard />
+      <div class="item" v-for="item in productsCaseList">
+        <CaseCard :case="item"/>
       </div>
-      <div class="more" @click="()=>proxy.$router.push('/case')">
+      <div class="more" @click="() => proxy.$router.push('/case')">
         查看更多案例
       </div>
     </div>
@@ -79,15 +79,44 @@
 </template>
   
 <script setup>
-import { ref, getCurrentInstance } from "vue"
+import { ref, getCurrentInstance, onMounted } from "vue"
 import Banner from "@/components/Banner.vue"
 import productCard from "@/components/productCard.vue";
 import CaseCard from "@/components/caseCard.vue"
+import { queryProductsList, queryCasesList } from "@/api/index"
 
 const { proxy } = getCurrentInstance();
 const carousel = ref(null)
 const active = ref("1")
 const activeTabName = ref('0')
+const productsList = ref([])
+const productsCaseList = ref([])
+
+onMounted(() => {
+  getProductsList()
+  getCaseList()
+})
+
+
+const getCaseList =()=>{
+  queryCasesList().then(({ code, data }) => {
+    if (code === 0) {
+      productsCaseList.value = data
+    }
+  })
+}
+const getProductsList = () => {
+  const params = {
+    pageIndex: 1,
+    pageSize: 1000
+  }
+  queryProductsList(params).then(({ code, data }) => {
+    if (code === 0) {
+      productsList.value = data
+    }
+  })
+}
+
 const handleTabClick = (val) => {
   active.value = val
   let toHeight = document.querySelector(`.title${val}`).offsetTop

@@ -1,8 +1,25 @@
 <template>
-  <el-footer class="footer  clearfix" v-show="isShow">
-    <div class="footer-booking">
+  <div v-if="router.currentRoute.value?.matched[1]?.path !== '/home'" class="footer-booking">
+    <div class="box">
+      <div class="box-top">
+        <div>
+          <h2>
+            刀具监控
+          </h2>
+          <p>让自动化生产更加可靠</p>
+        </div>
+        <div>
+          <el-button type="primary" color="rgb(0, 84, 167)" @click="$emit('openBookingDialog')">预约体验</el-button>
 
+        </div>
+      </div>
+      <div class="box-bottom">
+        实时监控每把刀具每次加工的功率变化，一旦发生断刀、崩刃、过度磨损等常见刀具故障，和工件/刀具缺失、空加工、装夹错误等常见加工问题，系统立即通过提醒、报警和停机等方式自动干预加工过程，从而防止后续刀具损坏、批量废品、甚至机床损坏等进一步经济损失，降低生产风险和成本，提高生产稳定性和加工过程品质。
+      </div>
     </div>
+  </div>
+  <el-footer class="footer  clearfix" v-show="isShow">
+
     <div class="footer-content">
       <ul class="content-nav">
 
@@ -54,18 +71,68 @@
   </el-footer>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      isShow: true,
-
-    };
-  },
-}
+<script setup>
+import { useRouter } from 'vue-router';
+let router = useRouter()
+const isShow = true;
 </script>
 
 <style lang='scss' scoped>
+@import "@/assets/css/index.scss";
+
+.footer-booking {
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+  width: 100%;
+  height: 290px;
+  background-image: url(https://img.tukuppt.com/ad_preview/00/03/79/5c98b10ebb1ec.jpg!/fw/780);
+  background-repeat: no-repeat;
+  background-size: 100% 290px;
+
+  .box {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: 40px 62px 32px 62px;
+    padding: 24px 100px;
+    background: linear-gradient(180.00deg, rgba(250, 251, 253, 0.15294117647058825) 0%, rgba(242, 243, 245, 1) 100%);
+    box-shadow: inset 0px -1px 7px rgba(200, 232, 255, 0.41);
+    backdrop-filter: blur(10.87px);
+    border-radius: 4px;
+
+    .box-top {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 26px;
+
+      h2 {
+        color: rgb(0, 75, 146);
+        font-size: 36px;
+        font-weight: 400;
+        line-height: 50px;
+        margin-bottom: 8px;
+      }
+
+      p {
+        color: rgb(62, 73, 84);
+        font-size: 24px;
+        font-weight: 400;
+        line-height: 34px;
+      }
+    }
+
+    .box-bottom {
+      @include show_line(2);
+      color: rgb(62, 73, 84);
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 20px;
+    }
+  }
+}
+
 .footer {
   position: relative;
   bottom: 0;
@@ -75,15 +142,7 @@ export default {
   overflow: hidden;
   background-color: #3E4954;
 
-  .footer-booking {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    z-index: 10;
-    width: 100%;
-    height: 282px;
-    background-color: #2f78c2;
-  }
+
 
   &-content {
     margin: 0 auto;
@@ -136,4 +195,5 @@ export default {
 
 
   }
-}</style>
+}
+</style>

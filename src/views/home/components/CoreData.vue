@@ -1,24 +1,12 @@
 <template>
     <div class="core-data">
-        <div>
-            <span>核心数据</span>
-            <number class="number" :ref="'number' + 1" :from="1000" :to="1000" :duration="5" easing="Power1.easeOut"
-                animationPaused />
+        <div v-for="item in props.coreDataList">
+            <span>{{item.coredataName}}</span>
+            <!-- <number class="number" :ref="'number' + 1" :from="1000" :to="1000" :duration="5" easing="Power1.easeOut"
+                animationPaused /> -->
+                <span class="number">{{item.coredataData}}</span>
         </div>
-        <div>
-            <span>核心数据</span>
-
-            <number class="number" :ref="'number' + 2" :from="1000" :to="1000" :duration="5" easing="Power1.easeOut"
-                animationPaused />
-
-        </div>
-        <div>
-            <span>核心数据</span>
-
-            <number class="number" :ref="'number' + 3" :from="1000" :to="1000" :duration="5" easing="Power1.easeOut"
-                animationPaused />
-
-        </div>
+ 
 
     </div>
 </template>
@@ -32,6 +20,8 @@ const number2 = ref(null)
 const number3 = ref(null)
 const divTop = ref(0)
 
+const props = defineProps(['coreDataList'])
+
 
 onMounted(() => {
     divTop.value = document.querySelector('.core-data').offsetTop
@@ -40,7 +30,7 @@ onMounted(() => {
 
 //页面卸载
 onUnmounted(() => {
-    window.removeEventListener("scroll", showDiv);
+    // window.removeEventListener("scroll", showDiv);
 });
 const showDiv = () => {
     //获取滚动条距离页面顶部的距离，如果滚动条距离页面距离大于目标元素距离页面顶部的距离，则目标元素已经往上滚动，且超出了当前可视区域，则给该元素添加fixed属性
@@ -63,7 +53,6 @@ const showDiv = () => {
 <style lang='scss' scoped>
 .core-data {
     width: 80%;
-    height: 104px;
     margin: 40px auto;
     background: linear-gradient(308deg, #F6F6FA 0%, #FEFFFE 100%);
     box-shadow: 5px 2px 24px 0px rgba(220, 220, 220, 0.5);
@@ -78,6 +67,7 @@ const showDiv = () => {
     div {
         width: 33%;
         text-align: center;
+        margin-bottom: 24px;
         span {
             font-size: 18px;
             font-weight: 400;
@@ -86,8 +76,10 @@ const showDiv = () => {
         }
 
         .number {
+            margin-left: 14px;
+
             font-size: 36px;
-            font-weight: 500;
+            font-weight: 400;
             color: #3E4954;
             line-height: 50px;
         }

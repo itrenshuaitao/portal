@@ -4,7 +4,7 @@
         <router-view />
     </el-main>
     <AsidePage @open-booking-dialog="openBookingDialog" />
-    <FooterPage />
+    <FooterPage @open-booking-dialog="openBookingDialog" />
 </template>
 
 <script setup>
@@ -17,7 +17,6 @@ const { proxy } = getCurrentInstance();
 const store = useStore();
 const refHeader = ref(null)
 const openBookingDialog = () => {
-    console.log("openBookingDialog");
     proxy.$refs.refHeader.openDialog()
 }
 const handleClick = () => {

@@ -8,96 +8,124 @@
             <el-button :type="plain" link :class="active == 'partners' && 'active'"
                 @click="() => handleTabClick('partners')">合作伙伴</el-button>
         </div>
-        <div class="title title-products">产品概览</div>
+        <template v-if="productsList[0]?.productsShow === 0">
+            <div class="title title-products">产品概览</div>
 
-        <div class="products-main">
-            <div class="products">
-                <img :class="activeProducts == 0 && 'active'" src="@/assets/img/test1.jpg">
-                <img :class="activeProducts == 1 && 'active'" src="@/assets/img/test2.jpg">
-                <img :class="activeProducts == 2 && 'active'" src="@/assets/img/test3.webp">
-                <img :class="activeProducts == 3 && 'active'" src="@/assets/img/test1.jpg">
-                <img :class="activeProducts == 4 && 'active'" src="@/assets/img/test2.jpg">
+            <div class="products-main">
+                <div class="products">
+                    <img v-for="(item, index) in productsList" :class="activeProducts == index && 'active'"
+                        :src="item.productsImg">
+
+                </div>
+                <ul class="slide">
+                    <li v-for="item in productsList">
+                        <div>
+                            <h2>{{ item.productsName }}</h2>
+                            <P>{{ item.productsSubtitle }}</P>
+                            <div class="to-detail">
+                                <router-link to="/">查看详情</router-link>
+                            </div>
+                        </div>
+                    </li>
+
+                </ul>
             </div>
-            <ul class="slide">
-                <li>
-                    <div>
-                        <h2>电子行业</h2>
-                        <P>电子行业的MES系统需求主要集中在收集关键数据，及时反馈异常，防错防呆，一次做对，提升生产过程的品质稳定性，质量事故的责任界定，实现人机料法环的全面管控。</P>
-                        <div class="to-detail">
+        </template>
 
-                            <router-link to="/">查看详情</router-link>
-
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div>
-                        <h2>电子行业</h2>
-                        <P>电子行业的MES系统需求主要集中在收集关键数据，及时反馈异常，防错防呆，一次做对，提升生产过程的品质稳定性，质量事故的责任界定，实现人机料法环的全面管控。</P>
-                        <div class="to-detail">
-
-                            <router-link to="/">查看详情</router-link>
-
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div>
-                        <h2>电子行业</h2>
-                        <P>电子行业的MES系统需求主要集中在收集关键数据，及时反馈异常，防错防呆，一次做对，提升生产过程的品质稳定性，质量事故的责任界定，实现人机料法环的全面管控。</P>
-                        <div class="to-detail">
-
-                            <router-link to="/">查看详情</router-link>
-
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div>
-                        <h2>电子行业</h2>
-                        <P>电子行业的MES系统需求主要集中在收集关键数据，及时反馈异常，防错防呆，一次做对，提升生产过程的品质稳定性，质量事故的责任界定，实现人机料法环的全面管控。</P>
-                        <div class="to-detail">
-
-                            <router-link to="/">查看详情</router-link>
-
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div>
-                        <h2>电子行业</h2>
-                        <P>电子行业的MES系统需求主要集中在收集关键数据，及时反馈异常，防错防呆，一次做对，提升生产过程的品质稳定性，质量事故的责任界定，实现人机料法环的全面管控。</P>
-                        <div class="to-detail">
-
-                            <router-link to="/">查看详情</router-link>
-
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        </div>
         <!-- 核心数据 -->
-        <CoreData />
-        <div class="title title-news">新闻中心</div>
-        <NewsCenter />
-        <div class="title title-partners">合作伙伴</div>
-        <Partners />
+        <CoreData v-if="coreDataList[0]?.coredataType === 0" :coreDataList="coreDataList" />
+        <template v-if="newsList[0]?.newsType === 0">
+            <div class="title title-news">新闻中心</div>
+            <NewsCenter :newsList="newsList" />
+        </template>
+        <template v-if="partnerList[0]&&partnerList[0][0]?.partnerType === 0">
+            <div class="title title-partners">合作伙伴</div>
+            <Partners :partnerList="partnerList" />
+        </template>
+
 
     </div>
 </template>
 
 <script setup>
+import { ref, onMounted, reactive, computed, watch, toRaw } from "vue"
+
 import CoreData from './CoreData.vue';
 import NewsCenter from './NewsCenter.vue';
 import Partners from './Partners.vue';
+import { getHomeProductsList, getHomeCoreDataList, getHomeNewsList, getHomePartnerList } from "@/api/index"
 
-import { ref, onMounted, computed, watch, toRaw } from "vue"
 const active = ref("products")
 const activeProducts = ref(0)
+const productsList = ref([])
+const coreDataList = ref([])
+const newsList = ref([])
+const partnerList = ref([])
 
 onMounted(() => {
     sildeAddEvent()
+    getProductsList()
+    getCoreDataList()
+    getNewsList()
+    getPartnerList()
 })
+
+const getPartnerList = () => {
+    const params = {
+        pageIndex: 1,
+        pageSize: 1000
+    }
+    getHomePartnerList(params).then(({ code, data }) => {
+        if (code === 0) {
+
+            let len = data.length;
+            let n = 20; //每行显示20个
+            let lineNum = len % 20 === 0 ? len / 20 : Math.floor((len / 20) + 1);
+            let res = [];
+            for (let i = 0; i < lineNum; i++) {
+                let temp = data.slice(i * n, i * n + n);
+                res.push(JSON.parse(JSON.stringify(temp)));
+            }
+
+
+
+            partnerList.value = res;
+
+        }
+    })
+}
+
+const getNewsList = () => {
+    getHomeNewsList().then(({ code, data }) => {
+        if (code === 0) {
+            newsList.value = data
+
+        }
+    })
+}
+
+
+const getCoreDataList = () => {
+    const params = {
+        pageIndex: 1,
+        pageSize: 100
+    }
+    getHomeCoreDataList(params).then(({ code, data }) => {
+        if (code === 0) {
+            coreDataList.value = data
+
+        }
+    })
+}
+
+const getProductsList = () => {
+    getHomeProductsList().then(({ code, data }) => {
+        if (code === 0) {
+            productsList.value = data
+
+        }
+    })
+}
 
 const handleTabClick = (type) => {
     active.value = type
@@ -109,7 +137,7 @@ const handleTabClick = (type) => {
     });
 }
 const sildeAddEvent = () => {
-    document.getElementsByClassName('slide')[0].addEventListener("mouseover", handleMouseover, false)
+    document.getElementsByClassName('slide')[0]?.addEventListener("mouseover", handleMouseover, false)
 }
 
 const handleMouseover = (e) => {
@@ -194,6 +222,7 @@ const handleMouseover = (e) => {
         position: absolute;
         top: 0;
         height: 100%;
+        width: 100%;
         overflow: hidden;
 
 

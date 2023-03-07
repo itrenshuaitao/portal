@@ -1,17 +1,17 @@
 <template>
     <div class="card">
         <div class="img">
-            <img src="https://www.orbitmes.com/dist/images/plan-03.jpg" alt="">
+            <img :src="products.productsImg" alt="">
         </div>
         <div class="text">
-            <h2 class="text-overflow">刀具监控</h2>
-            <p>让自动化生产更加可靠</p>
+            <h2 class="text-overflow">{{products.productsName}}</h2>
+            <p>{{products.productsSubtitle}}</p>
         </div>
     </div>
 </template>
 
 <script setup>
-
+const props = defineProps(['products'])
 </script>
 
 <style lang='scss' scoped>

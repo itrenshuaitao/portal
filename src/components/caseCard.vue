@@ -1,11 +1,11 @@
 <template>
     <div class="card" @click="()=>router.push('/case/detail/123')">
         <div class="img">
-            <img src="https://www.orbitmes.com/dist/images/plan-03.jpg" alt="">
+            <img :src="props.case.caseImg" alt="">
         </div>
         <div class="text">
-            <h2>武义协力机电</h2>
-            <p>磨损监控是作为刀具换刀判断的依据，需要一线操作工进行学习；</p>
+            <h2>{{ props.case.caseName }}</h2>
+            <p>{{props.case.caseTitle}}</p>
         </div>
         <div class="action">
             <div>
@@ -22,6 +22,8 @@
 <script setup>
 import { useRouter } from 'vue-router'
 const router = useRouter()
+const props = defineProps(['case'])
+
 </script>
 
 <style lang='scss' scoped>

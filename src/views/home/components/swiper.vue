@@ -1,43 +1,44 @@
 <template>
-    <div class="show-imgs-container" @mouseover="data.isIn = true" @mouseout="data.isIn = false">
-        <el-carousel ref="refCarousel" :interval="data.cutTime" arrow="never" :autoplay="data.autoplay" trigger="click"
-            :indicator-position="data.autoplay ? '' : 'none'" @change="handleChange">
-            <el-carousel-item v-for="(item, index) in data.list" :key="index">
+    <div v-if="pageData.list[0]?.sbannerShow ===0" class="show-imgs-container" @mouseover="pageData.isIn = true" @mouseout="pageData.isIn = false">
+        <el-carousel ref="refCarousel" :interval="pageData.cutTime" arrow="never" :autoplay="pageData.autoplay"
+            trigger="click" :indicator-position="pageData.autoplay ? '' : 'none'" @change="handleChange">
+            <el-carousel-item v-for="(item, index) in pageData.list" :key="index">
+                <img v-if="item.sbannerImg" :src="item.sbannerImg" alt="这是图片" class="banner" />
                 <!--视频播放器 -->
-                <img v-if="item.type === '0'" src="@/assets/img/test1.jpg" alt="这是图片" class="banner" />
+
                 <div v-else class="my_video">
-                    <vue3VideoPlay :id="'myVideoPlayer' + index" v-bind="data.options" :src="item.url" @play="onPlay"
+                    <vue3VideoPlay :id="'myVideoPlayer' + index" v-bind="pageData.options" :src="item.url" @play="onPlay"
                         @pause="onPause" @timeupdate="onTimeupdate" @canplay="onCanplay" @ended="onEnded" />
                 </div>
-                <div v-if="data.nowIndex===index" class="text-position">
+                <div v-if="pageData.nowIndex === index" class="text-position">
                     <div class="title">
                         <Transition name="my-transition" appear>
-                            <p>友机 · 智能加工过程监控系统</p>
+                            <p>{{ item.sbannerCopy1 }}</p>
+
                         </Transition>
                     </div>
                     <div class="title2">
                         <Transition name="my-transition" appear>
-                            <p>断刀 | 崩刃 | 撞刀</p>
+                            <p>{{ item.sbannerCopy2 }}</p>
                         </Transition>
                     </div>
                     <div class="desc">
                         <Transition name="my-transition" appear>
-                            <p>实时监控每把刀具每次加工的功率变化，在发生异常时自动停机；
-                                换型时自动学习，自动监控，操作简单；
-                                适用范围广，不限刀具数量和机床类型</p>
+                            <p>{{ item.sbannerCopy3 }}</p>
+
                         </Transition>
                     </div>
                     <Transition name="my-transition" class="desc2-transition" appear>
                         <div class="desc2">
-                            <p>保护刀具和机床、减少废品提高品质，让自动化生产更加稳定</p>
+                            <p>{{ item.sbannerCopy4 }}</p>
                         </div>
 
                     </Transition>
                     <Transition name="my-transition" class="link" appear>
 
-                        <div class="more">
+                        <div class="more" @click="() => toUrl(item.sbannerUrl)">
 
-                            <router-link to="/">了解更多</router-link>
+                            了解更多
 
                         </div>
                     </Transition>
@@ -49,36 +50,24 @@
             </el-carousel-item>
         </el-carousel>
     </div>
+    <div v-else style="margin-top: 60px;"></div>
 </template>
 <script setup>
 
 import { reactive, toRefs, ref, onMounted, toRaw, getCurrentInstance } from "vue";
-import MyTransition from "@/components/Transition.vue"
+import { useRouter } from 'vue-router'
+import { getHomeBanner } from "@/api/index"
 const { proxy } = getCurrentInstance()
+const router = useRouter()
 const refCarousel = ref(null);
-let data = reactive({
+let pageData = reactive({
     autoplay: true,//是否自动切换
     isPlay: false,//播放状态
     isIn: false,//鼠标是否位于播放器内
     cutTime: 3000,//轮播时间，单位毫秒
     nowIndex: 0,
     list: [
-        {
-            type: '0',
-            url: "@/assets/img/test1.jpg"
-        },
-        {
-            type: '0',
-            url: "@/assets/img/test2.jpg"
-        },
-        {
-            type: '1',
-            url: "https://www.runoob.com/try/demo_source/mov_bbb.mp4"
-        },
-        {
-            type: '1',
-            url: "http://vjs.zencdn.net/v/oceans.mp4"
-        },
+
     ],
     options: {
         // playbackRates: [0.5, 1.0, 1.5, 2.0], // 可选的播放速度
@@ -106,39 +95,50 @@ let data = reactive({
 
 
 onMounted(() => {
-    console.log(`the component is now mounted.`)
-    // let container = document.getElementsByClassName("show-imgs-container")[0]
-    // container.addEventListener("mouseover", function (e) {
-    //     container.classList.add('on-mouse-over')
-    // })
-    // container.addEventListener("mouseout", function (e) {
-    //     container.classList.remove('on-mouse-over')
-    //     data.autoplay = true
-    //     // proxy.$refs.refCarousel.next()
-    // })
+    getListBanner()
 })
+
+
+const getListBanner = () => {
+
+
+
+
+    const params = {
+        pageIndex: 1,
+        pageSize: 100
+    }
+
+
+    getHomeBanner(params).then(({ code, data }) => {
+        if (code === 0) {
+            pageData.list = data
+        }
+    })
+
+}
 // 获取走马灯的索引
 const handleChange = (nowIndex, oldIndex) => {
 
-data.nowIndex = nowIndex
-    if (data.list[nowIndex].type === '1') {
-        if (data.list[oldIndex].type === '1') {
+    pageData.nowIndex = nowIndex
+    if (pageData.list[nowIndex].type === '1') {
+        if (pageData.list[oldIndex].type === '1') {
             let video = document.getElementById(`myVideoPlayer${oldIndex}`)
             video.pause()
             video.currentTime = 0
         }
-        data.autoplay = false
+        pageData.autoplay = false
         let video = document.getElementById(`myVideoPlayer${nowIndex}`)
         // video.addEventListener('ended', function () {
         //     console.log(`myVideoPlayer${nowIndex}`,'添加视频结束事件')
-        //     data.autoplay = true
+        //     pageData.autoplay = true
         // })
         video.play()
     }
 }
 const onPlay = (ev) => {
     console.log('播放')
-    data.autoplay = false
+    pageData.autoplay = false
 
 }
 const onPause = (ev) => {
@@ -155,11 +155,18 @@ const onEnded = (ev) => {
     console.log(ev, '播放结束')
     let isHover = document.getElementsByClassName("show-imgs-container")[0].classList.contains("on-mouse-over")
     if (!isHover) {
-        data.autoplay = true
+        pageData.autoplay = true
         proxy.$refs.refCarousel.next()
 
     }
     // console.log(proxy.$refs.refCarousel)
+}
+const toUrl = (url) => {
+    if (url.includes('://')){
+        window.open(url)
+    } else {
+        router.push(url)
+    }
 }
 
 </script>
@@ -181,6 +188,11 @@ const onEnded = (ev) => {
     .el-carousel__item {
         width: 100%;
         height: 100%;
+
+        .banner {
+            width: 100%;
+            height: 100%;
+        }
 
         .my_video {
             pointer-events: none
@@ -290,6 +302,7 @@ const onEnded = (ev) => {
                 border-radius: 20px;
                 border: solid 1px #ffffff;
                 margin: 0 auto;
+                cursor: pointer;
 
 
 

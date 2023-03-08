@@ -18,12 +18,12 @@
 
                 </div>
                 <ul class="slide">
-                    <li v-for="item in productsList">
+                    <li v-for="item in productsList" >
                         <div>
                             <h2>{{ item.productsName }}</h2>
                             <P>{{ item.productsSubtitle }}</P>
                             <div class="to-detail">
-                                <router-link to="/">查看详情</router-link>
+                                <router-link :to="`/products/detail/${item.id}`">查看详情</router-link>
                             </div>
                         </div>
                     </li>

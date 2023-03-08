@@ -1,11 +1,11 @@
 <template>
       <div class="banner">
             <img :src="imgSrc" />
-            <div class="text" :style="`color: ${color};`">
+            <!-- <div class="text" :style="`color: ${color};`">
                 <p>{{title}}</p>
                 <p>{{subTitle}}
                 </p>
-            </div>
+            </div> -->
         </div>
 </template>
 
@@ -27,7 +27,7 @@ export default {
     },
     imgSrc: {
       type: String,
-      default: "http://www.ujoin-tech.com/uploadfile/upfiles/202005211958595ec66d0395c69.png"
+      default: ""
     }
   }
 };

@@ -3,10 +3,10 @@
         <el-carousel ref="refCarousel" :interval="pageData.cutTime" arrow="never" :autoplay="pageData.autoplay"
             trigger="click" :indicator-position="pageData.autoplay ? '' : 'none'" @change="handleChange">
             <el-carousel-item v-for="(item, index) in pageData.list" :key="index">
-                <img v-if="item.sbannerImg" :src="item.sbannerImg" alt="这是图片" class="banner" />
+                <img v-if="item.fileType==='img'" :src="item.sbannerImg" alt="这是图片" class="banner" />
                 <!--视频播放器 -->
 
-                <div v-else class="my_video">
+                <div v-else-if="item.fileType==='video'" class="my_video">
                     <vue3VideoPlay :id="'myVideoPlayer' + index" v-bind="pageData.options" :src="item.url" @play="onPlay"
                         @pause="onPause" @timeupdate="onTimeupdate" @canplay="onCanplay" @ended="onEnded" />
                 </div>
@@ -111,7 +111,15 @@ const getListBanner = () => {
 
 
     getHomeBanner(params).then(({ code, data }) => {
+
         if (code === 0) {
+            let videoArr=['flv','avi','mov','mp4','wmv']        
+             let imgArr = ['jpeg','jpg','png','gif'] 
+            data.map(item=>{
+               let str =  item.sbannerImg?.substring(item.sbannerImg.lastIndexOf('.') + 1).toLowerCase()
+               item.fileType = videoArr.includes(str)?'video':imgArr.includes(str)?'img':'null'
+            })
+            console.log(data)
             pageData.list = data
         }
     })

@@ -1,8 +1,8 @@
 <template>
     <div class="solution">
 
-        <Banner title="解决方案" subTitle="以机床监控为核心的数字化工厂解决方案" color="rgb(255, 255, 255)"
-            imgSrc="https://easyv.assets.dtstack.com/homepage/common/assets/images/market-consultation/search_bg.jpg">
+        <Banner 
+            :imgSrc="bannerImg">
         </Banner>
         <div class="tab">
             <el-button :type="plain" link :class="active == '1' && 'active'"
@@ -15,7 +15,7 @@
         <template v-if="solutionList[0]?.industryType === 0">
             <div class="title1 title">解决方案</div>
             <swiper class="swiper-container" loop :space-between="6" :slides-per-view="5"
-                :autoplay="{ autoplay: true, pauseOnMouseEnter: true }" @slideChange="slideChange">
+                :autoplay="{ autoplay: true, pauseOnMouseEnter: true,disableOnInteraction:false }" @slideChange="slideChange">
                 <swiper-slide class="swiper-slide" v-for="item in solutionList" :key="item.id" :solution_id="item.id"
                     @mouseenter="mouseOver">
                     <img style="width:100%; height: 328px" :src="item.industryImg" alt="">
@@ -37,52 +37,59 @@
         <div class="title2 title">行业痛点</div>
         <div class="problem">
             <div>
-                <h2>{{ problemList[2]?.industryPainpoint }}</h2>
+                <h2>{{ problemList[2]?.industryTitle }}</h2>
                 <p>
                     Ivy过程监控系统通过采集机床NC运行数据（程序号、刀具号、转速、进给倍率等）以及传感器数据（功率、振动），进行综合数据分析，提取每把刀具每次加工的加工曲线（去除主轴加减速以及不同转速下的摩擦力）进行实时监控。
-UJ-iCDS撞机保护        碰撞监控系统通过在机床主轴附近安装振动传感器，在发生碰撞的一瞬间(1ms响应)根据异常加剧的振动信号识别碰撞，并在识别到碰撞后快速停止机床进行保护，防止进一步的伤害。    </p>
+                    UJ-iCDS撞机保护 碰撞监控系统通过在机床主轴附近安装振动传感器，在发生碰撞的一瞬间(1ms响应)根据异常加剧的振动信号识别碰撞，并在识别到碰撞后快速停止机床进行保护，防止进一步的伤害。 </p>
             </div>
             <div class="list">
-                <div v-for="(item,index) in problemList" :class="`item item${index+1}`">{{ item.industryName }}</div>
+                <div v-for="(item, index) in problemList" :class="`item item${index + 1} ${item.industryName.length>4&&'longText'}`">{{ item.industryName }}</div>
             </div>
             <div class="img">
                 <img style="" :src="problemList[2]?.industryPainpointImg" alt="">
-                <div class="more" @click="() => proxy.$router.push('/case')">
+                <!-- <div class="more" @click="() => proxy.$router.push('/case')">
                     查看更多痛点
-                </div>
+                </div> -->
             </div>
         </div>
         <div class="title3 title">解决案例</div>
-        <!-- <div class="case-list">
-            <div class="item" v-for="item in 3">
-                <CaseCard />
+        <div class="case-list">
+            <div class="item" v-for="item in caseList">
+                <CaseCard :case="item"/>
             </div>
             <div class="more" @click="() => proxy.$router.push('/case')">
                 查看更多案例
             </div>
-        </div> -->
+        </div>
 
 
     </div>
 </template>
     
 <script setup>
-import { ref, onMounted, toRaw, computed } from "vue"
+import { ref, onMounted, toRaw, computed,getCurrentInstance } from "vue"
 import CaseCard from "@/components/caseCard.vue"
 import Banner from "@/components/Banner.vue"
 import { Swiper, SwiperSlide, } from 'swiper/vue';
 import 'swiper/css';
 import SwiperCore, { Autoplay } from 'swiper';
-import { queryIndustryList } from "@/api/index"
+import { queryIndustryList, queryIndustryCaseList } from "@/api/index"
+import {queryBannerImg} from "@/utils/index"
+
 
 SwiperCore.use([Autoplay]);
-
+const { proxy } = getCurrentInstance();
 const active = ref("1")
 const solutionList = ref([])
 const problemList = ref([])
+const caseList = ref([])
+const bannerImg=ref('')
+
 
 onMounted(() => {
     getSolutionList()
+    bannerImg.value=queryBannerImg(2)
+
 })
 const getSolutionList = () => {
 
@@ -93,11 +100,20 @@ const getSolutionList = () => {
     queryIndustryList(params).then(({ code, data }) => {
         if (code === 0) {
             solutionList.value = data
-    problemList.value=data.slice(0,5)
-
+            problemList.value = data.slice(0, 5)
+            if (data[0].id) getSolutionCaseList(data[0].id)
         }
     })
 }
+
+const getSolutionCaseList = (caseIndustryId) => {
+    queryIndustryCaseList({ caseIndustryId }).then(({ code, data }) => {
+        if (code === 0) {
+            caseList.value = data.sort((a, b) => b.caseTime < a.caseTime ? -1 : 1).slice(0, 3)
+        }
+    })
+}
+
 const handleTabClick = (val) => {
     active.value = val
     let toHeight = document.querySelector(`.title${val}`).offsetTop
@@ -109,26 +125,26 @@ const handleTabClick = (val) => {
 }
 
 const slideChange = (val) => {
-    // console.log("slide change",toRaw(val))
+    console.log("slide change",toRaw(val))
+    getSolutionCaseList(problemList.value[toRaw(val).activeIndex-1].id)
 }
 const mouseOver = (val) => {
     let list = toRaw(solutionList.value)
-
     let solution_id = val.target.getAttribute('solution_id')
     let index = list.findIndex(item => item.id.toString() === solution_id)
     let arr
     if (list.length > 5) {
-         arr = list.slice(index - 2, index + 3)
+        arr = list.slice(index - 2, index + 3)
         if (arr.length !== 5 && index > 2) {
             arr.push(...list.slice(0, 5 - arr.length))
-        }else if(arr.length !== 5 && index < 2){
+        } else if (arr.length !== 5 && index < 2) {
             arr.push(...list.slice(-(5 - arr.length)))
         }
     } else {
         arr = list
     }
 
-    problemList.value=arr
+    problemList.value = arr
 }
 
 </script>
@@ -260,6 +276,8 @@ const mouseOver = (val) => {
         img {
             height: 378px;
             width: 40vw;
+            border-radius: 4px;
+            overflow: hidden;
         }
 
         .img {
@@ -288,6 +306,9 @@ const mouseOver = (val) => {
                 font-size: 20px;
                 font-weight: 500;
                 line-height: 100px;
+                &.longText{
+                    font-size:14px
+                }
 
             }
 
@@ -304,6 +325,9 @@ const mouseOver = (val) => {
                 font-weight: 500;
                 line-height: 130px;
                 letter-spacing: 0px;
+                &.longText{
+                    font-size:20px
+                }
             }
 
             .item1 {

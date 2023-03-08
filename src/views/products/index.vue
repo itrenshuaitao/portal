@@ -1,8 +1,8 @@
 <template>
   <div class="product">
 
-    <Banner title="产品中心" subTitle="产品-以机床监控为核心的数字化工厂解决方案" color="rgb(62, 73, 84)"
-      imgSrc="https://easyv.assets.dtstack.com/homepage/common/assets/images/market-consultation/search_bg.jpg"></Banner>
+    <Banner :imgSrc="bannerImg">
+    </Banner>
 
     <div class="tab">
       <el-button :type="plain" link :class="active == '1' && 'active'" @click="() => handleTabClick('1')">产品集合</el-button>
@@ -13,7 +13,7 @@
     <div class="title1 title">产品集合</div>
     <div class="product-list">
       <div class="item" v-for="item in productsList">
-        <productCard :products="item" />
+        <productCard :products="item" @click="()=>cardClick(item.id)"/>
       </div>
     </div>
     <div class="title2 title">产品亮点</div>
@@ -68,7 +68,7 @@
     <div class="title3 title">产品案例</div>
     <div class="case-list">
       <div class="item" v-for="item in productsCaseList">
-        <CaseCard :case="item"/>
+        <CaseCard :case="item" />
       </div>
       <div class="more" @click="() => proxy.$router.push('/case')">
         查看更多案例
@@ -84,6 +84,8 @@ import Banner from "@/components/Banner.vue"
 import productCard from "@/components/productCard.vue";
 import CaseCard from "@/components/caseCard.vue"
 import { queryProductsList, queryCasesList } from "@/api/index"
+import { queryBannerImg } from "@/utils/index"
+
 
 const { proxy } = getCurrentInstance();
 const carousel = ref(null)
@@ -91,17 +93,21 @@ const active = ref("1")
 const activeTabName = ref('0')
 const productsList = ref([])
 const productsCaseList = ref([])
+const bannerImg = ref('')
+
 
 onMounted(() => {
   getProductsList()
   getCaseList()
+  bannerImg.value = queryBannerImg(1)
+
 })
 
 
-const getCaseList =()=>{
+const getCaseList = () => {
   queryCasesList().then(({ code, data }) => {
     if (code === 0) {
-      productsCaseList.value = data
+      productsCaseList.value = data.sort((a, b) => b.caseTime < a.caseTime ? -1 : 1).slice(0, 3)
     }
   })
 }
@@ -128,6 +134,10 @@ const handleTabClick = (val) => {
 }
 const handleHighlightsClick = (tab) => {
   proxy.$refs.carousel.setActiveItem(Number(tab.props.name))
+}
+
+const cardClick = (id) => {
+  proxy.$router.push('/products/detail/'+id)
 }
 </script>
   

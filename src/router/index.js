@@ -19,12 +19,26 @@ export const constantRoutes = [
       },
       {
         path: '/products',
-        name: 'Products',
-        component: () => import('@/views/products/index.vue'),
         meta: {
           title: "产品",
           icon: 'icon-code',
         },
+        children: [
+          {
+            name: 'Products',
+            path: '',
+            component: () => import('@/views/products/index.vue'),
+          },
+          {
+            path: 'detail/:id',
+            name: 'ProductsDetail',
+            component: () => import('@/views/products/detail.vue'),
+            meta: {
+              title: "产品详情",
+              icon: 'icon-code',
+            },
+          },
+        ]
 
       }, {
         path: '/solution',
@@ -34,16 +48,9 @@ export const constantRoutes = [
           title: "解决方案",
           icon: 'icon-code',
         },
+
       },
       {
-        path: '/detail/:id',
-        name: 'Detail',
-        component: () => import('@/components/detail.vue'),
-        meta: {
-          title: "案例详情",
-          icon: 'icon-code',
-        },
-      }, {
         path: '/case',
         meta: {
           title: "案例分享",
@@ -57,8 +64,8 @@ export const constantRoutes = [
           },
           {
             path: 'detail/:id',
-            name: 'Detail',
-            component: () => import('@/components/detail.vue'),
+            name: 'CaseDetail',
+            component: () => import('@/views/case/detail.vue'),
             meta: {
               title: "案例详情",
               icon: 'icon-code',
@@ -67,12 +74,26 @@ export const constantRoutes = [
         ]
       }, {
         path: '/news',
-        name: 'News',
-        component: () => import('@/views/news/index.vue'),
         meta: {
           title: "新闻中心",
           icon: 'icon-code',
         },
+        children: [
+          {
+            name: 'News',
+            path: '',
+            component: () => import('@/views/news/index.vue'),
+          },
+          {
+            path: 'detail/:id',
+            name: 'NewsDetail',
+            component: () => import('@/views/news/detail.vue'),
+            meta: {
+              title: "产品详情",
+              icon: 'icon-code',
+            },
+          },
+        ]
       }, {
         path: '/video',
         name: 'Video',

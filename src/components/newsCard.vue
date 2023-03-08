@@ -1,17 +1,17 @@
 <template>
     <div class="card">
         <div class="img">
-            <img :src="products.productsImg" alt="">
+            <img :src="news.newsImg" alt="">
         </div>
         <div class="text">
-            <h2 class="text-overflow">{{products.productsName}}</h2>
-            <p>{{products.productsSubtitle}}</p>
+            <h2 class="text-overflow">{{news.newsName}}</h2>
+            <p>{{news.newsTime}}</p>
         </div>
     </div>
 </template>
 
 <script setup>
-const props = defineProps(['products'])
+const props = defineProps(['news'])
 </script>
 
 <style lang='scss' scoped>
@@ -31,7 +31,6 @@ const props = defineProps(['products'])
     .img {
         border-radius: 4px;
         overflow: hidden;
-        height: 217px;
 
         img {
             width: 100%;

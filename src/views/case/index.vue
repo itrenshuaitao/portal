@@ -1,8 +1,8 @@
 <template>
     <div class="case">
 
-        <Banner title="案例分享" subTitle="以机床监控为核心的数字化工厂解决方案" color="rgb(255, 255, 255)"
-            imgSrc="https://easyv.assets.dtstack.com/homepage/common/assets/images/market-consultation/search_bg.jpg">
+        <Banner 
+            :imgSrc="bannerImg">
         </Banner>
         <div class="container">
             <div>
@@ -10,24 +10,40 @@
                     行业：
                 </span>
                 <span>
-                    <el-button class="industry" round v-for="item in items">{{ item.label }}</el-button>
+                    <el-button :class="`industry ${active=='all'&&'active'}`" round @click="()=>handleIndustryClick('all')">全部</el-button>
+
+                    <el-button   round v-for="item in solutionList" @click="()=>handleIndustryClick(item.id)" :class="`industry ${active==item.id&&'active'}`">{{ item.industryName }}</el-button>
                 </span>
             </div>
             <div class="case-list">
-                <div class="item" v-for="item in 8">
-                    <ItemCard />
+                <div class="item" v-for="item in caseList">
+                    <ItemCard :case="item"/>
                 </div>
+            </div>
+            <div style="display: flex;justify-content: center;">
+                <el-pagination background layout="prev, pager, next" :page-size="9" :total="paginationTotal" @current-change="paginationChange" />
             </div>
         </div>
     </div>
-    
 </template>
     
 <script setup>
+import { ref, onMounted, reactive} from "vue"
+
 import ItemCard from "@/components/caseCard.vue"
 import Banner from "@/components/Banner.vue"
-import { ref } from "vue"
-const active = ref("1")
+import { queryCaseList, queryIndustryCaseList, queryIndustryList } from "@/api/index"
+import {queryBannerImg} from "@/utils/index"
+
+
+const active = ref("all")
+const solutionList = ref([])
+const caseList = ref([])
+const caseListAll = ref([])
+const paginationTotal = ref(0)
+const bannerImg=ref('')
+
+
 const items = ref([
     { type: '', label: '全部' },
     { type: '', label: '军工行业' },
@@ -36,6 +52,63 @@ const items = ref([
     { type: '', label: '其他行业' },
 
 ])
+
+onMounted(() => {
+    getSolutionList()
+    getAllCaseList(1)
+    bannerImg.value=queryBannerImg(3)
+
+})
+const getSolutionList = () => {
+
+    const params = {
+        pageIndex: 1,
+        pageSize: 1000
+    }
+    queryIndustryList(params).then(({ code, data }) => {
+        if (code === 0) {
+            solutionList.value = data
+        }
+    })
+}
+
+const getAllCaseList = (pageIndex) => {
+
+    const params = {
+        pageIndex,
+        pageSize: 9
+    }
+    queryCaseList(params).then(({ code, data,totalResults }) => {
+        if (code === 0) {
+            caseList.value = data
+            paginationTotal.value=totalResults
+        }
+    })
+}
+const getCaseList = (caseIndustryId ) => {
+    queryIndustryCaseList({ caseIndustryId }).then(({ code, data }) => {
+        if (code === 0) {
+            caseListAll.value = data
+            caseList.value =data.slice(0,9)
+            paginationTotal.value=data.length
+        }
+    })
+}
+const handleIndustryClick = (id) => {
+    active.value=id
+    if(id==='all'){
+        getAllCaseList(1)
+    }else{
+        getCaseList(id)
+    }
+}
+const paginationChange = (value) => {
+    if(active.value=='all'){
+        getAllCaseList(value)
+    }else{
+        caseList.value =caseListAll.value.slice((value-1)*9,value*9)
+    }
+}
 
 
 </script>
@@ -60,6 +133,10 @@ const items = ref([
             font-weight: 400;
             line-height: 20px;
             letter-spacing: 0px;
+            &.active{
+                background-color:#ecf5ff;
+                color:#409eff;
+            }
         }
 
         .case-list {
@@ -78,4 +155,5 @@ const items = ref([
             }
         }
     }
-}</style>
+}
+</style>

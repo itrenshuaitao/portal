@@ -11,7 +11,7 @@
                     <p class="time">
                         {{item.newsTime}}
                     </p>
-                    <div class="to-desc">查看详情</div>
+                    <div class="to-desc" @click="proxy.$router.push('./news/detail/'+item.id)">查看详情</div>
                 </div>
                 <div>
                     <img :src="item.newsImg" />
@@ -48,6 +48,8 @@ const toNews = () => {
             &>div {
                 width: 43%;
                 height: 100%;
+                border-radius: 4px;
+                overflow: hidden;
 
                 img {
                     width: 99%;
@@ -56,10 +58,11 @@ const toNews = () => {
             }
 
             .text {
+                // height: 466px;
                 background: linear-gradient(180deg, #FAFBFD 0%, #F2F3F5 100%);
                 border-radius: 4px;
                 padding: 60px 32px 20px 32px;
-
+                box-sizing: border-box;
                 .news-title {
                     font-size: 26px;
                     font-weight: 400;

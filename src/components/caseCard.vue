@@ -1,5 +1,5 @@
 <template>
-    <div class="card" @click="()=>router.push('/case/detail/123')">
+    <div class="card" @click="()=>router.push('/case/detail/'+props.case.id)">
         <div class="img">
             <img :src="props.case.caseImg" alt="">
         </div>
@@ -42,11 +42,14 @@ const props = defineProps(['case'])
 
     .img {
         border-radius: 4px;
-        margin: 0 auto;
+        // margin: 0 auto;
+        height: 217px;
+
         overflow: hidden;
 
         img {
             width: 100%;
+            height: 217px;
             transition: all .3s;
 
         }

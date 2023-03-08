@@ -1,14 +1,23 @@
 import { createStore } from 'vuex'
+import createPersistedState from 'vuex-persistedstate'
 const store = createStore({
   state () {
     return {
-      count: 0
+      count: 0,
+      bannerList:[]
     }
   },
   mutations: {
     increment (state) {
       state.count++
+    },
+    setBannerList(state,list){
+      state.bannerList = list
     }
-  }
+
+  },
+  plugins: [createPersistedState({
+    storage: window.sessionStorage
+  })]
 })
 export default store

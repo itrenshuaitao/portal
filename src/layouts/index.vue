@@ -13,12 +13,25 @@ import { useStore } from "vuex";
 import HeaderPage from './components/header.vue';
 import FooterPage from './components/footer.vue';
 import AsidePage from './components/aside.vue';
+import {getBanner } from '@/api/index'
 const { proxy } = getCurrentInstance();
 const store = useStore();
 const refHeader = ref(null)
 const openBookingDialog = () => {
     proxy.$refs.refHeader.openDialog()
 }
+
+onMounted(()=>{
+    let params = {
+        pageIndex:1,
+        pageSize:10
+    }
+    getBanner(params).then(({code,data})=>{
+        if(code===0){
+            store.commit('setBannerList',data)
+        }
+    })
+})
 const handleClick = () => {
 
     const params = {

@@ -1,42 +1,88 @@
 <template>
-    <div>
-        <video id="my-player" ref="videoRef" class="video-js w-full h-full">
-            <source
-                src="https://prod-streaming-video-msn-com.akamaized.net/b7014b7e-b38f-4a64-bd95-4a28a8ef6dee/113a2bf3-3a5f-45d4-8b6f-e40ce8559da3.mp4" />
-        </video>
+    <div class="video-center">
+        <Banner :imgSrc="bannerImg">
+        </Banner>
+        <div class="video-list">
+            <div class="carousel">
+                <div class="left">
+                    <div class="video">
+                        <VideoPlay :video_url="'https://media.w3.org/2010/05/sintel/trailer.mp4'"
+                            :poster="'https://ethicalmarketingnews.com/wp-content/uploads/2018/07/fdaletters-840x480.jpg'">
+                        </VideoPlay>
+
+                    </div>
+                    <div>
+                        <h2>用科技让复杂的制造更简单 </h2>
+                        <p>
+                            2022/12/30
+                        </p>
+                    </div>
+                </div>
+                <div class="right">
+                    <div v-for="inte in 3" class="item">
+                        <div>2022友机技术宣传片</div>
+                    </div>
+                </div>
+            </div>
+            <div class="list">
+                <div v-for="item in 12" class="item"></div>
+            </div>
+        </div>
+
 
     </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from "vue"
-import videojs from 'video.js'
-let videoPlayer = null
-const videoRef = ref(null)
-const initVideo = () => {
-    const options = {
-        width: 960,
-        height: 400,
-        language: 'zh-CN', // 设置语言
-        controls: true, // 是否显示控制条
-        // preload: 'auto', // 预加载
-        autoplay: true, // 是否自动播放
-        fluid: false, // 自适应宽高
-        muted: true,//设置静音
-        src: "http://vjs.zencdn.net/v/oceans.ogv" // 要嵌入的视频源的源 URL
-    }
-    if (videoRef.value) {
-        // 创建 video 实例
-        console.log('video')
-        videoPlayer = videojs(videoRef.value, options, onPlayerReady)
-    }
-}
+import Banner from "@/components/Banner.vue"
+import VideoPlay from "@/components/video.vue"
+import { queryBannerImg } from "@/utils/index"
+
+const bannerImg = ref('')
 
 
-const onPlayerReady = () => { }
+
 onMounted(() => {
-    initVideo()
+    bannerImg.value = queryBannerImg(5)
 })
 </script>
 
-<style lang='scss' scoped></style>
+<style lang='scss' scoped>
+.video-center {
+    .video-list {
+        margin: 60px 120px 30px 120px;
+        .carousel {
+            display: flex;
+            justify-content: space-between;
+            .left{
+                .video{
+                    width: calc(100vw - 546px);
+                }
+            }
+            .right {
+                margin-left: 24px;
+                .item {
+                    width: 282px;
+                    height: 158px;
+                    background-color: aliceblue;
+                    margin-bottom: 24px;
+                }
+            }
+        }
+
+        .list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+
+            .item {
+                width: calc(25% - 24px);
+                height: 208px;
+                background-color: pink;
+                margin-bottom: 40px;
+            }
+        }
+    }
+}
+</style>

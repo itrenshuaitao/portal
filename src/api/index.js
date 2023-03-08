@@ -7,6 +7,14 @@ export const getHomeBanner = data =>{
         params: data
     })
 }
+// 内页banner
+export const getBanner = data =>{
+    return request({
+        url: '/website-rest/nbanner',
+        method: 'get',
+        params: data
+    })
+}
 // 首页产品概览
 export const getHomeProductsList = () =>{
     return request({
@@ -45,6 +53,14 @@ export const queryProductsList = (params) =>{
         params
     })
 }
+// 产品详情
+export const queryProductsById = (params) =>{
+    return request({
+        url: '/website-rest/findproductsById',
+        method: 'get',
+        params
+    })
+}
 // 产品案例
 export const queryCasesList = () =>{
     return request({
@@ -56,6 +72,46 @@ export const queryCasesList = () =>{
 export const queryIndustryList = (params) =>{
     return request({
         url: '/website-rest/queryIndustryList',
+        method: 'get',
+        params
+    })
+}
+// 解决方案案例
+export const queryIndustryCaseList = (params) =>{
+    return request({
+        url: '/website-rest/industryList',
+        method: 'get',
+        params
+    })
+}
+//全部案例列表
+export const queryCaseList = (params) =>{
+    return request({
+        url: '/website-rest/queryCaseList',
+        method: 'get',
+        params
+    })
+}
+//案例详情
+export const queryCaseById = (params) =>{
+    return request({
+        url: '/website-rest/findCaseById',
+        method: 'get',
+        params
+    })
+}
+//新闻列表
+export const queryNewsList = (params) =>{
+    return request({
+        url: '/website-rest/queryNewsList',
+        method: 'get',
+        params
+    })
+}
+//新闻详情
+export const queryNewsById = (params) =>{
+    return request({
+        url: '/website-rest/findNewsById',
         method: 'get',
         params
     })

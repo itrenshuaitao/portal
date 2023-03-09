@@ -1,12 +1,13 @@
 <template>
     <div class="main-container">
-        <div class="tab">
-            <el-button :type="plain" link :class="active == 'products' && 'active'"
-                @click="() => handleTabClick('products')">产品概览</el-button>
-            <el-button :type="plain" link class="news" :class="active == 'news' && 'active'"
-                @click="() => handleTabClick('news')">新闻中心</el-button>
-            <el-button :type="plain" link :class="active == 'partners' && 'active'"
-                @click="() => handleTabClick('partners')">合作伙伴</el-button>
+        <div class="tab"
+            v-if="productsList[0]?.productsShow === 0 || newsList[0]?.newsType === 0 || partnerList[0] && partnerList[0][0]?.partnerType === 0">
+            <el-button v-if="productsList[0]?.productsShow === 0" :type="plain" link
+                :class="active == 'products' && 'active'" @click="() => handleTabClick('products')">产品概览</el-button>
+            <el-button v-if="newsList[0]?.newsType === 0" :type="plain" link class="news"
+                :class="active == 'news' && 'active'" @click="() => handleTabClick('news')">新闻中心</el-button>
+            <el-button v-if="partnerList[0] && partnerList[0][0]?.partnerType === 0" :type="plain" link
+                :class="active == 'partners' && 'active'" @click="() => handleTabClick('partners')">合作伙伴</el-button>
         </div>
         <template v-if="productsList[0]?.productsShow === 0">
             <div class="title title-products">产品概览</div>
@@ -18,7 +19,7 @@
 
                 </div>
                 <ul class="slide">
-                    <li v-for="item in productsList" >
+                    <li v-for="item in productsList">
                         <div>
                             <h2>{{ item.productsName }}</h2>
                             <P>{{ item.productsSubtitle }}</P>
@@ -38,7 +39,7 @@
             <div class="title title-news">新闻中心</div>
             <NewsCenter :newsList="newsList" />
         </template>
-        <template v-if="partnerList[0]&&partnerList[0][0]?.partnerType === 0">
+        <template v-if="partnerList[0] && partnerList[0][0]?.partnerType === 0">
             <div class="title title-partners">合作伙伴</div>
             <Partners :partnerList="partnerList" />
         </template>
@@ -48,7 +49,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, reactive, computed, watch, toRaw } from "vue"
+import { ref, onMounted, reactive, computed, watch, nextTick } from "vue"
 
 import CoreData from './CoreData.vue';
 import NewsCenter from './NewsCenter.vue';
@@ -63,11 +64,19 @@ const newsList = ref([])
 const partnerList = ref([])
 
 onMounted(() => {
-    sildeAddEvent()
     getProductsList()
     getCoreDataList()
     getNewsList()
     getPartnerList()
+    sildeAddEvent()
+
+})
+
+watch(productsList, async (newList, oldList) => {
+    if (newList.length) {
+
+        await nextTick(() => sildeAddEvent())
+    }
 })
 
 const getPartnerList = () => {
@@ -79,8 +88,8 @@ const getPartnerList = () => {
         if (code === 0) {
 
             let len = data.length;
-            let n = 20; //每行显示20个
-            let lineNum = len % 20 === 0 ? len / 20 : Math.floor((len / 20) + 1);
+            let n = 10; //每行显示10个
+            let lineNum = len % n === 0 ? len / n : Math.floor((len / n) + 1);
             let res = [];
             for (let i = 0; i < lineNum; i++) {
                 let temp = data.slice(i * n, i * n + n);
@@ -96,9 +105,9 @@ const getPartnerList = () => {
 }
 
 const getNewsList = () => {
-    getHomeNewsList().then(({ code, data }) => {
+    getHomeNewsList({newsPlaces:0}).then(({ code, data }) => {
         if (code === 0) {
-            newsList.value = data
+            newsList.value = data.slice(0,3)
 
         }
     })
@@ -119,9 +128,9 @@ const getCoreDataList = () => {
 }
 
 const getProductsList = () => {
-    getHomeProductsList().then(({ code, data }) => {
+    getHomeProductsList({ productsPlaces: 0 }).then(({ code, data }) => {
         if (code === 0) {
-            productsList.value = data
+            productsList.value = data.slice(0, 5)
 
         }
     })
@@ -137,6 +146,7 @@ const handleTabClick = (type) => {
     });
 }
 const sildeAddEvent = () => {
+
     document.getElementsByClassName('slide')[0]?.addEventListener("mouseover", handleMouseover, false)
 }
 

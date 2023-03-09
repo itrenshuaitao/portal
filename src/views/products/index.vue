@@ -5,17 +5,22 @@
     </Banner>
 
     <div class="tab">
-      <el-button :type="plain" link :class="active == '1' && 'active'" @click="() => handleTabClick('1')">产品集合</el-button>
+      <el-button v-if="productsList[0]?.productsShow == 0" :type="plain" link :class="active == '1' && 'active'"
+        @click="() => handleTabClick('1')">产品集合</el-button>
       <el-button :type="plain" link class="news" :class="active == '2' && 'active'"
         @click="() => handleTabClick('2')">产品亮点</el-button>
-      <el-button :type="plain" link :class="active == '3' && 'active'" @click="() => handleTabClick('3')">产品案例</el-button>
+      <el-button v-if="productsCaseList[0]?.caseType2 == 0" :type="plain" link :class="active == '3' && 'active'"
+        @click="() => handleTabClick('3')">产品案例</el-button>
     </div>
-    <div class="title1 title">产品集合</div>
-    <div class="product-list">
-      <div class="item" v-for="item in productsList">
-        <productCard :products="item" @click="()=>cardClick(item.id)"/>
+    <template v-if="productsList[0]?.productsShow == 0">
+      <div class="title1 title">产品集合</div>
+      <div class="product-list">
+        <div class="item" v-for="item in productsList">
+          <productCard :products="item" @click="() => cardClick(item.id)" />
+        </div>
       </div>
-    </div>
+    </template>
+
     <div class="title2 title">产品亮点</div>
     <div class="highlights">
       <el-tabs v-model="activeTabName" stretch @tab-click="handleHighlightsClick">
@@ -52,28 +57,44 @@
       <el-carousel ref="carousel" :interval="4000" type="card" height="380px" indicator-position="none" :autoplay="false"
         arrow="never" @change="val => activeTabName = val.toString()">
         <el-carousel-item>
+          <div class="text">
+            <h2>UJ-iPMS过程监控</h2>
+            <p> Ivy过程监控系统通过采集机床NC运行数据（程序号、刀具号、转速、进给倍率等）以及传感器数据（功率、振动），进行综合数据分析，提取每把刀具每次加工的加工曲线（去除主轴加减速以及不同转速下的摩擦力）进行实时监控。
+            </p>
+          </div>
           <img class="img" src="http://www.ujoin-tech.com/uploadfile/upfiles/202005212008055ec66f250d77b.png" alt="">
 
         </el-carousel-item>
         <el-carousel-item>
+          <div class="text">
+            <h2>UJ-iCDS撞机保护</h2>
+            <p> 碰撞监控系统通过在机床主轴附近安装振动传感器，在发生碰撞的一瞬间(1ms响应)根据异常加剧的振动信号识别碰撞，并在识别到碰撞后快速停止机床进行保护，防止进一步的伤害。</p>
+          </div>
           <img class="img" src="http://www.ujoin-tech.com/uploadfile/upfiles/202005212008175ec66f31696da.png" alt="">
         </el-carousel-item>
         <el-carousel-item>
-
+          <div class="text">
+            <h2>UJ-IoM生产制造协同系统 </h2>
+            <p> "联网数据采集是现代OEE系统应用的核心基础，通过机联网采集如：设备各种运行状态（状态、持续时间、发生次数）、生产节拍、产出数、生产工艺等参数。
+              实现最基础的设备运行状态数据之外，对于设备加工时的工艺和机械参数的监控，有利于收集产品质量检验所需的各项检验指标值，实现加工过程中的质量实时把控，降低由于自动化机器连续作业，且没有采取质量异常制动，从而导致的连续质量报废的损失。"
+            </p>
+          </div>
           <img class="img" src="http://www.ujoin-tech.com/uploadfile/upfiles/20221008161117634130a5c229c.jpg" alt="">
         </el-carousel-item>
       </el-carousel>
     </div>
+    <template v-if="productsCaseList[0]?.caseType2 == 0">
+      <div class="title3 title">产品案例</div>
+      <div class="case-list">
+        <div class="item" v-for="item in productsCaseList">
+          <CaseCard :case="item" />
+        </div>
+        <div class="more" @click="() => proxy.$router.push('/case')">
+          查看更多案例
+        </div>
+      </div>
+    </template>
 
-    <div class="title3 title">产品案例</div>
-    <div class="case-list">
-      <div class="item" v-for="item in productsCaseList">
-        <CaseCard :case="item" />
-      </div>
-      <div class="more" @click="() => proxy.$router.push('/case')">
-        查看更多案例
-      </div>
-    </div>
 
   </div>
 </template>
@@ -137,7 +158,7 @@ const handleHighlightsClick = (tab) => {
 }
 
 const cardClick = (id) => {
-  proxy.$router.push('/products/detail/'+id)
+  proxy.$router.push('/products/detail/' + id)
 }
 </script>
   
@@ -209,9 +230,32 @@ const cardClick = (id) => {
       padding-bottom: 22px;
     }
 
-    // :deep(.el-carousel__item--card){
-    //   width: 70%;
-    // }
+    :deep(.el-carousel__item--card) {
+
+      //   width: 70%;
+      //   &.is-active{
+      //     // transform: translateX(261.75px) scale(1);
+      //   }
+      .text {
+        position: absolute;
+        padding: 100px 45px;
+
+        h2 {
+          color: rgb(241, 241, 241);
+          font-size: 24px;
+          font-weight: 500;
+          line-height: 34px;
+          margin-bottom: 24px;
+        }
+
+        p {
+          color: rgb(241, 241, 241);
+          font-size: 14px;
+          font-weight: 400;
+          line-height: 20px;
+        }
+      }
+    }
 
     .custom-tabs-label {
       img {

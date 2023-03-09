@@ -24,8 +24,5 @@ onMounted(() => {
 </script>
 
 <style lang='scss' scoped>
-.detail-wrapper {
-    margin-top: 60px;
-    padding: 0 120px;
-}
+
 </style>

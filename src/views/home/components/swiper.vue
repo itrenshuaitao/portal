@@ -1,13 +1,14 @@
 <template>
-    <div v-if="pageData.list[0]?.sbannerShow ===0" class="show-imgs-container" @mouseover="pageData.isIn = true" @mouseout="pageData.isIn = false">
+    <div v-if="pageData.list[0]?.sbannerShow === 0" class="show-imgs-container" @mouseover="pageData.isIn = true"
+        @mouseout="pageData.isIn = false">
         <el-carousel ref="refCarousel" :interval="pageData.cutTime" arrow="never" :autoplay="pageData.autoplay"
             trigger="click" :indicator-position="pageData.autoplay ? '' : 'none'" @change="handleChange">
             <el-carousel-item v-for="(item, index) in pageData.list" :key="index">
-                <img v-if="item.fileType==='img'" :src="item.sbannerImg" alt="这是图片" class="banner" />
+                <img v-if="item.fileType === 'img'" :src="item.sbannerImg" alt="这是图片" class="banner" />
                 <!--视频播放器 -->
 
-                <div v-else-if="item.fileType==='video'" class="my_video">
-                    <vue3VideoPlay :id="'myVideoPlayer' + index" v-bind="pageData.options" :src="item.url" @play="onPlay"
+                <div v-else-if="item.fileType === 'video'" class="my_video">
+                    <vue3VideoPlay :id="'myVideoPlayer' + index" v-bind="pageData.options" :src="item.sbannerImg" @play="onPlay"
                         @pause="onPause" @timeupdate="onTimeupdate" @canplay="onCanplay" @ended="onEnded" />
                 </div>
                 <div v-if="pageData.nowIndex === index" class="text-position">
@@ -74,15 +75,16 @@ let pageData = reactive({
         width: '100%',
         height: '100%',
         control: false, //是否显示控制器
-        autoplay: false, // 是否自动播放
-        volume: 0,
+        autoplay: true, // 是否自动播放
         loop: false, // 是否开启循环播放
+        muted: true, //静音
+        volume: 0, //默认音量大小
         preload: "auto", // 自动预加载
         language: "zh-CN", // 语言，'en', 'zh-cn', 'zh-tw'
         aspectRatio: "16:9", // 播放器高宽占比（例如"16:9"或"4:3"）
         fluid: true, // 当true时，Video.js player将拥有流体大小。换句话说，它将按比例缩放以适应其容器。
         // src: "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4", // url地址
-        poster: "http://www.ujoin-tech.com/uploadfile/upfiles/2022051714053462833b2ecadee.jpg",
+        // poster: "http://www.ujoin-tech.com/uploadfile/upfiles/2022051714053462833b2ecadee.jpg",
         notSupportedMessage: "此视频暂无法播放，请稍后再试", // 允许覆盖Video.js无法播放媒体源时显示的默认信息。
         controlBar: {
             timeDivider: true, // 是否显示当前时间和持续时间的分隔符，"/"
@@ -113,13 +115,12 @@ const getListBanner = () => {
     getHomeBanner(params).then(({ code, data }) => {
 
         if (code === 0) {
-            let videoArr=['flv','avi','mov','mp4','wmv']        
-             let imgArr = ['jpeg','jpg','png','gif'] 
-            data.map(item=>{
-               let str =  item.sbannerImg?.substring(item.sbannerImg.lastIndexOf('.') + 1).toLowerCase()
-               item.fileType = videoArr.includes(str)?'video':imgArr.includes(str)?'img':'null'
+            let videoArr = ['flv', 'avi', 'mov', 'mp4', 'wmv']
+            let imgArr = ['jpeg', 'jpg', 'png', 'gif']
+            data.map(item => {
+                let str = item.sbannerImg?.substring(item.sbannerImg.lastIndexOf('.') + 1).toLowerCase()
+                item.fileType = videoArr.includes(str) ? 'video' : imgArr.includes(str) ? 'img' : 'null'
             })
-            console.log(data)
             pageData.list = data
         }
     })
@@ -129,8 +130,8 @@ const getListBanner = () => {
 const handleChange = (nowIndex, oldIndex) => {
 
     pageData.nowIndex = nowIndex
-    if (pageData.list[nowIndex].type === '1') {
-        if (pageData.list[oldIndex].type === '1') {
+    if (pageData.list[nowIndex].fileType === 'video') {
+        if (pageData.list[oldIndex].fileType === 'video') {
             let video = document.getElementById(`myVideoPlayer${oldIndex}`)
             video.pause()
             video.currentTime = 0
@@ -167,10 +168,9 @@ const onEnded = (ev) => {
         proxy.$refs.refCarousel.next()
 
     }
-    // console.log(proxy.$refs.refCarousel)
 }
 const toUrl = (url) => {
-    if (url.includes('://')){
+    if (url.includes('://')) {
         window.open(url)
     } else {
         router.push(url)
@@ -203,7 +203,9 @@ const toUrl = (url) => {
         }
 
         .my_video {
-            pointer-events: none
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
         }
 
         video {

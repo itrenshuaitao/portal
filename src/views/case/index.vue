@@ -21,7 +21,7 @@
                 </div>
             </div>
             <div style="display: flex;justify-content: center;">
-                <el-pagination background layout="prev, pager, next" :page-size="9" :total="paginationTotal" @current-change="paginationChange" />
+                <el-pagination background layout="prev, pager, next" :page-size="pagination.pageSize" :total="pagination.total" @current-change="paginationChange" />
             </div>
         </div>
     </div>
@@ -40,7 +40,10 @@ const active = ref("all")
 const solutionList = ref([])
 const caseList = ref([])
 const caseListAll = ref([])
-const paginationTotal = ref(0)
+const pagination = reactive({
+    total:0,
+    pageSize:9
+})
 const bannerImg=ref('')
 
 
@@ -73,15 +76,14 @@ const getSolutionList = () => {
 }
 
 const getAllCaseList = (pageIndex) => {
-
     const params = {
         pageIndex,
-        pageSize: 9
+        pageSize: pagination.pageSize
     }
     queryCaseList(params).then(({ code, data,totalResults }) => {
         if (code === 0) {
             caseList.value = data
-            paginationTotal.value=totalResults
+            pagination.total=totalResults
         }
     })
 }

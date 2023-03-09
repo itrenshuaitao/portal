@@ -1,21 +1,23 @@
 <template>
     <div class="solution">
 
-        <Banner 
-            :imgSrc="bannerImg">
+        <Banner :imgSrc="bannerImg">
         </Banner>
         <div class="tab">
-            <el-button :type="plain" link :class="active == '1' && 'active'"
-                @click="() => handleTabClick('1')">解决方案</el-button>
-            <el-button :type="plain" link class="news" :class="active == '2' && 'active'"
-                @click="() => handleTabClick('2')">行业痛点</el-button>
+            <template v-if="solutionList[0]?.industryType === 0">
+                <el-button :type="plain" link :class="active == '1' && 'active'"
+                    @click="() => handleTabClick('1')">解决方案</el-button>
+                <el-button :type="plain" link class="news" :class="active == '2' && 'active'"
+                    @click="() => handleTabClick('2')">行业痛点</el-button>
+            </template>
             <el-button :type="plain" link :class="active == '3' && 'active'"
                 @click="() => handleTabClick('3')">解决案例</el-button>
         </div>
-        <template v-if="solutionList[0]?.industryType === 0">
+        <template v-if="solutionList[0] && solutionList[0].industryType === 0">
             <div class="title1 title">解决方案</div>
-            <swiper class="swiper-container" loop :space-between="6" :slides-per-view="5"
-                :autoplay="{ autoplay: true, pauseOnMouseEnter: true,disableOnInteraction:false }" @slideChange="slideChange">
+            <swiper class="swiper-container" :loop="{ loop: true }" :observer="true" :space-between="6"
+                :slides-per-view="5" :autoplay="{ autoplay: true, pauseOnMouseEnter: true, disableOnInteraction: false }"
+                :centered-slides="true" @slideChange="slideChange">
                 <swiper-slide class="swiper-slide" v-for="item in solutionList" :key="item.id" :solution_id="item.id"
                     @mouseenter="mouseOver">
                     <img style="width:100%; height: 328px" :src="item.industryImg" alt="">
@@ -39,11 +41,13 @@
             <div>
                 <h2>{{ problemList[2]?.industryTitle }}</h2>
                 <p>
-                    Ivy过程监控系统通过采集机床NC运行数据（程序号、刀具号、转速、进给倍率等）以及传感器数据（功率、振动），进行综合数据分析，提取每把刀具每次加工的加工曲线（去除主轴加减速以及不同转速下的摩擦力）进行实时监控。
-                    UJ-iCDS撞机保护 碰撞监控系统通过在机床主轴附近安装振动传感器，在发生碰撞的一瞬间(1ms响应)根据异常加剧的振动信号识别碰撞，并在识别到碰撞后快速停止机床进行保护，防止进一步的伤害。 </p>
+                    {{ problemList[2]?.industryPainpoint }} </p>
             </div>
             <div class="list">
-                <div v-for="(item, index) in problemList" :class="`item item${index + 1} ${item.industryName.length>4&&'longText'}`">{{ item.industryName }}</div>
+                <div v-for="(item, index) in problemList"
+                    :class="`item item${index + 1} ${item.industryName.length > 4 && 'longText'}`">{{ item.industryName
+                    }}
+                </div>
             </div>
             <div class="img">
                 <img style="" :src="problemList[2]?.industryPainpointImg" alt="">
@@ -52,10 +56,12 @@
                 </div> -->
             </div>
         </div>
+
+
         <div class="title3 title">解决案例</div>
         <div class="case-list">
             <div class="item" v-for="item in caseList">
-                <CaseCard :case="item"/>
+                <CaseCard :case="item" />
             </div>
             <div class="more" @click="() => proxy.$router.push('/case')">
                 查看更多案例
@@ -63,18 +69,19 @@
         </div>
 
 
+
     </div>
 </template>
     
 <script setup>
-import { ref, onMounted, toRaw, computed,getCurrentInstance } from "vue"
+import { ref, onMounted, toRaw, computed, getCurrentInstance } from "vue"
 import CaseCard from "@/components/caseCard.vue"
 import Banner from "@/components/Banner.vue"
 import { Swiper, SwiperSlide, } from 'swiper/vue';
 import 'swiper/css';
 import SwiperCore, { Autoplay } from 'swiper';
 import { queryIndustryList, queryIndustryCaseList } from "@/api/index"
-import {queryBannerImg} from "@/utils/index"
+import { queryBannerImg } from "@/utils/index"
 
 
 SwiperCore.use([Autoplay]);
@@ -83,12 +90,12 @@ const active = ref("1")
 const solutionList = ref([])
 const problemList = ref([])
 const caseList = ref([])
-const bannerImg=ref('')
+const bannerImg = ref('')
 
 
 onMounted(() => {
     getSolutionList()
-    bannerImg.value=queryBannerImg(2)
+    bannerImg.value = queryBannerImg(2)
 
 })
 const getSolutionList = () => {
@@ -125,21 +132,24 @@ const handleTabClick = (val) => {
 }
 
 const slideChange = (val) => {
-    console.log("slide change",toRaw(val))
-    getSolutionCaseList(problemList.value[toRaw(val).activeIndex-1].id)
+    let index = toRaw(val).realIndex
+    getSolutionCaseList(toRaw(solutionList.value)[index].id)
 }
 const mouseOver = (val) => {
     let list = toRaw(solutionList.value)
     let solution_id = val.target.getAttribute('solution_id')
+    console.log(solution_id)
     let index = list.findIndex(item => item.id.toString() === solution_id)
     let arr
     if (list.length > 5) {
-        arr = list.slice(index - 2, index + 3)
-        if (arr.length !== 5 && index > 2) {
-            arr.push(...list.slice(0, 5 - arr.length))
-        } else if (arr.length !== 5 && index < 2) {
-            arr.push(...list.slice(-(5 - arr.length)))
+
+        if ([0, 1, list.length - 1, list.lenght].includes(index)) {
+            let lastIndex = [...list, ...list].findLastIndex(item => item.id === list[index].id)
+            arr = [...list, ...list].slice(lastIndex - 2, lastIndex + 3)
+        } else {
+            arr = list.slice(index - 2, index + 3)
         }
+
     } else {
         arr = list
     }
@@ -285,7 +295,7 @@ const mouseOver = (val) => {
         }
 
         .list {
-            width: 100%;
+            width: 160px;
             height: 101%;
             border: 2px solid rgba(200, 232, 255, .5);
             border-radius: 0 100% 100% 0/50%;
@@ -306,8 +316,9 @@ const mouseOver = (val) => {
                 font-size: 20px;
                 font-weight: 500;
                 line-height: 100px;
-                &.longText{
-                    font-size:14px
+
+                &.longText {
+                    font-size: 14px
                 }
 
             }
@@ -325,8 +336,9 @@ const mouseOver = (val) => {
                 font-weight: 500;
                 line-height: 130px;
                 letter-spacing: 0px;
-                &.longText{
-                    font-size:20px
+
+                &.longText {
+                    font-size: 20px
                 }
             }
 

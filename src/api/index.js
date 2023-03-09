@@ -16,10 +16,11 @@ export const getBanner = data =>{
     })
 }
 // 首页产品概览
-export const getHomeProductsList = () =>{
+export const getHomeProductsList = params =>{
     return request({
         url: '/website-rest/ProductsList',
         method: 'get',
+        params
     })
 }
 // 首页核心数据
@@ -31,10 +32,11 @@ export const getHomeCoreDataList = (data) =>{
     })
 }
 // 首页新闻
-export const getHomeNewsList = () =>{
+export const getHomeNewsList = params =>{
     return request({
         url: '/website-rest/NewsList',
         method: 'get',
+        params
     })
 }
 // 首页合作伙伴

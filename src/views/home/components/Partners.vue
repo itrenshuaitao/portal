@@ -18,11 +18,12 @@ const props = defineProps(['partnerList'])
 
 <style lang='scss' scoped>
 .partners-container {
-    background: #F2F5F8 linear-gradient(180deg, #FAFBFD 0%, #F2F3F5 100%);
+    background: #F2F5F8 ;
     padding: 40px 0;
 }
 
 .box {
+    background: #F2F5F8 ;
     height: 78px;
     margin: 0 auto;
     overflow: hidden;

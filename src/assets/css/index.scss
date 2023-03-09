@@ -37,6 +37,15 @@ body {
   font-size: 18px;
 }
 
+.detail-wrapper {
+  margin-top: 60px;
+  padding: 0 120px;
+  img{
+      width: 100% !important;
+      height: 100% !important;
+  }
+}
+
 .pointer {
   cursor: pointer;
 }

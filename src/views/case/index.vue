@@ -91,7 +91,7 @@ const getCaseList = (caseIndustryId ) => {
         if (code === 0) {
             caseListAll.value = data
             caseList.value =data.slice(0,9)
-            paginationTotal.value=data.length
+            pagination.total=data.length
         }
     })
 }

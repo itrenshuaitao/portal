@@ -88,7 +88,9 @@
 <script setup>
 import { reactive, ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router';
+import { useStore } from "vuex";
 import { queryIndustryList, queryCaseList,queryNewsList,queryVideoList } from "@/api/index"
+const store = useStore();
 let router = useRouter()
 
 
@@ -132,6 +134,8 @@ const getSolutionList = () => {
   queryIndustryList(params).then(({ code, data }) => {
     if (code === 0) {
       solutionList.value = data
+      store.commit('setSolutionList',data)
+
     }
   })
 }

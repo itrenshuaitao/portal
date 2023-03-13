@@ -89,9 +89,10 @@
         <div class="item" v-for="item in productsCaseList">
           <CaseCard :case="item" />
         </div>
-        <div class="more" @click="() => proxy.$router.push('/case')">
-          查看更多案例
-        </div>
+
+      </div>
+      <div class="more" @click="() => proxy.$router.push('/case')">
+        查看更多案例
       </div>
     </template>
 
@@ -126,9 +127,9 @@ onMounted(() => {
 
 
 const getCaseList = () => {
-  queryCasesList().then(({ code, data }) => {
+  queryCasesList({ casesPlace: '0' }).then(({ code, data }) => {
     if (code === 0) {
-      productsCaseList.value = data.sort((a, b) => b.caseTime < a.caseTime ? -1 : 1).slice(0, 3)
+      productsCaseList.value = data.sort((a, b) => b.caseTime < a.caseTime ? -1 : 1).slice(0, 2)
     }
   })
 }
@@ -282,26 +283,29 @@ const cardClick = (id) => {
     padding: 0 120px;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: flex-start;
     margin-bottom: 46px;
 
     .item {
-      width: 32%;
+      width: calc((100% - 32px) / 3);
+      margin-right: 16px;
     }
 
-    .more {
-      margin: 46px auto;
-      width: 191px;
-      height: 40px;
-      text-align: center;
-      border-radius: 4px;
-      border: 1px solid #6C7B8B;
-      font-size: 24px;
-      font-weight: 400;
-      color: #6C7B8B;
-      line-height: 40px;
-      cursor: pointer;
-    }
+
+  }
+
+  .more {
+    margin: 46px auto;
+    width: 191px;
+    height: 40px;
+    text-align: center;
+    border-radius: 4px;
+    border: 1px solid #6C7B8B;
+    font-size: 24px;
+    font-weight: 400;
+    color: #6C7B8B;
+    line-height: 40px;
+    cursor: pointer;
   }
 }
 </style>

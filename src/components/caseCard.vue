@@ -1,26 +1,34 @@
 <template>
-    <div class="card" @click="()=>router.push('/case/detail/'+props.case.id)">
+    <div class="card" @click="() => router.push('/case/detail/' + props.case.id)">
         <div class="img">
             <img :src="props.case.caseImg" alt="">
         </div>
         <div class="text">
             <h2>{{ props.case.caseName }}</h2>
-            <p>{{props.case.caseTitle}}</p>
+            <p>{{ props.case.caseTitle }}</p>
         </div>
         <div class="action">
             <div>
                 查看详情
                 <i class="right-arrow"></i>
             </div>
-            <div>
-                军工行业
+            <div class="right">
+                <div class="industry-name"
+                    v-for="item in queryIndustryNameList(props.case.caseIndustryId.split(',')).slice(0, 2)">
+                    {{ item }}
+                </div>
+
             </div>
+
         </div>
     </div>
 </template>
 
 <script setup>
 import { useRouter } from 'vue-router'
+import {
+    queryIndustryNameList
+} from '@/utils/index'
 const router = useRouter()
 const props = defineProps(['case'])
 
@@ -118,20 +126,26 @@ const props = defineProps(['case'])
             }
         }
 
-        :nth-child(2) {
-            width: 88px;
-            height: 32px;
-            background: rgb(255, 255, 255);
-            box-shadow: 0px 2px 5px rgba(220, 220, 220, 0.5) inset 0px -1px 4px rgba(0, 75, 146, 0.65);
-            backdrop-filter: blur(21.75px);
-            border-radius: 16px;
-            color: rgb(0, 75, 146);
-            font-size: 14px;
-            font-weight: 400;
-            line-height: 32px;
-            letter-spacing: 0px;
-            text-align: center;
+        .right {
+            display: flex;
+
+            .industry-name {
+                width: 88px;
+                height: 32px;
+                background: rgb(255, 255, 255);
+                box-shadow: 0px 2px 5px rgba(220, 220, 220, 0.5), inset 0px -1px 4px rgba(0, 75, 146, 0.65);
+                backdrop-filter: blur(21.75px);
+                border-radius: 16px;
+                color: rgb(0, 75, 146);
+                font-size: 14px;
+                font-weight: 400;
+                line-height: 32px;
+                letter-spacing: 0px;
+                text-align: center;
+                margin-left: 10px;
+            }
         }
+
+
     }
-}
-</style>
+}</style>

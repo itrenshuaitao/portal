@@ -13,14 +13,14 @@
             <el-button :type="plain" link :class="active == '3' && 'active'"
                 @click="() => handleTabClick('3')">解决案例</el-button>
         </div>
-        <template v-if="solutionList[0] && solutionList[0].industryType === 0">
+        <div class="solution-box" v-if="solutionList[0] && solutionList[0].industryType === 0">
             <div class="title1 title">解决方案</div>
-            <swiper class="swiper-container" :loop="{ loop: true }" :observer="{observer:true}" :space-between="6"
-                :slides-per-view="5" :autoplay="{ autoplay: true, pauseOnMouseEnter: true, disableOnInteraction: false }"
-                 @slideChange="slideChange">
-                 <!-- :centered-slides="true" -->
-                <swiper-slide class="swiper-slide" v-for="item in solutionList" :key="item.id" :solution_id="item.id"
-                    @mouseenter="mouseOver">
+            <swiper v-if="solutionList.length" class="swiper-container"
+                :navigation="{ nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }"
+                :observer="{ observer: true }" :space-between="6" :slides-per-view="5" loop @slideChange="slideChange">
+                <!-- :centered-slides="true" -->
+                <swiper-slide  v-for="item in solutionList" :class="`swiper-slide ${slideActive===item.id && 'active'}`" :key="item.id" :solution_id="item.id"
+                    @mouseenter="mouseOver" @click="()=>slideActive=item.id">
                     <img style="width:100%; height: 328px" :src="item.industryImg" alt="">
                     <div class="itemDiv">
                         <div class="icon">
@@ -32,10 +32,12 @@
                     </div>
                 </swiper-slide>
                 <div class="swiper-pagination"></div>
-                <div class="swiper-button-prev"></div><!--左箭头。如果放置在swiper-container外面，需要自定义样式。-->
-                <div class="swiper-button-next"></div><!--右箭头。如果放置在swiper-container外面，需要自定义样式。-->
+
             </swiper>
-        </template>
+
+            <div class="swiper-button-prev"></div><!--左箭头。如果放置在swiper-container外面，需要自定义样式。-->
+            <div class="swiper-button-next"></div><!--右箭头。如果放置在swiper-container外面，需要自定义样式。-->
+        </div>
 
         <div class="title2 title">行业痛点</div>
         <div class="problem">
@@ -64,9 +66,10 @@
             <div class="item" v-for="item in caseList">
                 <CaseCard :case="item" />
             </div>
-            <div class="more" @click="() => proxy.$router.push('/case')">
-                查看更多案例
-            </div>
+
+        </div>
+        <div class="more" @click="() => proxy.$router.push('/case')">
+            查看更多案例
         </div>
 
 
@@ -80,18 +83,21 @@ import CaseCard from "@/components/caseCard.vue"
 import Banner from "@/components/Banner.vue"
 import { Swiper, SwiperSlide, } from 'swiper/vue';
 import 'swiper/css';
-import SwiperCore, { Autoplay } from 'swiper';
+import 'swiper/css/navigation';
+
+import SwiperCore, { Autoplay, Navigation } from 'swiper';
 import { queryIndustryList, queryIndustryCaseList } from "@/api/index"
 import { queryBannerImg } from "@/utils/index"
 
 
-SwiperCore.use([Autoplay]);
+SwiperCore.use([Autoplay, Navigation]);
 const { proxy } = getCurrentInstance();
 const active = ref("1")
 const solutionList = ref([])
 const problemList = ref([])
 const caseList = ref([])
 const bannerImg = ref('')
+const slideActive = ref('')
 
 
 onMounted(() => {
@@ -108,7 +114,7 @@ const getSolutionList = () => {
     queryIndustryList(params).then(({ code, data }) => {
         if (code === 0) {
             solutionList.value = data
-            problemList.value = data.slice(0, 5)
+            problemList.value = [...data, ...data].slice(data.length - 2, data.length + 3)
             if (data[0].id) getSolutionCaseList(data[0].id)
         }
     })
@@ -139,14 +145,23 @@ const slideChange = (val) => {
 const mouseOver = (val) => {
     let list = toRaw(solutionList.value)
     let solution_id = val.target.getAttribute('solution_id')
-    console.log(solution_id)
     let index = list.findIndex(item => item.id.toString() === solution_id)
+    let list_length = list.length
+    console.log(index)
+
     let arr
     if (list.length > 5) {
+        let lastIndex
 
-        if ([0, 1, list.length - 1, list.lenght].includes(index)) {
-            let lastIndex = [...list, ...list].findLastIndex(item => item.id === list[index].id)
+        if ([0, 1].includes(index)) {
+            lastIndex = [...list, ...list].findLastIndex(item => item.id === list[index].id)
             arr = [...list, ...list].slice(lastIndex - 2, lastIndex + 3)
+        } else if ([list_length - 2, list_length-1].includes(index)) {
+            lastIndex = [...list, ...list].findIndex(item => item.id=== list[index].id)
+            console.log(lastIndex)
+
+            arr = [...list, ...list].slice(lastIndex - 2, lastIndex + 3)
+
         } else {
             arr = list.slice(index - 2, index + 3)
         }
@@ -157,7 +172,7 @@ const mouseOver = (val) => {
 
     problemList.value = arr
 }
-
+const modules = [Autoplay, Navigation];
 </script>
     
 <style lang="scss" scoped>
@@ -198,6 +213,23 @@ const mouseOver = (val) => {
         margin: 40px 0;
     }
 
+    .solution-box {
+        position: relative;
+
+        .swiper-button-prev,
+        .swiper-rtl .swiper-button-next {
+            top: 62%;
+            left: 80px;
+        }
+
+        .swiper-button-next,
+        .swiper-rtl .swiper-button-prev {
+            top: 62%;
+
+            right: 80px;
+        }
+    }
+
     .swiper-container {
 
         margin: 0 120px;
@@ -211,7 +243,7 @@ const mouseOver = (val) => {
 
             }
 
-            &:hover {
+            &:hover, &.active{
                 .itemDiv {
 
                     padding-top: 6rem;
@@ -371,11 +403,12 @@ const mouseOver = (val) => {
         padding: 0 120px;
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-between;
+        justify-content: flex-start;
         margin-bottom: 46px;
 
         .item {
-            width: 32%;
+            width: calc((100% - 32px) / 3);
+            margin-right: 16px;
         }
 
 

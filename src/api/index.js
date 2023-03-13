@@ -64,10 +64,11 @@ export const queryProductsById = (params) =>{
     })
 }
 // 产品案例
-export const queryCasesList = () =>{
+export const queryCasesList = params =>{
     return request({
         url: '/website-rest/CasesList',
         method: 'get',
+        params
     })
 }
 // 解决方案列表

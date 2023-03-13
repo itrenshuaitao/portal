@@ -6,6 +6,7 @@ import path from 'path'
 // https://vitejs.dev/config/
 export default ({ mode }) => {
   return defineConfig({
+    base: './',
     plugins: [
       vue(),
       vueJsx({

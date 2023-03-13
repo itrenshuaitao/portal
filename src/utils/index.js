@@ -81,4 +81,14 @@ export function queryURLParams(url) {
 }
 // 获取内页bannerImg
 // 内页banner位置 1:产品 2:解决方案 3:案例分享 4:新闻中心 5:视频中心 6: 企业介绍 7:招聘人才 8:联系我们
-export const queryBannerImg = (index)=>store.state.bannerList.length&&store.state.bannerList.filter(item => item.nbannerPlace==index)[0]?.nbannerImg||'https://easyv.assets.dtstack.com/homepage/common/assets/images/market-consultation/search_bg.jpg'
+export const queryBannerImg = (index) => store.state.bannerList.length && store.state.bannerList.filter(item => item.nbannerPlace == index)[0]?.nbannerImg || 'https://easyv.assets.dtstack.com/homepage/common/assets/images/market-consultation/search_bg.jpg'
+// 获取行业名称
+export const queryIndustryNameList = (ids) => {
+  console.log(ids)
+  let arr = []
+  ids.map(id => {
+    arr.push(store.state.solutionList.filter(item=>item.id == id)[0]?.industryName)
+  })
+  return arr.filter(i=>i!==undefined)
+
+}

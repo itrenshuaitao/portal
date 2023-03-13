@@ -23,8 +23,8 @@
                         <div>
                             <h2>{{ item.productsName }}</h2>
                             <P>{{ item.productsSubtitle }}</P>
-                            <div class="to-detail">
-                                <router-link :to="`/products/detail/${item.id}`">查看详情</router-link>
+                            <div class="to-detail" @click="router.push(`/products/detail/${item.id}`)">
+                                查看详情
                             </div>
                         </div>
                     </li>
@@ -50,12 +50,12 @@
 
 <script setup>
 import { ref, onMounted, reactive, computed, watch, nextTick } from "vue"
-
+import {useRouter} from "vue-router"
 import CoreData from './CoreData.vue';
 import NewsCenter from './NewsCenter.vue';
 import Partners from './Partners.vue';
 import { getHomeProductsList, getHomeCoreDataList, getHomeNewsList, getHomePartnerList } from "@/api/index"
-
+const router = useRouter()
 const active = ref("products")
 const activeProducts = ref(0)
 const productsList = ref([])
@@ -105,9 +105,9 @@ const getPartnerList = () => {
 }
 
 const getNewsList = () => {
-    getHomeNewsList({newsPlaces:0}).then(({ code, data }) => {
+    getHomeNewsList({ newsPlaces: 0 }).then(({ code, data }) => {
         if (code === 0) {
-            newsList.value = data.slice(0,3)
+            newsList.value = data.slice(0, 3)
 
         }
     })
@@ -245,7 +245,7 @@ const handleMouseover = (e) => {
 
             &:hover {
                 div {
-                    top: 0%;
+                    top: 38%;
                 }
 
                 background-image: linear-gradient(to bottom, transparent, #0168e0);
@@ -255,7 +255,7 @@ const handleMouseover = (e) => {
 
             div {
                 position: relative;
-                top: 45%;
+                top: 55%;
                 color: #fff;
                 text-align: center;
                 transition: all .3s;
@@ -270,7 +270,7 @@ const handleMouseover = (e) => {
                 }
 
                 p {
-                    margin: 0 16% 26% 16%;
+                    margin: 0 16% 12% 16%;
                     overflow: hidden;
                     text-overflow: ellipsis;
                     line-height: 1.5;
@@ -299,6 +299,12 @@ const handleMouseover = (e) => {
             }
         }
     }
+
+
+
+
+
+
 
 }
 </style>

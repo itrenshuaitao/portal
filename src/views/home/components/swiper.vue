@@ -2,34 +2,33 @@
     <div v-if="pageData.list[0]?.sbannerShow === 0" class="show-imgs-container" @mouseover="pageData.isIn = true"
         @mouseout="pageData.isIn = false">
         <el-carousel ref="refCarousel" :interval="pageData.cutTime" arrow="never" :autoplay="pageData.autoplay"
-            trigger="click" :indicator-position="pageData.autoplay ? '' : 'none'" @change="handleChange">
+            trigger="click" indicator-position= "none" @change="handleChange">
             <el-carousel-item v-for="(item, index) in pageData.list" :key="index">
                 <img v-if="item.fileType === 'img'" :src="item.sbannerImg" alt="这是图片" class="banner" />
                 <!--视频播放器 -->
 
                 <div v-else-if="item.fileType === 'video'" class="my_video">
-                    <vue3VideoPlay :id="'myVideoPlayer' + index" v-bind="pageData.options" :src="item.sbannerImg" @play="onPlay"
-                        @pause="onPause" @timeupdate="onTimeupdate" @canplay="onCanplay" @ended="onEnded" />
+                    <vue3VideoPlay :id="'myVideoPlayer' + index" v-bind="pageData.options" :src="item.sbannerImg"
+                        @play="onPlay" @pause="onPause" @timeupdate="onTimeupdate" @canplay="onCanplay" @ended="onEnded" />
                 </div>
                 <div v-if="pageData.nowIndex === index" class="text-position">
-                    <div class="title">
+                    <div v-if="item.sbannerCopy1" class="title">
                         <Transition name="my-transition" appear>
                             <p>{{ item.sbannerCopy1 }}</p>
-
                         </Transition>
                     </div>
-                    <div class="title2">
+                    <div v-if="item.sbannerCopy2" class="title2">
                         <Transition name="my-transition" appear>
                             <p>{{ item.sbannerCopy2 }}</p>
                         </Transition>
                     </div>
-                    <div class="desc">
+                    <div v-if="item.sbannerCopy3" class="desc">
                         <Transition name="my-transition" appear>
                             <p>{{ item.sbannerCopy3 }}</p>
 
                         </Transition>
                     </div>
-                    <Transition name="my-transition" class="desc2-transition" appear>
+                    <Transition v-if="item.sbannerCopy4" name="my-transition" class="desc2-transition" appear>
                         <div class="desc2">
                             <p>{{ item.sbannerCopy4 }}</p>
                         </div>
@@ -49,6 +48,25 @@
 
 
             </el-carousel-item>
+
+            <div class="nav-slider">
+                <div class="container">
+                    <div  v-for="(item,index) in pageData.list" :class="`slide ${pageData.nowIndex==index&&'active'}`" @click="()=>handleSlideClick(index)">
+                        <div class="progress-bar">
+                            <div class="progress-bar-slide">
+
+                            </div>
+                        </div>
+                        <div class="progress-titel">
+                            <span>
+                                {{ item.sbannerName }}
+                            </span>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
         </el-carousel>
     </div>
     <div v-else style="margin-top: 60px;"></div>
@@ -61,6 +79,7 @@ import { getHomeBanner } from "@/api/index"
 const { proxy } = getCurrentInstance()
 const router = useRouter()
 const refCarousel = ref(null);
+const slideActive = ref(0);
 let pageData = reactive({
     autoplay: true,//是否自动切换
     isPlay: false,//播放状态
@@ -144,6 +163,11 @@ const handleChange = (nowIndex, oldIndex) => {
         // })
         video.play()
     }
+}
+const handleSlideClick = (index)=> {
+    pageData.nowIndex = index
+    proxy.$refs.refCarousel.setActiveItem(index)
+
 }
 const onPlay = (ev) => {
     console.log('播放')
@@ -324,5 +348,112 @@ const toUrl = (url) => {
 
         }
     }
+
+    .nav-slider {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        z-index: 10;
+        background-image: linear-gradient(180deg, transparent, rgba(0, 0, 0, .4));
+        padding-bottom: 24px;
+        overflow: hidden;
+        padding-inline: 32px;
+
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            display: flex;
+            justify-content: center;
+            transition-property: transform;
+            box-sizing: content-box;
+
+
+            .slide {
+                height: 80px;
+                display: flex;
+                flex-direction: column;
+                flex: 0 0 196px;
+                margin-right: 32px;
+                row-gap: 9px;
+                cursor: pointer;
+
+                .progress-bar {
+                    width: 24px;
+                    height: 3px;
+                    background-color: hsla(0, 0%, 100%, .48);
+                    border-radius: 2px;
+                    overflow: hidden;
+
+                    .progress-bar-slide {
+                        background-color: #009eff;
+                        width: 0;
+                        height: 100%;
+                    }
+
+
+
+                }
+
+                .progress-titel {
+                    font-size: 14px;
+                    line-height: 20px;
+                    letter-spacing: -.32px;
+                    color: hsla(0, 0%, 100%, .48);
+
+                    // span {}
+
+                }
+
+                &:hover {
+                    .progress-bar {
+                        animation: widthTrans .3s linear forwards;
+                        background-color: #fff;
+                    }
+
+                    .progress-titel {
+                        color: #fff;
+                    }
+                }
+                &.active{
+                    .progress-bar{
+                        width: 100%;
+                        // animation: widthTrans 3s linear forwards;
+                        .progress-bar-slide{
+                            animation: expansion .1s linear forwards;
+                        }
+                    }
+                    .progress-titel {
+                        color: #fff;
+                    }
+                }
+            }
+        }
+    }
 }
+
+@keyframes widthTrans {
+    0% {
+        width: 12%;
+    }
+
+    40% {
+        width: 110%;
+    }
+
+    80% {
+        width: 95%;
+    }
+
+    100% {
+        width: 100%;
+    }
+}
+@keyframes expansion {
+    100%{
+        width: 100%;
+    }
+        
+    }
 </style>

@@ -118,3 +118,11 @@ export const queryNewsById = (params) =>{
         params
     })
 }
+//视频列表
+export const queryVideoList = (params) =>{
+    return request({
+        url: '/website-rest/queryVideoList',
+        method: 'get',
+        params
+    })
+}

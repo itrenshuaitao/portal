@@ -25,7 +25,7 @@
                 </div>
             </div>
             <div class="list">
-                <div v-for="item in 12" class="item"></div>
+                <div v-for="item in 10" class="item"></div>
             </div>
         </div>
 
@@ -34,34 +34,57 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue"
+import { ref, onMounted, reactive } from "vue"
 import Banner from "@/components/Banner.vue"
 import VideoPlay from "@/components/video.vue"
+import { queryVideoList } from "@/api/index"
 import { queryBannerImg } from "@/utils/index"
 
 const bannerImg = ref('')
-
+const videoList = ref([])
+const pagination = reactive({
+    total: 0,
+    pageSize: 12
+})
 
 
 onMounted(() => {
     bannerImg.value = queryBannerImg(5)
+    getVideoList(1)
 })
+
+const getVideoList = (pageIndex) => {
+    const params = {
+        pageIndex,
+        pageSize: pagination.pageSize
+    }
+    queryVideoList(params).then(({ code, data, totalResults }) => {
+        if (code === 0) {
+            videoList.value = data
+            pagination.total = totalResults
+        }
+    })
+}
 </script>
 
 <style lang='scss' scoped>
 .video-center {
     .video-list {
         margin: 60px 120px 30px 120px;
+
         .carousel {
             display: flex;
             justify-content: space-between;
-            .left{
-                .video{
-                    width: calc(100vw - 546px);
+
+            .left {
+                .video {
+                    width: calc(100vw - 584px);
                 }
             }
+
             .right {
                 margin-left: 24px;
+
                 .item {
                     width: 282px;
                     height: 158px;
@@ -74,13 +97,19 @@ onMounted(() => {
         .list {
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-between;
+            justify-content: flex-start;
 
             .item {
-                width: calc(25% - 24px);
+
+                width: calc(25% - 18px);
                 height: 208px;
                 background-color: pink;
                 margin-bottom: 40px;
+                margin-right: 24px;
+
+                &:nth-of-type(4n+0) {
+                    margin-right: 0;
+                }
             }
         }
     }

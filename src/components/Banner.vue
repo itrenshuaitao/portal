@@ -1,5 +1,5 @@
 <template>
-      <div class="banner">
+      <div v-if="store.state.bannerList[0].nbannerShow==0" class="banner">
             <img :src="imgSrc" />
             <!-- <div class="text" :style="`color: ${color};`">
                 <p>{{title}}</p>
@@ -7,12 +7,13 @@
                 </p>
             </div> -->
         </div>
+        <div v-else style="margin-top: 60px;"></div>
 </template>
 
-<script>
-export default {
-  name: "Banner",
-  props: {
+<script setup>
+import { useStore } from "vuex";
+const store = useStore();
+const props = defineProps({
     title: {
       type: String,
       default: ""
@@ -29,8 +30,7 @@ export default {
       type: String,
       default: ""
     }
-  }
-};
+})
 </script>
 
 <style lang="scss" scoped>

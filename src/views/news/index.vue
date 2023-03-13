@@ -2,7 +2,7 @@
     <div class="news">
 
         <Banner 
-            :imgSrc="bannerImg">
+            :imgSrc="toRaw(bannerImg)">
         </Banner>
         <div class="container">
        
@@ -19,7 +19,7 @@
 </template>
     
 <script setup>
-import { ref, onMounted, reactive} from "vue"
+import { ref, onMounted, reactive,toRaw} from "vue"
 import { useStore } from "vuex";
 import { useRouter } from 'vue-router'
 import ItemCard from "@/components/newsCard.vue"

@@ -3,15 +3,20 @@
     <div class="logo">
       <img src="@/assets/img/toplogo.png" alt />
     </div>
-    <el-menu :default-active="router.currentRoute.value?.matched[1]?.path" class="el-menu-demo" mode="horizontal" background-color="rgba(255,255,255,0)"
-      :ellipsis="false" :router="true">
+    <el-menu :default-active="router.currentRoute.value?.matched[1]?.path" class="el-menu-demo" mode="horizontal"
+      background-color="rgba(255,255,255,0)" :ellipsis="false" :router="true">
       <el-menu-item index="/home">首页</el-menu-item>
       <el-menu-item index="/products">产品</el-menu-item>
-      <el-menu-item index="/solution">解决方案</el-menu-item>
-      <el-menu-item index="/case">案例分享</el-menu-item>
-      <el-menu-item index="/news">新闻中心</el-menu-item>
-      <el-menu-item index="/video">视频中心</el-menu-item>
-      <el-menu-item index="/about">关于友机</el-menu-item>
+      <el-menu-item v-if="solutionList[0] && solutionList[0].industryType === 0" index="/solution">解决方案</el-menu-item>
+      <el-menu-item v-if="caseList[0] && caseList[0].caseType === 0" index="/case">案例分享</el-menu-item>
+      <el-menu-item v-if="newsList[0] && newsList[0].newsType === 0" index="/news">新闻中心</el-menu-item>
+      <el-menu-item v-if="videoList[0] && videoList[0].videoType === 0" index="/video">视频中心</el-menu-item>
+      <el-sub-menu index="/about">
+        <template #title>关于友机</template>
+        <el-menu-item index="/about">公司介绍</el-menu-item>
+        <el-menu-item index="/about/recruit">人才招聘</el-menu-item>
+        <el-menu-item index="/about/contact">联系我们</el-menu-item>
+      </el-sub-menu>
     </el-menu>
     <div class="booking">
       <el-button type="primary" @click="dialogFormVisible = true">预约体验</el-button>
@@ -83,7 +88,17 @@
 <script setup>
 import { reactive, ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router';
+import { queryIndustryList, queryCaseList,queryNewsList,queryVideoList } from "@/api/index"
 let router = useRouter()
+
+
+const solutionList = ref([])
+const caseList = ref([])
+const newsList = ref([])
+const videoList = ref([])
+
+
+
 const dialogFormVisible = ref(false)
 const formLabelWidth = '140px'
 
@@ -100,6 +115,63 @@ const form = reactive({
 const openDialog = () => {
   dialogFormVisible.value = true
 }
+
+onMounted(() => {
+  getSolutionList()
+  getAllCaseList(1)
+  getNewsList(1)
+  getVideoList(1)
+})
+
+const getSolutionList = () => {
+
+  const params = {
+    pageIndex: 1,
+    pageSize: 1000
+  }
+  queryIndustryList(params).then(({ code, data }) => {
+    if (code === 0) {
+      solutionList.value = data
+    }
+  })
+}
+
+const getAllCaseList = (pageIndex) => {
+  const params = {
+    pageIndex,
+    pageSize: 3
+  }
+  queryCaseList(params).then(({ code, data }) => {
+    if (code === 0) {
+      caseList.value = data
+    }
+  })
+}
+const getNewsList = (pageIndex) => {
+
+  const params = {
+    pageIndex,
+    pageSize: 3
+  }
+  queryNewsList(params).then(({ code, data }) => {
+    if (code === 0) {
+      newsList.value = data
+    }
+  })
+}
+
+const getVideoList = (pageIndex) => {
+  const params = {
+    pageIndex,
+    pageSize:3
+  }
+  queryVideoList(params).then(({ code, data }) => {
+    if (code === 0) {
+      videoList.value = data
+    }
+  })
+}
+
 defineExpose({
   openDialog
 })

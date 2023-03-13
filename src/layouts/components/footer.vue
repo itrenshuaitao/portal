@@ -1,5 +1,5 @@
 <template>
-  <div v-if="router.currentRoute.value?.matched[1]?.path !== '/home'" class="footer-booking">
+  <!-- <div v-if="router.currentRoute.value?.matched[1]?.path !== '/home'" class="footer-booking">
     <div class="box">
       <div class="box-top">
         <div>
@@ -17,7 +17,7 @@
         实时监控每把刀具每次加工的功率变化，一旦发生断刀、崩刃、过度磨损等常见刀具故障，和工件/刀具缺失、空加工、装夹错误等常见加工问题，系统立即通过提醒、报警和停机等方式自动干预加工过程，从而防止后续刀具损坏、批量废品、甚至机床损坏等进一步经济损失，降低生产风险和成本，提高生产稳定性和加工过程品质。
       </div>
     </div>
-  </div>
+  </div> -->
   <el-footer class="footer  clearfix" v-show="isShow">
 
     <div class="footer-content">
@@ -56,13 +56,23 @@
       </ul>
       <div class="line"></div>
       <div class="info">
-        <p>400-631-9969</p>
-        <p>info@ujoin-tech.com</p>
-        <!-- <img src="./assets/img/ercode.png" alt /> -->
+        <div class="top">
+          <div>
+            <p class="tel">400-631-9969</p>
+            <p class="email">info@ujoin-tech.com</p>
+          </div>
 
-        <img src="@/assets/img/ico.jpg" alt />
-        <p>杭州产研基地： <br />杭州市上城区鸿泰路128</p>
-        <p>无锡产研基地： <br />无锡市新吴区灵江路7号</p>
+          <img src="@/assets/img/ico.jpg" alt />
+        </div>
+        <div class="bottom">
+          <p>杭州产研基地： <br />
+            杭州市上城区鸿泰路128号环翼<br />城4幢1401室
+          </p>
+          <p>无锡产研基地： <br />无锡市新吴区灵江路7号</p>
+          <p>长春分公司： <br />
+            长春市汽车开发区乙一路盛世<br />汽车产业园D5栋317室</p>
+        </div>
+
 
       </div>
 
@@ -148,7 +158,7 @@ const isShow = true;
     margin: 0 auto;
     padding-top: 20px;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-around;
     height: 100%;
 
     .content-nav {
@@ -172,25 +182,70 @@ const isShow = true;
         span {
           padding: 18px 0;
           line-height: 16px;
+          transition: 0.3s;
+          cursor: pointer;
+
+          &:hover {
+            color: #148FFA;
+            transform: translateX(5px);
+          }
         }
       }
     }
 
     .line {
       position: absolute;
-      right: 35%;
+      right: 38%;
       width: 1px;
       height: 90%;
       background: #D8D8D8;
     }
 
     .info {
-      img {
-        width: 100px;
-        height: 100px;
-        padding: 10px;
-        background-color: pink;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: rgb(255, 255, 255);
+
+
+      .top {
+        display: flex;
+        align-items: center;
+
+        .tel {
+
+          font-size: 32px;
+          font-weight: 500;
+          line-height: 45px;
+          margin-bottom: 16px;
+        }
+
+        .email {
+          font-size: 16px;
+          font-weight: 400;
+          line-height: 22px;
+        }
+
+        img {
+          margin-left: 12px;
+          width: 100px;
+          height: 100px;
+          padding: 10px;
+          background-color: pink;
+        }
       }
+
+      .bottom {
+        text-align: center;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 22px;
+        p{
+          margin-top: 20px;
+        }
+      }
+
+
     }
 
 

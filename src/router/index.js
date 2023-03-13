@@ -60,7 +60,7 @@ export const constantRoutes = [
           {
             name: 'Case',
             path: '',
-            component: import('@/views/case/index.vue'),
+            component: () => import('@/views/case/index.vue'),
           },
           {
             path: 'detail/:id',
@@ -104,12 +104,35 @@ export const constantRoutes = [
         },
       }, {
         path: '/about',
-        name: 'About',
-        component: () => import('@/views/about/index.vue'),
-        meta: {
-          title: "关于友机",
-          icon: 'icon-code',
+
+        children: [{
+          name: 'About',
+          path: '',
+          component: () => import('@/views/about/index.vue'),
+          meta: {
+            title: "关于友机",
+            icon: 'icon-code',
+          },
         },
+        {
+          name: 'Recruit',
+          path: 'recruit',
+          component: () => import('@/views/about/recruit.vue'),
+          meta: {
+            title: "人才招聘",
+            icon: 'icon-code',
+          },
+        },
+        {
+          name: 'Contact',
+          path: 'contact',
+          component: () => import('@/views/about/contact.vue'),
+          meta: {
+            title: "联系我们",
+            icon: 'icon-code',
+          },
+        },
+        ]
       }
 
     ],

@@ -1,11 +1,11 @@
 <template>
     <div>
-        <Banner :imgSrc="bannerImg" />
+        contact
     </div>
 </template>
 
 <script setup>
-import Banner from "@/components/Banner.vue"
+
 </script>
 
 <style lang='scss' scoped>

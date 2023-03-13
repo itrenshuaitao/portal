@@ -1,6 +1,5 @@
 <template>
     <div class="case">
-
         <Banner 
             :imgSrc="bannerImg">
         </Banner>

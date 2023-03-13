@@ -15,9 +15,10 @@
         </div>
         <template v-if="solutionList[0] && solutionList[0].industryType === 0">
             <div class="title1 title">解决方案</div>
-            <swiper class="swiper-container" :loop="{ loop: true }" :observer="true" :space-between="6"
+            <swiper class="swiper-container" :loop="{ loop: true }" :observer="{observer:true}" :space-between="6"
                 :slides-per-view="5" :autoplay="{ autoplay: true, pauseOnMouseEnter: true, disableOnInteraction: false }"
-                :centered-slides="true" @slideChange="slideChange">
+                 @slideChange="slideChange">
+                 <!-- :centered-slides="true" -->
                 <swiper-slide class="swiper-slide" v-for="item in solutionList" :key="item.id" :solution_id="item.id"
                     @mouseenter="mouseOver">
                     <img style="width:100%; height: 328px" :src="item.industryImg" alt="">

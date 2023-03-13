@@ -1,6 +1,6 @@
 <template>
     <div>
-        <vue3VideoPlay v-bind="options" :poster="poster" />
+        <vue3VideoPlay v-bind="options" :poster="poster" @ended="onEnd" />
     </div>
 </template>
     
@@ -16,7 +16,7 @@ export default {
         vue3VideoPlay,
     },
     props: ['video_url', 'poster'],
-    setup(props) {
+    setup(props,context) {
         let data = reactive({
             options: {
                 width: "100%", //播放器高度
@@ -30,7 +30,7 @@ export default {
                 autoPlay: true, //自动播放
                 loop: false, //循环播放
                 mirror: false, //镜像画面
-                ligthOff: true, //关灯模式
+                // ligthOff: true, //关灯模式
                 volume: 0.3, //默认音量大小
                 control: true, //是否显示控制
                 controlBtns: [
@@ -47,7 +47,13 @@ export default {
             poster: props.poster
         });
 
+        const onEnd =()=>{
+            console.log('播放结束')
+            context.emit('switchVideoUrl')
+        }
+
         return {
+            onEnd,
             ...toRefs(data)
         }
     }

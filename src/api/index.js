@@ -127,3 +127,10 @@ export const queryVideoList = (params) =>{
         params
     })
 }
+//置顶视频列表
+export const queryTopVideoList = () =>{
+    return request({
+        url: '/website-rest/findVideoTop',
+        method: 'get',
+    })
+}

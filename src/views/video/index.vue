@@ -6,13 +6,14 @@
             <div class="carousel">
                 <div class="left">
                     <div v-if="isVideoVisible" class="video">
-                        <VideoPlay :video_url="videoObj.videoImgs" :poster="videoObj.videoImg" @switchVideoUrl="switchVideoUrl">
+                        <VideoPlay :video_url="videoObj.videoImgs" :poster="videoObj.videoImg"
+                            @switchVideoUrl="switchVideoUrl">
                         </VideoPlay>
                     </div>
                     <div class="info">
                         <h2>{{ videoObj.videoName }} </h2>
                         <p>
-                           {{ videoObj.videoTimes }}
+                            {{ videoObj.videoTimes }}
                         </p>
                     </div>
                 </div>
@@ -24,7 +25,19 @@
                 </div>
             </div>
             <div class="list">
-                <div v-for="item in 10" class="item"></div>
+                <div v-for="item in videoList" class="item pointer" @click="handleClick(item)">
+                    <img class="" :src="item.videoImg">
+                    <div class="info">
+                        <h2>{{ item.videoName }} </h2>
+                        <p>
+                            {{ item.videoTimes }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div style="display: flex;justify-content: center;">
+                <el-pagination background layout="prev, pager, next" :page-size="pagination.pageSize"
+                    :total="pagination.total" @current-change="(value) => getVideoList(value)" />
             </div>
         </div>
 
@@ -96,6 +109,15 @@ const changeVideoObj = (obj) => {
         isVideoVisible.value = true
     })
 
+
+}
+
+const handleClick = (obj) => {
+    //   window.scrollTo({
+    //         top: 0,
+    //         behavior: "smooth"
+    //     });
+    changeVideoObj(obj)
 
 }
 </script>
@@ -170,6 +192,7 @@ const changeVideoObj = (obj) => {
         }
 
         .list {
+            margin-top: 56px;
             display: flex;
             flex-wrap: wrap;
             justify-content: flex-start;
@@ -177,15 +200,43 @@ const changeVideoObj = (obj) => {
             .item {
 
                 width: calc(25% - 18px);
-                height: 208px;
-                background-color: pink;
+                height: 230px;
                 margin-bottom: 40px;
                 margin-right: 24px;
-                border-radius: 4px;
+                overflow: hidden;
 
                 &:nth-of-type(4n+0) {
                     margin-right: 0;
                 }
+
+                img {
+                    border-radius: 4px;
+
+                    width: 100%;
+                    height: 158px;
+                }
+
+                .info {
+                    margin-left: 16px;
+
+                    h2 {
+                        margin-top: 16px;
+                        margin-bottom: 7px;
+                        color: rgb(62, 73, 84);
+                        font-size: 20px;
+                        font-weight: 500;
+                        line-height: 28px;
+
+                        p {
+                            color: rgb(108, 123, 139);
+                            font-size: 14px;
+                            font-weight: 400;
+                            line-height: 20px;
+
+                        }
+                    }
+                }
+
             }
         }
     }

@@ -20,7 +20,7 @@
                 :observer="{ observer: true }" :space-between="6" :slides-per-view="5" loop @slideChange="slideChange">
                 <!-- :centered-slides="true" -->
                 <swiper-slide  v-for="item in solutionList" :class="`swiper-slide ${slideActive===item.id && 'active'}`" :key="item.id" :solution_id="item.id"
-                    @mouseenter="mouseOver" @click="()=>slideActive=item.id">
+                    @mouseenter="mouseOver" @click="()=>slideActive=slideActive==item.id?'':item.id">
                     <img style="width:100%; height: 328px" :src="item.industryImg" alt="">
                     <div class="itemDiv">
                         <div class="icon">

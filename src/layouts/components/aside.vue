@@ -35,13 +35,13 @@
 
 <script setup>
 
-
 const handleToTop = () => {
     window.scrollTo({
         top: 0,
         behavior: "smooth"
     });
 }
+
 </script>
 
 <style lang='scss' scoped>

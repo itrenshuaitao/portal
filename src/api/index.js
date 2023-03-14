@@ -119,10 +119,10 @@ export const queryNewsById = (params) =>{
         params
     })
 }
-//视频列表
+//非置顶视频列表
 export const queryVideoList = (params) =>{
     return request({
-        url: '/website-rest/queryVideoList',
+        url: '/website-rest/querytopList',
         method: 'get',
         params
     })
@@ -132,5 +132,21 @@ export const queryTopVideoList = () =>{
     return request({
         url: '/website-rest/findVideoTop',
         method: 'get',
+    })
+}
+//公司介绍
+export const queryFindfirmById = params =>{
+    return request({
+        url: '/website-rest/findfirmById',
+        method: 'get',
+        params:{id:1}
+    })
+}
+//公司介绍
+export const queryFindcoredataById = params =>{
+    return request({
+        url: '/website-rest/findcoredataById',
+        method: 'get',
+        params:{companyId:2}
     })
 }

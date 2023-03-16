@@ -2,90 +2,144 @@
     <div>
         <Banner :imgSrc="bannerImg" />
         <div class="tab">
-            <el-button :type="plain" link :class="active == '1' && 'active'"
+            <el-button v-if="companylist[0]?.companyType == 0" :type="plain" link :class="active == '1' && 'active'"
                 @click="() => handleTabClick('1')">企业介绍</el-button>
-            <el-button :type="plain" link class="news" :class="active == '2' && 'active'"
-                @click="() => handleTabClick('2')">企业文化</el-button>
-            <el-button :type="plain" link :class="active == '3' && 'active'"
+            <el-button v-if="companylist[2]?.companyType == 0" :type="plain" link class="news"
+                :class="active == '2' && 'active'" @click="() => handleTabClick('2')">企业文化</el-button>
+            <el-button v-if="companylist[3]?.companyType == 0" :type="plain" link :class="active == '3' && 'active'"
                 @click="() => handleTabClick('3')">发展历程</el-button>
-            <el-button :type="plain" link :class="active == '4' && 'active'"
+            <el-button v-if="companylist[4]?.companyType == 0" :type="plain" link :class="active == '4' && 'active'"
                 @click="() => handleTabClick('4')">服务网络</el-button>
-            <el-button :type="plain" link :class="active == '5' && 'active'"
+            <el-button v-if="companylist[5]?.companyType == 0" :type="plain" link :class="active == '5' && 'active'"
                 @click="() => handleTabClick('5')">荣誉证书</el-button>
         </div>
-        <div class="title1 title">企业介绍</div>
-        <div class="synopsis" v-html="findfirm.firmProducts">
+        <template v-if="companylist[0]?.companyType == 0">
+            <div class="title1 title">企业介绍</div>
+            <div class="synopsis" v-html="findfirm.firmProducts">
             </div>
-        <div class="core-data">
+        </template>
+
+        <div v-if="companylist[1]?.companyType == 0" class="core-data">
             <div class="item" v-for="(item, index) in coredata">
                 <span>
                     <number class="number" :ref="'number' + index" :from="0" :to="item.coredataData" :duration="5"
                         easing="Power1.easeOut" animationPaused />+
                 </span>
                 <span>
-                   {{item.coredataName}}
+                    {{ item.coredataName }}
                 </span>
 
             </div>
         </div>
-        <div class="title2 title">企业文化</div>
-        <div class="culture">
-            <div>
-                <p>使命</p>
-                <p>让复杂的制造进入无人驾驶时代 </p>
-            </div>
-            <div>
-                <p>愿景</p>
-                <p>成为暗灯工厂核心技术全球领导者</p>
-            </div>
-            <div>
-                <p>价值观</p>
-                <p>以客户为中心，做到每一份交付，对客户都是可持续的价值； 追求卓越，只做最牛的产品； 开放创新，勇敢探索一切可能性； 诚实正善，彼此信任，共同分享。</p>
+        <template v-if="companylist[2]?.companyType == 0">
+            <div class="title2 title">企业文化</div>
+            <div class="culture">
+                <div>
+                    <p>使命</p>
+                    <p>{{ findCulture.cultureMission }} </p>
+                </div>
+                <div>
+                    <p>愿景</p>
+                    <p>{{ findCulture.cultrueVision }} </p>
+                </div>
+                <div>
+                    <p>价值观</p>
+                    <p>
+                        {{ findCulture.cultrueValues }}
+                    </p>
+                </div>
+
 
             </div>
-
-
-        </div>
-        <div class="title3 title">发展历程</div>
-        <div class="history">
-            <el-carousel ref="refCarousel" :autoplay="false" indicator-position="none" arrow="never" height="539px">
-                <el-carousel-item class="item" v-for="item in 4" :key="item">
-                    <div class="node" v-for="node in 4">
-                        <div class="left">
-                            <div></div>
+        </template>
+        <template v-if="companylist[3]?.companyType == 0">
+            <div class="title3 title">发展历程</div>
+            <div class="history" :style="historyList[0] && `background-image: url('${historyList[0][0].historyImg}');`">
+                <el-carousel ref="refCarousel" :autoplay="false" indicator-position="none" arrow="never" height="539px"
+                    @change="(i) => historyActive = i">
+                    <el-carousel-item class="item" v-for="item in historyList" :key="item">
+                        <div class="node" v-for="node in item">
+                            <div class="icon-dot">
+                                <div></div>
+                            </div>
+                            <div class="right">
+                                <p class="time">{{ node.historyYear }}</p>
+                                <div class="text">{{ node.historyDetail }}</div>
+                            </div>
                         </div>
-                        <div class="right">
-                            <p class="time">2021</p>
-                            <div class="text">你刚来可以抱怨你的手下是一群混蛋，但是如果过了一年你还在抱怨，那么你才是一个真正的混蛋</div>
+                    </el-carousel-item>
+                </el-carousel>
+                <div class="position">
+                    <div class="left pointer" @click="proxy.$refs.refCarousel.prev()"></div>
+                    <div class="right pointer" @click="proxy.$refs.refCarousel.next()"></div>
+                    <div>{{ historyActive + 1 }}</div>
+                    <div> / {{ historyList.length }}</div>
+                </div>
+            </div>
+        </template>
+        <template v-if="companylist[4]?.companyType == 0">
+            <div class="title4 title">服务网络</div>
+            <MapView></MapView>
+        </template>
+        <template v-if="companylist[5]?.companyType == 0">
+            <div class="title5 title">荣誉证书</div>
+
+            <el-carousel height="700px" :autoplay="false" indicator-position="none">
+                <el-carousel-item v-for="arr in findCertList" :key="item">
+                    <div class="certificate">
+
+                        <div :class="`box top ${arr[0]?.length < 3  && 'special'}`">
+                            <div class="item" v-for="topItem in arr[0]" @click="()=>showImage(topItem)">
+                                <div class="icon-dot">
+                                    <div></div>
+                                </div>
+                                <img :src="topItem.certImg" />
+                                <div class="image-mask"></div>
+                            </div>
+                        </div>
+                        <div class="line"></div>
+                        <div :class="`box bottom ${arr[1]?.length == 2 && 'special'}`">
+                            <div class="item" v-for="bottomItem in arr[1]"  @click="()=>showImage(bottomItem)">
+                                <div class="icon-dot">
+                                    <div></div>
+                                </div>
+                                <img :src="bottomItem.certImg" />
+                                <div class="image-mask"></div>
+                            </div>
+
                         </div>
                     </div>
+
                 </el-carousel-item>
             </el-carousel>
-            <div class="position">
-                <div class="left pointer" @click="proxy.$refs.refCarousel.prev()"></div>
-                <div class="right pointer" @click="proxy.$refs.refCarousel.next()"></div>
-                <div>3</div>
-                <div> / 7</div>
-            </div>
-        </div>
-        <div class="title4 title">服务网络</div>
-        <MapView></MapView>
-        <div class="title5 title">荣誉证书</div>
+
+            <el-image-viewer v-if="showImageViewer" @close="showImageViewer = false" hide-on-click-modal
+                :url-list="imgViewerUrlList" />
+
+        </template>
     </div>
 </template>
 
 <script setup>
-import { ref, onMounted, reactive, onUnmounted, getCurrentInstance, toRaw } from "vue"
+import { ref, onMounted, reactive, onUnmounted, getCurrentInstance, toRaw, nextTick } from "vue"
 
 import Banner from "@/components/Banner.vue"
 import MapView from "./components/maptest.vue"
-import {queryFindfirmById,queryFindcoredataById} from "@/api/index"
+import { queryCompanylist, queryFindfirmById, queryFindcoredataById, queryFindCultureById, queryFindhistoryById, queryFindCertById } from "@/api/index"
 import { queryBannerImg } from "@/utils/index"
 const { proxy } = getCurrentInstance()
 const bannerImg = ref('')
 const active = ref("1")
+const historyActive = ref(0)
+
+const companylist = ref([])
 const findfirm = ref('')
 const coredata = ref([])
+const findCulture = ref({})
+const historyList = ref([])
+const findCertList = ref([])
+const imgViewerUrlList = ref([])
+const showImageViewer = ref(false)
 const refCarousel = ref(null);
 const number0 = ref(null)
 const number1 = ref(null)
@@ -93,10 +147,12 @@ const number2 = ref(null)
 const number3 = ref(null)
 const number4 = ref(null)
 onMounted(() => {
-    window.addEventListener("scroll", showDiv);
+
     bannerImg.value = queryBannerImg(6)
     initPageData()
-    
+    nextTick(() => {
+        companylist.value[1]?.companyType == 0 && window.addEventListener("scroll", showDiv);
+    })
 
 })
 //页面卸载
@@ -131,21 +187,120 @@ const handleTabClick = (val) => {
     });
 }
 
-const initPageData = ()=>{
-    queryFindfirmById().then(({code,data})=>{
-        if(code===0){
+const initPageData = () => {
+    queryCompanylist().then(({ code, data }) => {
+        if (code === 0) {
+            companylist.value = data
+        }
+
+    })
+    queryFindfirmById().then(({ code, data }) => {
+        if (code === 0) {
             findfirm.value = data[0]
         }
     })
-    queryFindcoredataById().then(({code,data})=>{
-        if(code===0){
-            coredata.value = data.slice(0,5)
+    queryFindcoredataById().then(({ code, data }) => {
+        if (code === 0) {
+            coredata.value = data.slice(0, 5)
         }
     })
+    queryFindCultureById().then(({ code, data }) => {
+        if (code === 0) {
+            findCulture.value = data[0]
+        }
+    })
+    queryFindhistoryById().then(({ code, data }) => {
+        if (code === 0) {
+            let index = 0;
+            let newArray = [];
+            while (index < data.length) {
+                newArray.push(data.slice(index, index += 4));
+            }
+            historyList.value = newArray
+        }
+    })
+    queryFindCertById().then(({ code }) => {
+        const { data } = {
+            "code": 0,
+            "resultMsg": "加载完成",
+            "data": [
+                { "updateUserId": null, "updateUserName": null, "updateTime": null, "id": 1, "certImg": "https://uj-web-site.oss-cn-zhangjiakou.aliyuncs.com/1678849102773.jpeg", "companyId": 6 },
+                { "updateUserId": null, "updateUserName": null, "updateTime": null, "id": 2, "certImg": "https://uj-web-site.oss-cn-zhangjiakou.aliyuncs.com/1678849102773.jpeg", "companyId": 6 },
+                { "updateUserId": null, "updateUserName": null, "updateTime": null, "id": 3, "certImg": "https://uj-web-site.oss-cn-zhangjiakou.aliyuncs.com/1678849102773.jpeg", "companyId": 6 },
+                { "updateUserId": null, "updateUserName": null, "updateTime": null, "id": 4, "certImg": "https://uj-web-site.oss-cn-zhangjiakou.aliyuncs.com/1678849102773.jpeg", "companyId": 6 },
+                { "updateUserId": null, "updateUserName": null, "updateTime": null, "id": 5, "certImg": "https://uj-web-site.oss-cn-zhangjiakou.aliyuncs.com/1678849102773.jpeg", "companyId": 6 },
+                { "updateUserId": null, "updateUserName": null, "updateTime": null, "id": 6, "certImg": "https://uj-web-site.oss-cn-zhangjiakou.aliyuncs.com/1678849102773.jpeg", "companyId": 6 },
+                { "updateUserId": null, "updateUserName": null, "updateTime": null, "id": 6, "certImg": "https://uj-web-site.oss-cn-zhangjiakou.aliyuncs.com/1678849102773.jpeg", "companyId": 6 },
+                { "updateUserId": null, "updateUserName": null, "updateTime": null, "id": 6, "certImg": "https://uj-web-site.oss-cn-zhangjiakou.aliyuncs.com/1678849102773.jpeg", "companyId": 6 },
+                { "updateUserId": null, "updateUserName": null, "updateTime": null, "id": 6, "certImg": "https://uj-web-site.oss-cn-zhangjiakou.aliyuncs.com/1678849102773.jpeg", "companyId": 6 },
+                { "updateUserId": null, "updateUserName": null, "updateTime": null, "id": 6, "certImg": "https://uj-web-site.oss-cn-zhangjiakou.aliyuncs.com/1678849102773.jpeg", "companyId": 6 },
+            ]
+        }
+        if (code === 0) {
+            let index = 0;
+            let newArray = [];
+            while (index < data.length) {
+                newArray.push(data.slice(index, index += 7));
+            }
+
+            newArray.map((arr, index) => {
+                switch (arr.length) {
+                    case 7:
+                        newArray[index] = [arr.slice(0, 4), arr.slice(4, 7)]
+                        break
+                    case 5:
+                        newArray[index] = [arr.slice(0, 3), arr.slice(3, 5)]
+                        break
+                    case 6:
+                        newArray[index] = [arr.slice(0, 4), arr.slice(4, 6)]
+                        break
+                    default:
+                        newArray[index] = [arr.slice(0, 4)]
+
+                }
+            })
+            findCertList.value = newArray
+        }
+    })
+
+}
+
+const showImage = (val)=>{
+    showImageViewer.value=true
+    imgViewerUrlList.value=[val.certImg]
 }
 </script>
 
 <style lang='scss' scoped>
+.icon-dot {
+    div {
+        position: relative;
+        width: 40px;
+        height: 40px;
+        background: rgba(192, 228, 255, 0.25);
+        box-shadow: 0px 2px 5px rgba(220, 220, 220, 0.5), inset 0px -1px 4px rgb(200, 232, 255);
+        backdrop-filter: blur(8.15px);
+        border-radius: 50%;
+
+        &::after {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(114.70deg, rgba(25, 108, 255, 1.00) 0%, rgba(0, 84, 167, 1.00) 46%);
+            box-shadow: 0px 2px 5px rgba(220, 220, 220, 0.5);
+            backdrop-filter: blur(21.75px);
+            border-radius: 50%;
+        }
+
+
+
+    }
+}
+
 .tab {
     height: 60px;
     background: #F9F9F9;
@@ -277,6 +432,8 @@ const initPageData = ()=>{
     position: relative;
     padding: 0 120px;
     background: linear-gradient(180.00deg, rgba(250, 251, 253, 1.00) 0%, rgba(242, 243, 245, 1.00) 100%), rgb(242, 245, 248);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
 
     .item {
         display: flex;
@@ -289,46 +446,23 @@ const initPageData = ()=>{
             margin-left: 225px;
             display: flex;
 
+            .icon-dot {
+                &::before {
+                    content: '';
+                    position: absolute;
+                    width: 2px;
+                    height: 138px;
+                    left: 19px;
+                    top: 20px;
+                    background: linear-gradient(180.00deg, rgba(3, 87, 176, 1.00) 0%, rgba(21, 104, 243, 0.00) 100%);
+                }
+            }
+
             &:nth-child(3) {
                 margin-left: 0;
             }
 
-            .left {
-                div {
-                    position: relative;
-                    width: 40px;
-                    height: 40px;
-                    background: rgba(192, 228, 255, 0.25);
-                    box-shadow: 0px 2px 5px rgba(220, 220, 220, 0.5), inset 0px -1px 4px rgb(200, 232, 255);
-                    backdrop-filter: blur(8.15px);
-                    border-radius: 50%;
 
-                    &::after {
-                        content: '';
-                        display: block;
-                        position: absolute;
-                        top: 10px;
-                        left: 10px;
-                        width: 20px;
-                        height: 20px;
-                        background: linear-gradient(114.70deg, rgba(25, 108, 255, 1.00) 0%, rgba(0, 84, 167, 1.00) 46%);
-                        box-shadow: 0px 2px 5px rgba(220, 220, 220, 0.5);
-                        backdrop-filter: blur(21.75px);
-                        border-radius: 50%;
-                    }
-
-                    &::before {
-                        content: '';
-                        position: absolute;
-                        width: 2px;
-                        height: 138px;
-                        left: 19px;
-                        top: 20px;
-                        background: linear-gradient(180.00deg, rgba(3, 87, 176, 1.00) 0%, rgba(21, 104, 243, 0.00) 100%);
-                    }
-
-                }
-            }
 
             .right {
                 margin-left: 8px;
@@ -394,5 +528,98 @@ const initPageData = ()=>{
             font-weight: 400;
         }
     }
+}
+
+.certificate {
+    height: 700px;
+    // background-color: #2d7ecf;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .line {
+        width: 1030px;
+        width: calc(100vw - 410px);
+
+
+        border: 2px dashed rgba(0, 84, 167, 0.32);
+    }
+
+    .box {
+
+        .item {
+            position: relative;
+            margin-top: 45px;
+            width: 172px;
+            height: 212px;
+            background: linear-gradient(-51.95deg, rgba(246, 246, 250, 1.00) 0%, rgba(254, 255, 254, 1.00) 90%);
+            border: 2px solid rgb(255, 255, 255);
+            box-shadow: 5px 2px 24px rgba(220, 220, 220, 0.5);
+            border-radius: 4px;
+            cursor: pointer;
+
+            .image-mask {
+                position: absolute;
+                width: 139.68px;
+                height: 187.06px;
+                left: 16px;
+                bottom: 12px;
+                background: rgba(101, 101, 101, 0.6);
+                opacity: 0;
+                transition: all 0.5s;
+
+            }
+
+            &:hover .image-mask {
+                opacity: 1;
+            }
+
+            img {
+                width: 139.68px;
+                height: 187.06px;
+                margin: 12px 16px;
+            }
+
+
+        }
+    }
+
+    .top {
+        width: calc(100vw - 240px);
+        margin-bottom: 40px;
+        display: flex;
+        justify-content: space-between;
+        &.special {
+            justify-content: space-around;
+        }
+        .item {
+            .icon-dot {
+                position: absolute;
+                bottom: -61px;
+                left: 66px;
+            }
+        }
+
+    }
+
+    .bottom {
+        display: flex;
+        width: calc(100vw - 410px);
+        justify-content: space-around;
+
+        .item {
+            .icon-dot {
+                position: absolute;
+                top: -68px;
+                left: 66px;
+            }
+        }
+
+        &.special {
+            width: calc(100vw - 590px);
+            justify-content: space-between;
+        }
+    }
+
 }
 </style>

@@ -84,7 +84,6 @@ export function queryURLParams(url) {
 export const queryBannerImg = (index) => store.state.bannerList.length && store.state.bannerList.filter(item => item.nbannerPlace == index)[0]?.nbannerImg || 'https://easyv.assets.dtstack.com/homepage/common/assets/images/market-consultation/search_bg.jpg'
 // 获取行业名称
 export const queryIndustryNameList = (ids) => {
-  console.log(ids)
   let arr = []
   ids.map(id => {
     arr.push(store.state.solutionList.filter(item=>item.id == id)[0]?.industryName)

@@ -7,153 +7,74 @@
 <script setup>
 import * as echarts from "echarts";   //引入echarts
 import china from "@/assets/china.json";
+import { getSalesOption } from "./test.js"
 
 import { onMounted, reactive, ref } from "vue";
 
 const chart = ref();
 
-// 各省的人口数据
-const mapData = [
-    { name: "河北省", value: 10000 },
-    { name: "山西省", value: 9000 },
-    { name: "辽宁省", value: 4000 },
-    { name: "吉林省", value: 5000 },
-    { name: "黑龙江省", value: 6000 },
-    { name: "江苏省", value: 2000 },
-    { name: "浙江省", value: 800 },
-    { name: "安徽省", value: 2000 },
-    { name: "福建省", value: 4600 },
-    { name: "江西省", value: 3200 },
-    { name: "山东省", value: 200 },
-    { name: "河南省", value: 200 },
-    { name: "湖北省", value: 2060 },
-    { name: "湖南省", value: 3000 },
-    { name: "广东省", value: 2900 },
-    { name: "海南省", value: 2000 },
-    { name: "四川省", value: 2120 },
-    { name: "贵州省", value: 2350 },
-    { name: "云南省", value: 2000 },
-    { name: "陕西省", value: 2890 },
-    { name: "甘肃省", value: 2740 },
-    { name: "青海省", value: 2660 },
-    { name: "台湾省", value: 2440 },
-    { name: "内蒙古自治区", value: 2350 },
-    { name: "广西壮族自治区", value: 2700 },
-    { name: "西藏自治区", value: 2000 },
-    { name: "宁夏回族自治区", value: 2000 },
-    { name: "新疆维吾尔自治区", value: 2000 },
-    { name: "北京市", value: 2000 },
-    { name: "天津市", value: 2000 },
-    { name: "上海市", value: 2000 },
-    { name: "重庆市", value: 2000 },
-    { name: "香港特别行政区", value: 2000 },
-    { name: "澳门特别行政区", value: 2000 },
-    { name: "南海诸岛", value: 800 },
-];
-// 用做点击完带到init方法的数据
-//   const provinces = {
-//     台湾省: taiwan,
-//     河北省: hebei,
-//     山西省: shanxi,
-//     辽宁省: liaoning,
-//     吉林省: jilin,
-//     黑龙江省: heilongjiang,
-//     江苏省: jiangsu,
-//     浙江省: zhejiang,
-//     安徽省: anhui,
-//     福建省: fujian,
-//     江西省: jiangxi,
-//     山东省: shandong,
-//     河南省: henan,
-//     湖北省: hubei,
-//     湖南省: hunan,
-//     广东省: guangdong,
-//     海南省: hainan,
-//     四川省: sichuan,
-//     贵州省: guizhou,
-//     云南省: yunnan,
-//     陕西省: shanxi2,
-//     甘肃省: gansu,
-//     青海省: qinghai,
-//     新疆维吾尔自治区: xinjiang,
-//     广西省: guangxi,
-//     内蒙古自治区: neimenggu,
-//     宁夏回族自治区: ningxia,
-//     西藏自治区: xizang,
-//     北京市: beijing,
-//     天津市: tianjin,
-//     上海市: shanghai,
-//     重庆市: chongqing,
-//     香港特别行政区: xianggang,
-//     澳门特别行政区: aomen,
-//   };
-// const mapData = [
-//   {name: '漳州市', value: 10100},
-//   {name: '南平市', value: 12000},
-//   {name: '三明市', value: 10300},
-//   {name: '龙岩市', value: 10700},
-//   {name: '厦门市', value: 100},
-//   {name: '莆田市', value: 1200},
-//   {name: '福州市', value: 3000},
-//   {name: '泉州市', value: 1900},
-//   {name: '宁德市', value: 1090},
-// ]
 
-const init = (name) => {
+
+
+
+const init = async (name) => {
     // 获取图标 初始化
     var myChart = echarts.init(document.getElementById("echarts"));
 
-    // 图标指定数据
-    echarts.registerMap(name, name);
+    /////////////
+    const { option, chinaJson } = await getSalesOption()
 
-
-
-
-
-
-
-
-
-
+    /////////////
     var geoGpsMap = {
-        '1': [125.8154, 44.2584],
-        '2': [125.8154, 44.2584],
-        '3': [117.1582, 36.8701],
-        '4': [117.1582, 36.8701],
-        '5': [103.9526, 30.7617],
-        '6': [103.9526, 30.7617],
+        '1': [120.228518, 30.29953],
+        '2': [120.228518, 30.29953],
     };
+
     var geoCoordMap = {
-        "江苏": [118.8062, 31.9208],
-        '黑龙江': [127.9688, 45.368],
-        '内蒙古': [110.3467, 41.4899],
-        "吉林": [125.8154, 44.2584],
-        '北京市': [116.4551, 40.2539],
-        "辽宁": [123.1238, 42.1216],
-        "河北": [114.4995, 38.1006],
-        "天津": [117.4219, 39.4189],
-        "山西": [112.3352, 37.9413],
-        "陕西": [109.1162, 34.2004],
-        "甘肃": [103.5901, 36.3043],
-        "宁夏": [106.3586, 38.1775],
-        "青海": [101.4038, 36.8207],
-        "新疆": [87.9236, 43.5883],
-        "四川": [103.9526, 30.7617],
-        "重庆": [108.384366, 30.439702],
-        "山东": [117.1582, 36.8701],
-        "河南": [113.4668, 34.6234],
-        "安徽": [117.29, 32.0581],
-        "湖北": [114.3896, 30.6628],
-        "浙江": [119.5313, 29.8773],
-        "福建": [119.4543, 25.9222],
-        "江西": [116.0046, 28.6633],
-        "湖南": [113.0823, 28.2568],
-        "贵州": [106.6992, 26.7682],
-        "云南": [102.9199, 25.4663],
-        "广东": [113.12244, 23.009505],
-        "广西": [108.479, 23.1152],
-        "海南": [110.3893, 19.8516],
-        '上海': [121.4648, 31.2891],
+        '新疆': [86.61, 40.79],
+        '西藏': [89.13, 30.66],
+        '黑龙江': [128.34, 47.05],
+        '吉林': [126.32, 43.38],
+        '辽宁': [123.42, 41.29],
+        '内蒙古': [112.17, 42.81],
+        '北京': [116.40, 40.40],
+        '宁夏': [106.27, 36.76],
+        '山西': [111.95, 37.65],
+        '河北': [115.21, 38.44],
+        '天津': [117.04, 39.52],
+        '青海': [97.07, 35.62],
+        '甘肃': [103.82, 36.05],
+        '山东': [118.01, 36.37],
+        '陕西': [108.94, 34.46],
+        '河南': [113.46, 34.25],
+        '安徽': [117.28, 31.86],
+        '江苏': [120.26, 32.54],
+        '上海': [121.46, 31.28],
+        '四川': [103.36, 30.65],
+        '湖北': [112.29, 30.98],
+        '浙江': [120.228518, 30.29953],
+        '重庆': [107.51, 29.63],
+        '湖南': [112.08, 27.79],
+        '江西': [115.89, 27.97],
+        '贵州': [106.91, 26.67],
+        '福建': [118.31, 26.07],
+        '云南': [101.71, 24.84],
+        '台湾': [121.01, 23.54],
+        '广西': [108.67, 23.68],
+        '广东': [113.98, 22.82],
+        '海南': [110.03, 19.33],
+        '澳门': [113.54, 22.19],
+        '香港': [114.17, 22.32],
+    };
+
+    var researchBaseMap = {
+        '无锡': [120.296448, 31.548798],
+        '西安': [108.96285, 34.341785],
+        '长春': [125.332618, 43.917827],
+        '成都': [104.081656, 30.696074],
+        '杭州': [120.228518, 30.29953],
+
+
     };
 
     var d1 = {
@@ -177,7 +98,7 @@ const init = (name) => {
         '河南': 15717,
         '安徽': 15671,
         '湖北': 3714,
-        '浙江': 3141,
+        // '浙江': 3141,
         '福建': 955,
         '江西': 4978,
         '湖南': 778,
@@ -363,40 +284,21 @@ const init = (name) => {
     };
 
     var colors = [
-        ["#1DE9B6", "#1DE9B6", "#FFDB5C", "#FFDB5C", "#04B9FF", "#04B9FF"],
-        ["#1DE9B6", "#F46E36", "#04B9FF", "#5DBD32", "#FFC809", "#FB95D5", "#BDA29A", "#6E7074", "#546570", "#C4CCD3"],
+        ["#1DE9B6", "#FFDB5C", "#FFDB5C", "#04B9FF", "#04B9FF"],
+        ["#1DE9B6", "#04B9FF", "#5DBD32", "#FFC809", "#FB95D5", "#BDA29A", "#6E7074", "#546570", "#C4CCD3"],
         ["#37A2DA", "#67E0E3", "#32C5E9", "#9FE6B8", "#FFDB5C", "#FF9F7F", "#FB7293", "#E062AE", "#E690D1", "#E7BCF3", "#9D96F5", "#8378EA", "#8378EA"],
         ["#DD6B66", "#759AA0", "#E69D87", "#8DC1A9", "#EA7E53", "#EEDD78", "#73A373", "#73B9BC", "#7289AB", "#91CA8C", "#F49F42"],
     ];
     var colorIndex = 0;
-    // var geoCoordMap = {
-    //     '郑州': [113.64964385, 34.7566100641],
-    //     '开封': [114.351642118, 34.8018541758],
-    //     '洛阳': [112.447524769, 34.6573678177],
-    //     '平顶山': [113.300848978, 33.7453014565],
-    //     '安阳': [114.351806508, 36.1102667222],
-    //     '鹤壁': [114.297769838, 35.7554258742],
-    //     '新乡': [113.912690161, 35.3072575577],
-    //     '焦作': [113.211835885, 35.234607555],
-    //     '濮阳': [115.026627441, 35.7532978882],
-    //     '漯河': [114.0460614, 33.5762786885],
-    //     '三门峡': [111.181262093, 34.7833199411],
-    //     '南阳': [112.542841901, 33.0114195691],
-    //     "商丘": [115.641885688, 34.4385886402],
-    //     '信阳': [114.085490993, 32.1285823075],
-    //     '周口': [114.654101942, 33.6237408181],
-    //     '许昌': [113.83531246, 34.0267395887],
-    //     '驻马店': [114.049153547, 32.9831581541]
-    // };
 
-    var year = ["长春", "青岛",  "成都"];
+    var year = ["杭州", "杭州", "杭州"];
     var mapData = [
         [],
         [],
-        [],
-        [],
-        [],
-        [],
+        // [],
+        // [],
+        // [],
+        // [],
     ];
 
     /*柱子Y名称*/
@@ -405,59 +307,42 @@ const init = (name) => {
 
     for (var key in geoCoordMap) {
         mapData[0].push({
-            "year": '长春',
+            "year": '杭州',
             "name": key,
-            "value": d1[key] / 100,
-            "value1": d1[key] / 100,
+            "value": 1,
+            "value1": 1,
         });
+        // mapData[1].push({
+        //     "year": '长春',
+        //     "name": key,
+        //     "value": d1[key] / 100,
+        //     "value1": d2[key] / 100,
+        // });
+        // mapData[2].push({
+        //     "year": '青岛',
+        //     "name": key,
+        //     "value": d3[key] / 100,
+        //     "value1": d3[key] / 100,
+        // });
+
+    }
+
+    for (var key in researchBaseMap) {
         mapData[1].push({
-            "year": '长春',
+            "year": '杭州',
             "name": key,
-            "value": d1[key] / 100,
-            "value1": d2[key] / 100,
-        });
-        mapData[2].push({
-            "year": '青岛',
-            "name": key,
-            "value": d3[key] / 100,
-            "value1": d3[key] / 100,
-        });
-        mapData[3].push({
-            "year": '青岛',
-            "name": key,
-            "value": d3[key] / 100,
-            "value1": d4[key] / 100,
-        });
-        mapData[4].push({
-            "year": '成都',
-            "name": key,
-            "value": d5[key] / 100,
-            "value1": d5[key] / 100,
-        });
-        mapData[5].push({
-            "year": '成都',
-            "name": key,
-            "value": d5[key] / 100,
-            "value1": d6[key] / 100,
+            "value": 1,
+            "value1": 1,
         });
     }
 
-    for (var i = 0; i < mapData.length; i++) {
-        mapData[i].sort(function sortNumber(a, b) { return a.value - b.value });
-        barData.push([]);
-        categoryData.push([]);
-        for (var j = 0; j < mapData[i].length; j++) {
-            barData[i].push(mapData[i][j].value1);
-            categoryData[i].push(mapData[i][j].name);
-        }
-    }
 
 
     echarts.registerMap('china', china);
-    var convertData = function (data) {
+    var convertData = function (data, n) {
         var res = [];
         for (var i = 0; i < data.length; i++) {
-            var geoCoord = geoCoordMap[data[i].name];
+            var geoCoord = n === 0 ? geoCoordMap[data[i].name] : researchBaseMap[data[i].name];
             if (geoCoord) {
                 res.push({
                     name: data[i].name,
@@ -468,11 +353,11 @@ const init = (name) => {
         return res;
     };
 
-    var convertToLineData = function (data, gps) {
+    var convertToLineData = function (data, gps, n) {
         var res = [];
         for (var i = 0; i < data.length; i++) {
             var dataItem = data[i];
-            var toCoord = geoCoordMap[dataItem.name];
+            var toCoord = n === 0 ? geoCoordMap[dataItem.name] : researchBaseMap[dataItem.name];
             var fromCoord = gps; //郑州
             //  var toCoord = geoGps[Math.random()*3]; 
             if (fromCoord && toCoord) {
@@ -484,6 +369,7 @@ const init = (name) => {
                 }]);
             }
         }
+
         return res;
     };
 
@@ -493,7 +379,7 @@ const init = (name) => {
             data: year,
             axisType: 'category',
             autoPlay: true,
-            playInterval: 3000,
+            playInterval: 5000,
             left: '10%',
             right: '10%',
             bottom: '3%',
@@ -546,15 +432,7 @@ const init = (name) => {
                 bottom: '10%',
                 width: '20%'
             },
-            tooltip: {
-                trigger: 'axis', // hover触发器
-                axisPointer: { // 坐标轴指示器，坐标轴触发有效
-                    type: 'shadow', // 默认为直线，可选为：'line' | 'shadow'
-                    shadowStyle: {
-                        color: 'rgba(150,150,150,0.1)' //hover颜色
-                    }
-                }
-            },
+
             geo: {
                 show: true,
                 map: 'china',
@@ -597,228 +475,181 @@ const init = (name) => {
                 }
             },
         },
-        options: []
+        options: [
+            // getSalesOption().option
+        ]
 
     };
 
     for (var n = 0; n < year.length; n++) {
+        if (n == 0 || n == 1) {
+            optionXyMap01.options.push({
+                backgroundColor: '#013954',
+                title:
 
-        optionXyMap01.options.push({
-            backgroundColor: '#013954',
-            title:
 
-
-                [
-                //     {
-                //     text: '整车物流平台',
-                //     subtext: '   数据由整车物流部提供',
-                //     left: '35%',
-                //     top: '15%',
-                //     textStyle: {
-                //         color: '#fff',
-                //         fontSize: 25
-                //     }
-                // },
-                    // {
-                    //     id: 'statistic',
-                    //     text: year[n] + "数据统计情况",
-                    //     left: '75%',
-                    //     top: '8%',
-                    //     textStyle: {
-                    //         color: '#fff',
-                    //         fontSize: 25
-                    //     }
-                    // }
-                ],
-            xAxis: {
-                show: false,
-                type: 'value',
-                scale: true,
-                position: 'top',
-                min: 0,
-                boundaryGap: false,
-                splitLine: {
-                    show: false
-                },
-                axisLine: {
-                    show: false
-                },
-                axisTick: {
-                    show: false
-                },
-                axisLabel: {
-                    margin: 2,
-                    textStyle: {
-                        color: '#aaa'
-                    }
-                },
-            },
-            yAxis: {
-                show: false,
-                type: 'category',
-                //  name: 'TOP 20',
-                nameGap: 16,
-                axisLine: {
-                    show: true,
-                    lineStyle: {
-                        color: '#ddd'
-                    }
-                },
-                axisTick: {
-                    show: false,
-                    lineStyle: {
-                        color: '#ddd'
-                    }
-                },
-                axisLabel: {
-                    interval: 0,
-                    textStyle: {
-                        color: '#ddd'
-                    }
-                },
-                data: categoryData[n]
-            },
-
-            series: [
-                //未知作用
-                {
-                    //文字和标志
-                    name: 'light',
-                    type: 'scatter',
-                    coordinateSystem: 'geo',
-                    data: convertData(mapData[n]),
-                    symbolSize: function (val) {
-                        return val[2] / 10;
-                    },
-                    label: {
-                        normal: {
-                            formatter: '{b}',
-                            position: 'right',
-                            show: true
-                        },
-                        emphasis: {
-                            show: true
-                        }
-                    },
-                    itemStyle: {
-                        normal: {
-                            color: colors[colorIndex][n]
-                        }
-                    }
-                },
-                //地图？
-                {
-                    type: 'map',
-                    map: 'china',
-                    geoIndex: 0,
-                    aspectScale: 0.75, //长宽比
-                    showLegendSymbol: false, // 存在legend时显示
-                    label: {
-                        normal: {
-                            show: false
-                        },
-                        emphasis: {
-                            show: false,
+                    [
+                        {
+                            text: n == 0 ? '业务覆盖面' : '产研基地',
+                            // subtext: '   数据由整车物流部提供',
+                            left: '35%',
+                            top: '10%',
                             textStyle: {
-                                color: '#fff'
+                                color: '#fff',
+                                fontSize: 25
                             }
-                        }
-                    },
-                    roam: true,
-                    itemStyle: {
-                        normal: {
-                            areaColor: '#031525',
-                            borderColor: '#FFFFFF',
                         },
-                        emphasis: {
-                            areaColor: '#2B91B7'
-                        }
+                        // {
+                        //     id: 'statistic',
+                        //     text: year[n] + "数据统计情况",
+                        //     left: '75%',
+                        //     top: '8%',
+                        //     textStyle: {
+                        //         color: '#fff',
+                        //         fontSize: 25
+                        //     }
+                        // }
+                    ],
+                series: [
+                    //未知作用
+                    // {
+                    //     //文字和标志
+                    //     name: 'light',
+                    //     type: 'scatter',
+                    //     coordinateSystem: 'geo',
+                    //     data: convertData(mapData[n], n),
+                    //     symbol: 'circle',
+                    //     symbolSize: 1,
+                    //     label: {
+                    //         normal: {
+                    //             formatter: '{b}',
+                    //             position: 'right',
+                    //             show: true
+                    //         },
+                    //         emphasis: {
+                    //             show: true
+                    //         }
+                    //     },
+                    //     itemStyle: {
+                    //         normal: {
+                    //             color: 'rgb(255,255,255)'// colors[colorIndex][n]
+                    //         }
+                    //     }
+                    // },
+                    //地图？
+                    {
+                        type: 'map',
+                        map: 'china',
+                        geoIndex: 0,
+                        aspectScale: 0.75, //长宽比
+                        showLegendSymbol: false, // 存在legend时显示
+                        label: {
+                            normal: {
+                                show: false
+                            },
+                            emphasis: {
+                                show: false,
+                                textStyle: {
+                                    color: '#fff'
+                                }
+                            }
+                        },
+                        roam: true,
+                        itemStyle: {
+                            normal: {
+                                areaColor: '#031525',
+                                borderColor: '#FFFFFF',
+                            },
+                            emphasis: {
+                                areaColor: '#2B91B7'
+                            }
+                        },
+                        animation: false,
+                        // data: mapData[n]
                     },
-                    animation: false,
-                    data: mapData
-                },
-                //地图点的动画效果
-                {
-                    //  name: 'Top 5',
-                    type: 'effectScatter',
-                    coordinateSystem: 'geo',
-                    data: convertData(mapData[n].sort(function (a, b) {
-                        return b.value - a.value;
-                    }).slice(0, 20)),
-                    symbolSize: function (val) {
-                        return val[2] / 10;
+                    //地图点的动画效果
+                    {
+                        //  name: 'Top 5',
+                        type: 'effectScatter',
+                        coordinateSystem: 'geo',
+                        data: convertData(mapData[n].sort(function (a, b) {
+                            return b.value - a.value;
+                        }), n),
+                        rippleEffect: { //涟漪特效
+                            period: 4, //动画时间，值越小速度越快
+                            brushType: 'stroke', //波纹绘制方式 stroke, fill
+                            scale: 4 //波纹圆环最大限制，值越大波纹越大
+                        },
+                        symbolSize: 3,
+                        showEffectOn: 'render',
+
+                        hoverAnimation: true,
+                        label: {
+                            normal: {
+                                formatter: '{b}',
+                                position: 'right',
+                                show: true
+                            }
+                        },
+                        itemStyle: {
+                            normal: {
+                                color: colors[colorIndex][n],
+                                shadowBlur: 10,
+                                shadowColor: colors[colorIndex][n]
+                            }
+                        },
+                        zlevel: 1
                     },
-                    showEffectOn: 'render',
-                    rippleEffect: {
-                        brushType: 'stroke'
+                    //地图线的动画效果
+                    {
+                        type: 'lines',
+                        zlevel: 2,
+                        effect: {
+                            show: true,
+                            period: 3, //箭头指向速度，值越小速度越快
+                            trailLength: 0.02, //特效尾迹长度[0,1]值越大，尾迹越长重
+                            symbol: 'arrow', //箭头图标
+                            symbolSize: 3, //图标大小
+                        },
+                        lineStyle: {
+                            normal: {
+                                color: colors[colorIndex][n],
+                                width: 0.1, //尾迹线条宽度
+                                opacity: 0.5, //尾迹线条透明度
+                                curveness: .3 //尾迹线条曲直度
+                            }
+                        },
+                        data: convertToLineData(mapData[n], geoGpsMap[n + 1], n)
                     },
-                    hoverAnimation: true,
-                    label: {
-                        normal: {
-                            formatter: '{b}',
-                            position: 'right',
-                            show: true
-                        }
-                    },
-                    itemStyle: {
-                        normal: {
-                            color: colors[colorIndex][n],
-                            shadowBlur: 10,
-                            shadowColor: colors[colorIndex][n]
-                        }
-                    },
-                    zlevel: 1
-                },
-                //地图线的动画效果
-                {
-                    type: 'lines',
-                    zlevel: 2,
-                    effect: {
-                        show: true,
-                        period: 4, //箭头指向速度，值越小速度越快
-                        trailLength: 0.02, //特效尾迹长度[0,1]值越大，尾迹越长重
-                        symbol: 'arrow', //箭头图标
-                        symbolSize: 3, //图标大小
-                    },
-                    lineStyle: {
-                        normal: {
-                            color: colors[colorIndex][n],
-                            width: 0.1, //尾迹线条宽度
-                            opacity: 0.5, //尾迹线条透明度
-                            curveness: .3 //尾迹线条曲直度
-                        }
-                    },
-                    data: convertToLineData(mapData[n], geoGpsMap[n + 1])
-                },
-                //柱状图
-                // {
-                //     zlevel: 1.5,
-                //     type: 'bar',
-                //     symbol: 'none',
-                //     itemStyle: {
-                //         normal: {
-                //             color: colors[colorIndex][n]
-                //         }
-                //     },
-                //     data: barData[n]
-                // }
-            ]
-        })
+                    //柱状图
+                    // {
+                    //     zlevel: 1.5,
+                    //     type: 'bar',
+                    //     symbol: 'none',
+                    //     itemStyle: {
+                    //         normal: {
+                    //             color: colors[colorIndex][n]
+                    //         }
+                    //     },
+                    //     data: barData[n]
+                    // }
+                ]
+            })
+        }
     }
 
 
+    // optionXyMap01.options[0] = option
 
 
 
 
-
-
-
+    console.log(optionXyMap01)
 
     // 把option设置给myChart实例
     myChart.setOption(optionXyMap01, true);
 
- 
+
 };
 
 
@@ -829,5 +660,4 @@ onMounted(() => {
 });
 </script>
    
-<style scoped>
-</style>
+<style scoped></style>

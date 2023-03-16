@@ -147,7 +147,6 @@ const mouseOver = (val) => {
     let solution_id = val.target.getAttribute('solution_id')
     let index = list.findIndex(item => item.id.toString() === solution_id)
     let list_length = list.length
-    console.log(index)
 
     let arr
     if (list.length > 5) {
@@ -158,7 +157,6 @@ const mouseOver = (val) => {
             arr = [...list, ...list].slice(lastIndex - 2, lastIndex + 3)
         } else if ([list_length - 2, list_length-1].includes(index)) {
             lastIndex = [...list, ...list].findIndex(item => item.id=== list[index].id)
-            console.log(lastIndex)
 
             arr = [...list, ...list].slice(lastIndex - 2, lastIndex + 3)
 

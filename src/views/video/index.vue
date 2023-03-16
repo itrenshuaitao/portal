@@ -76,7 +76,6 @@ const getVideoList = (pageIndex) => {
     }
     queryVideoList(params).then(({ code, data, totalResults }) => {
         if (code === 0) {
-            console.log(data)
             videoList.value = data
             pagination.total = totalResults
         }

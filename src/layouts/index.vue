@@ -38,7 +38,6 @@ const handleClick = () => {
         url: "http://jsonplaceholder.typicode.com/posts/2",
     };
     proxy.$get(params).then((data) => {
-        console.log(data)
     }).catch((e) => {
 
     })

@@ -93,7 +93,7 @@ const isShow = true;
   z-index: 10;
   width: 100%;
   height: 164px;
-  background-image: url(https://img.tukuppt.com/ad_preview/00/03/79/5c98b10ebb1ec.jpg!/fw/780);
+  background-image: url(https://images.unsplash.com/photo-1678039529572-d415a9444e73?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2532&q=80);
   background-repeat: no-repeat;
   background-size: 100% 290px;
 

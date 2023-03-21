@@ -106,12 +106,12 @@
   box-shadow: none;
   // box-shadow:none;
 }
-.el-input__inner{
-  color: #666;
-  font-family: 'alibb-regular';
-  height: 46px;
-  font-size: 18px;
-}
+// .el-input__inner{
+//   color: #666;
+//   font-family: 'alibb-regular';
+//   height: 46px;
+//   font-size: 18px;
+// }
 .el-input.is-disabled .el-input__wrapper{
   background: #F1F1F1;
   border: 1px solid #969BA0;
@@ -238,6 +238,7 @@
     padding: 24px 24px 0 24px;
     margin-right: 0;
     font-family: "alibb-normal";
+    display:none;
   }
   .my-header{
     justify-content: space-between;

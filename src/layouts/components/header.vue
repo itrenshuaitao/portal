@@ -23,64 +23,70 @@
     </div>
   </el-header>
 
-  <el-dialog v-model="dialogFormVisible" class="booking-dialog">
-    <div class="box left">
-      <p>预约体验</p>
-      <p>请提交需求，我们马上跟您取得联系</p>
-      <p>立即拨打服务热线：173 6707 0802</p>
-    </div>
-    <div class="box right">
-      <el-form :model="form" label-position="top">
-        <el-form-item label="姓名" :label-width="formLabelWidth" :rules="[
-          {
-            required: true,
-            message: 'Please input email address',
-            trigger: 'blur',
-          },
-        ]">
-          <el-input v-model="form.name" autocomplete="off" />
-        </el-form-item>
-        <el-form-item label="公司名称" :label-width="formLabelWidth" :rules="[
-          {
-            required: true,
-            message: 'Please input email address',
-            trigger: 'blur',
-          },
-        ]">
-          <el-input v-model="form.companyName" autocomplete="off" />
-        </el-form-item>
-        <el-form-item label="您的电话" :label-width="formLabelWidth" :rules="[
-          {
-            required: true,
-            message: 'Please input email address',
-            trigger: 'blur',
-          },
-        ]">
-          <el-input v-model="form.tel" autocomplete="off" />
-        </el-form-item>
-        <el-form-item label="公司所在行业" :label-width="formLabelWidth" :rules="[
-          {
-            required: true,
-            message: 'Please input email address',
-            trigger: 'blur',
-          },
-        ]">
-          <el-select v-model="form.industry" placeholder="请选择">
-            <el-option label="Zone No.1" value="shanghai" />
-            <el-option label="Zone No.2" value="beijing" />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="如果您有其他想了解的信息或疑问，欢迎给我们留言" :label-width="formLabelWidth">
-          <el-input v-model="form.message" autocomplete="off" />
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="submitForm(ruleFormRef)">
-            立即预约
-          </el-button>
-        </el-form-item>
+  <el-dialog v-model="dialogFormVisible">
 
-      </el-form>
+    <div class="booking-dialog">
+      <div class="box left">
+        <p>预约体验</p>
+        <p>请提交需求，我们马上跟您取得联系</p>
+        <p>立即拨打服务热线：173 6707 0802</p>
+      </div>
+      <div class="box right">
+        <el-form :model="form" label-position="top">
+          <el-form-item label="公司名称" :label-width="formLabelWidth" :rules="[
+            {
+              required: true,
+              message: 'Please input email address',
+              trigger: 'blur',
+            },
+          ]">
+            <el-input v-model="form.companyName" autocomplete="off" />
+          </el-form-item>
+          <el-form-item label="公司所在行业" :label-width="formLabelWidth" :rules="[
+            {
+              required: true,
+              message: 'Please input email address',
+              trigger: 'blur',
+            },
+          ]">
+            <el-select v-model="form.industry" placeholder="请选择">
+              <el-option label="Zone No.1" value="shanghai" />
+              <el-option label="Zone No.2" value="beijing" />
+            </el-select>
+          </el-form-item>
+          <el-form-item label="姓名" :label-width="formLabelWidth" :rules="[
+            {
+              required: true,
+              message: 'Please input email address',
+              trigger: 'blur',
+            },
+          ]">
+            <el-input v-model="form.name" autocomplete="off" />
+          </el-form-item>
+
+          <el-form-item label="您的电话" :label-width="formLabelWidth" :rules="[
+            {
+              required: true,
+              message: 'Please input email address',
+              trigger: 'blur',
+            },
+          ]">
+            <el-input v-model="form.tel" autocomplete="off" />
+          </el-form-item>
+
+          <el-form-item label="您遇到了哪些机械加工问题或疑问，欢迎给我们留言" :label-width="formLabelWidth">
+            <el-input v-model="form.message" autocomplete="off" type="textarea" />
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="submitForm(ruleFormRef)">
+              立即预约
+            </el-button>
+          </el-form-item>
+
+        </el-form>
+      </div>
     </div>
+
 
   </el-dialog>
 </template>
@@ -89,7 +95,7 @@
 import { reactive, ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router';
 import { useStore } from "vuex";
-import { queryIndustryList, queryCaseList,queryNewsList,queryVideoList } from "@/api/index"
+import { queryIndustryList, queryCaseList, queryNewsList, queryVideoList } from "@/api/index"
 const store = useStore();
 let router = useRouter()
 
@@ -134,7 +140,7 @@ const getSolutionList = () => {
   queryIndustryList(params).then(({ code, data }) => {
     if (code === 0) {
       solutionList.value = data
-      store.commit('setSolutionList',data)
+      store.commit('setSolutionList', data)
 
     }
   })
@@ -167,7 +173,7 @@ const getNewsList = (pageIndex) => {
 const getVideoList = (pageIndex) => {
   const params = {
     pageIndex,
-    pageSize:3
+    pageSize: 3
   }
   queryVideoList(params).then(({ code, data }) => {
     if (code === 0) {
@@ -211,9 +217,12 @@ defineExpose({
 }
 
 .booking-dialog {
+  display: flex;
+  justify-content: space-between;
+  color:#fff;
+
   .box {
-    display: inline-block;
-    width: 50%;
+    width: 46%;
     vertical-align: top;
 
     :deep(.el-form-item__label) {
@@ -221,6 +230,12 @@ defineExpose({
     }
 
     &.left {
+      padding: 40px 20px;
+      background-image: url('https://img95.699pic.com/photo/40015/4163.jpg_wh860.jpg');
+      background-repeat: no-repeat;
+      background-size: 340px 560px;
+
+
       :nth-child(1) {
         font-size: 28px;
         font-weight: 700;

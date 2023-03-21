@@ -88,8 +88,8 @@
                 <el-carousel-item v-for="arr in findCertList" :key="item">
                     <div class="certificate">
 
-                        <div :class="`box top ${arr[0]?.length < 3  && 'special'}`">
-                            <div class="item" v-for="topItem in arr[0]" @click="()=>showImage(topItem)">
+                        <div :class="`box top ${arr[0]?.length < 3 && 'special'}`">
+                            <div class="item" v-for="topItem in arr[0]" @click="() => showImage(topItem)">
                                 <div class="icon-dot">
                                     <div></div>
                                 </div>
@@ -99,7 +99,7 @@
                         </div>
                         <div class="line"></div>
                         <div :class="`box bottom ${arr[1]?.length == 2 && 'special'}`">
-                            <div class="item" v-for="bottomItem in arr[1]"  @click="()=>showImage(bottomItem)">
+                            <div class="item" v-for="bottomItem in arr[1]" @click="() => showImage(bottomItem)">
                                 <div class="icon-dot">
                                     <div></div>
                                 </div>
@@ -146,12 +146,12 @@ const number1 = ref(null)
 const number2 = ref(null)
 const number3 = ref(null)
 const number4 = ref(null)
-onMounted(() => {
+onMounted(async () => {
 
     bannerImg.value = queryBannerImg(6)
-    initPageData()
+    await initPageData()
     nextTick(() => {
-        companylist.value[1]?.companyType == 0 && window.addEventListener("scroll", showDiv);
+        window.addEventListener("scroll", showDiv);
     })
 
 })
@@ -160,19 +160,22 @@ onUnmounted(() => {
     window.removeEventListener("scroll", showDiv);
 });
 const showDiv = () => {
-    //获取滚动条距离页面顶部的距离，如果滚动条距离页面距离大于目标元素距离页面顶部的距离，则目标元素已经往上滚动，且超出了当前可视区域，则给该元素添加fixed属性
-    const el = document.querySelector('.core-data').getBoundingClientRect()
-    const viewPortHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
-    const offsetTop = el.top
-    const offsetBottom = el.bottom;
-    const scrollTop = document.documentElement.scrollTop
-    const top = offsetTop - scrollTop
-    // 进入可视区域
-    if (top <= viewPortHeight && offsetBottom >= 0) {
-        [0, 1, 2, 3, 4].map(item => {
-            proxy.$refs[`number${item}`][0].restart()
-        })
-    } else {
+    if (companylist.value[1]?.companyType == 0) {
+
+        //获取滚动条距离页面顶部的距离，如果滚动条距离页面距离大于目标元素距离页面顶部的距离，则目标元素已经往上滚动，且超出了当前可视区域，则给该元素添加fixed属性
+        const el = document.querySelector('.core-data').getBoundingClientRect()
+        const viewPortHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
+        const offsetTop = el.top
+        const offsetBottom = el.bottom;
+        const scrollTop = document.documentElement.scrollTop
+        const top = offsetTop - scrollTop
+        // 进入可视区域
+        if (top <= viewPortHeight && offsetBottom >= 0) {
+            [0, 1, 2, 3, 4].map(item => {
+                proxy.$refs[`number${item}`][0].play()
+            })
+        } else {
+        }
     }
 
 }
@@ -209,7 +212,7 @@ const initPageData = () => {
             findCulture.value = data[0]
         }
     })
-    queryFindhistoryById().then(({ code, data }) => {
+    queryFindhistoryById({ pageIndex: 1, pageSize: 500 }).then(({ code, data }) => {
         if (code === 0) {
             let index = 0;
             let newArray = [];
@@ -265,9 +268,9 @@ const initPageData = () => {
 
 }
 
-const showImage = (val)=>{
-    showImageViewer.value=true
-    imgViewerUrlList.value=[val.certImg]
+const showImage = (val) => {
+    showImageViewer.value = true
+    imgViewerUrlList.value = [val.certImg]
 }
 </script>
 
@@ -386,7 +389,7 @@ const showImage = (val)=>{
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        transition: all 0.3s linear;
+        transition: padding 0.3s linear;
 
         &:hover {
             padding: 40px;
@@ -447,6 +450,9 @@ const showImage = (val)=>{
             display: flex;
 
             .icon-dot {
+                position: relative;
+
+
                 &::before {
                     content: '';
                     position: absolute;
@@ -589,9 +595,11 @@ const showImage = (val)=>{
         margin-bottom: 40px;
         display: flex;
         justify-content: space-between;
+
         &.special {
             justify-content: space-around;
         }
+
         .item {
             .icon-dot {
                 position: absolute;

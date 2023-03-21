@@ -146,33 +146,37 @@ export const queryCompanylist = () => {
 //公司介绍-企业介绍
 export const queryFindfirmById = () => {
     return request({
-        url: '/website-rest/findfirmById',
+        url: '/website-rest/firmList',
         method: 'get',
-        params: { id: 1 }
     })
 }
 //公司介绍-核心数据
 export const queryFindcoredataById = () => {
     return request({
-        url: '/website-rest/findcoredataById',
+        url: '/website-rest/coredataList',
         method: 'get',
-        params: { companyId: 2 }
     })
 }
-//公司介绍-核心数据
+//公司介绍-企业文化
 export const queryFindCultureById = () => {
     return request({
-        url: '/website-rest/findCultureById',
+        url: '/website-rest/CultureList',
         method: 'get',
-        params: { id: 1 }
     })
 }
 // 公司介绍-发展历程
-export const queryFindhistoryById = () => {
+export const queryFindhistoryById = params => {
     return request({
-        url: '/website-rest/findhistoryById',
+        url: '/website-rest/historyList',
         method: 'get',
-        params: { companyId: 4 }
+        params
+    })
+}
+// 公司介绍-服务网络
+export const queryNnetworkLists = () => {
+    return request({
+        url: '/website-rest/networkLists',
+        method: 'get',
     })
 }
 // 公司介绍-荣誉证书
@@ -196,5 +200,30 @@ export const queryJobList = params => {
         url: '/website-rest/queryjobList',
         method: 'get',
         params
+    })
+}
+// 人才招聘-简历提交
+export const subResume = data => {
+    return request({
+        url: '/website-rest/sendmailhtml',
+        method: 'post',
+        data
+    })
+}
+// 联系我们-图片
+export const queryContactImg = () => {
+    return request({
+        url: '/website-rest/findUsById',
+        method: 'get',
+        params:{
+            contactId:1
+        }
+    })
+}
+// 联系我们-地图
+export const queryContactMap = () => {
+    return request({
+        url: '/website-rest/maplists',
+        method: 'get',
     })
 }

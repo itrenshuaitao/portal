@@ -39,7 +39,7 @@ const props = defineProps(['partnerList'])
     width: 80%;
 
     .imgList {
-        animation: to-left 28s linear infinite;
+        animation: to-left 90s linear infinite;
 
     }
 
@@ -49,7 +49,7 @@ const props = defineProps(['partnerList'])
     width: 90%;
 
     .imgList {
-        animation: to-right 28s linear infinite;
+        animation: to-right 90s linear infinite;
     }
 
 }

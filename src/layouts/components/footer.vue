@@ -230,7 +230,6 @@ const isShow = true;
           width: 100px;
           height: 100px;
           padding: 10px;
-          background-color: pink;
         }
       }
 

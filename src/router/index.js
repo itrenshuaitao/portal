@@ -13,7 +13,7 @@ export const constantRoutes = [
         name: 'Home',
         component: () => import('@/views/home/index.vue'),
         meta: {
-          title: "首页",
+          // title: "首页",
           icon: 'icon-home',
         },
       },
@@ -149,9 +149,17 @@ const router = createRouter({
   history: createWebHashHistory(),
   routes: constantRoutes,
 });
+const defaultTitle = '友机技术 | 刀具监控,断刀监控,磨损监控,刀具管理,机床联网,设备联网,MES,制造执行,制造协同'
+router.beforeEach(async (to, form, next) => {
+  if (to.meta.title) {
+    document.title = to.meta.title + '-' + defaultTitle
+  } else {
+    document.title = defaultTitle
+  }
+  next()
+})
 
 router.afterEach((to, from, next) => {
-
   window.scrollTo(0, 0);
 })
 

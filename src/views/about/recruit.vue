@@ -5,16 +5,52 @@
         <div class="title">招聘信息</div>
         <div class="submit">
             <p>可投简历至邮箱：jiaie.gao@ujoin-tech.com</p>
-            <el-button :dark="isDark" plain>我要应聘</el-button>
+            <el-button class="sub-btn" :dark="isDark" plain @click="dialogFormVisible = true">我要应聘</el-button>
+            <el-dialog v-model="dialogFormVisible" width="35%" title="填写信息" @open="clearFormLabelAlign">
+                <el-form label-position="right" ref="subForm" :rules="rules" label-width="100px" :model="formLabelAlign"
+                    style="max-width: 460px">
+                    <el-form-item label="姓名" prop="name">
+                        <el-input v-model="formLabelAlign.name" />
+                    </el-form-item>
+                    <el-form-item label="联系电话" prop="tel">
+                        <el-input v-model="formLabelAlign.tel" />
+                    </el-form-item>
+                    <el-form-item label="附件信息" prop="filePath">
+                        <el-upload ref="uploadRef" v-model="formLabelAlign.filePath" :limit="1" accept=".pdf"
+                            class="upload-demo" :action="uploadUrl" :on-success="handleAvatarSuccess">
+                            <template #trigger>
+                                <el-button type="primary">上传简历</el-button>
+                            </template>
+                            <span class="el-upload__tip">
+                                支持png、pdf等格式
+                            </span>
+                        </el-upload>
+                    </el-form-item>
+                    <el-form-item label="备注">
+                        <el-input v-model="formLabelAlign.remark" type="textarea" />
+                    </el-form-item>
+                </el-form>
+                <template #footer>
+                    <span class="dialog-footer">
+                        <el-button @click="dialogFormVisible = false">取消</el-button>
+                        <el-button type="primary" @click="handleSubResume">
+                            提交
+                        </el-button>
+                    </span>
+                    <div class="tip">
+                        若符合录用条件，我们将在5个工作日内联系您
+                    </div>
+                </template>
+            </el-dialog>
         </div>
         <div class="job-list">
             <div v-for="item in jobList" class="item">
                 <div class="left">
                     <div class="job-name">
-                        <p>产品经理</p>
-                        <p>产品经理- MES方向</p>
-                        <p>全职</p>
-                        <p>3年经验</p>
+                        <p>{{ item.jobName }}</p>
+                        <p>{{ item.jobQname }}</p>
+                        <p>{{ ['', '全职', '兼职', '实习'][item.jobQuality] }}</p>
+                        <p>{{ item.jobExperience }}</p>
                         <div class="city">
                             <el-icon>
                                 <Location />
@@ -22,7 +58,7 @@
                             杭州
                         </div>
                     </div>
-                    <div class="sub pointer">
+                    <div class="sub pointer" @click="postClick">
                         <el-icon>
                             <Position />
 
@@ -37,11 +73,13 @@
                 <div class="right">
                     <div class="description">
                         <p>职位描述</p>
-                        <p>这是一段描述这是一段描述这是一段描述这是一段描述这是一段描述这是一段描述这是一段这是一段描述这是一段描述这是一段描述这是一段描述这是一段描述这是一段描述这是一段描述</p>
+                        <p>{{ item.jobDescription }}</p>
                     </div>
                     <div class="Qualifications ">
                         <p>任职资格</p>
-                        <p>这是一段描述这是一段描述这是一段描述这是一段描述这是一段描述这是一段描述这是一段这是一段描述这是一段描述这是一段描述这是一段描述这是一段描述这是一段描述这是一段描述</p>
+                        <p>
+                            {{ item.jobShip }}
+                        </p>
 
                     </div>
                 </div>
@@ -59,23 +97,85 @@
 
 <script setup>
 import { ref, onMounted, reactive, onUnmounted, getCurrentInstance, toRaw, nextTick } from "vue"
+import { ElMessage, ElMessageBox } from "element-plus";
 import Banner from "@/components/Banner.vue"
 import { queryBannerImg } from "@/utils/index"
-import { queryRecruitimgList, queryJobList } from "@/api/index"
+import { queryRecruitimgList, queryJobList, subResume } from "@/api/index"
+const { proxy } = getCurrentInstance()
+const uploadUrl = ref(
+    import.meta.env.VITE_API_DOMAIN + import.meta.env.VITE_UPLOAD_URL
+);
 const bannerImg = ref('')
 const backgroundImgUrl = ref('')
 const jobList = ref([])
-const jobTotal = ref('')
+const dialogFormVisible = ref(false)
 const pagination = reactive({
     total: 0,
     pageIndex: 1
+})
+const formLabelAlign = reactive({
+    name: '',
+    tel: '',
+    remark: '',
+    filePath: ''
+})
+const rules = reactive({
+    name: [
+        { required: true, message: '请输入姓名', trigger: 'blur' },
+    ],
+    tel: [
+        { required: true, message: '请输入联系电话', trigger: 'blur' },
+    ],
+    filePath: [{ required: true, message: '请上传附件', trigger: 'change' }]
 })
 onMounted(() => {
 
     bannerImg.value = queryBannerImg(7)
 
     initPageData()
+    // handleSubResume()
 })
+
+
+const postClick = () => {
+    dialogFormVisible.value = true
+    clearFormLabelAlign()
+}
+const clearFormLabelAlign = () => {
+    formLabelAlign.name = ''
+    formLabelAlign.tel = ''
+    formLabelAlign.remark = ''
+    formLabelAlign.filePath = ''
+}
+const handleAvatarSuccess = (response, uploadFile) => {
+    if (response.code === 200) {
+        formLabelAlign.filePath = response.data.picture
+        ElMessage.success("上传成功!");
+    } else {
+        ElMessage.error("上传失败!");
+    }
+};
+const handleSubResume = () => {
+    const { filePath, name, tel, remark } = formLabelAlign;
+    proxy.$refs.subForm.validate((valid) => {
+        if (valid) {
+            const data = {
+                filePath,
+                simpleMailMessage: {
+                    text: `姓名：${name}; 联系电话：${tel}; 备注：${remark}`
+                }
+            }
+            subResume(data).then(({ code, data }) => {
+                if (code == 200) {
+                    dialogFormVisible.value = false
+                }
+            })
+        }
+    })
+
+
+}
+
 const initPageData = () => {
     queryRecruitimgList().then(({ code, data }) => {
         if (code == 0) {
@@ -144,7 +244,7 @@ const updataJobList = () => {
             margin-bottom: 32px;
         }
 
-        button {
+        .sub-btn {
             width: 228px;
             height: 74px;
             color: rgb(69, 104, 128);
@@ -155,6 +255,12 @@ const updataJobList = () => {
             // &:hover{
             //     color: #fff;
             // }
+        }
+
+        .tip {
+            color: #b99898;
+            font-size: 12px;
+            margin-top: 8px;
         }
     }
 

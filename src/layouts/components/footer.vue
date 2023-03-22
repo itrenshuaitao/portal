@@ -62,12 +62,16 @@
           <img src="@/assets/img/ico.jpg" alt />
         </div>
         <div class="bottom">
-          <p>杭州产研基地： <br />
-            杭州市上城区鸿泰路128号环翼<br />城4幢1401室
-          </p>
-          <p>无锡产研基地： <br />无锡市新吴区灵江路7号</p>
-          <p>长春分公司： <br />
-            长春市汽车开发区乙一路盛世<br />汽车产业园D5栋317室</p>
+          <p>杭州产研基地： </p>
+
+          <span>
+            杭州市上城区鸿泰路128号环翼城4幢1401室
+          </span>
+          <p>无锡产研基地</p>
+          <span>无锡市新吴区灵江路7号</span>
+          <p>长春分公司：</p>
+          <span>
+            长春市汽车开发区乙一路盛世汽车产业园D5栋317室</span>
         </div>
 
 
@@ -205,7 +209,7 @@ const isShow = true;
     .info {
       display: flex;
       flex-direction: column;
-      align-items: center;
+      align-items: flex-start;
       color: rgb(255, 255, 255);
 
 
@@ -236,14 +240,16 @@ const isShow = true;
       }
 
       .bottom {
-        text-align: center;
         font-size: 16px;
         font-weight: 400;
         line-height: 22px;
 
         p {
+          font-weight: 700;
           margin-top: 20px;
+          margin-bottom: 12px;
         }
+   
       }
 
 

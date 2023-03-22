@@ -54,10 +54,10 @@
         </template>
         <template v-if="companylist[3]?.companyType == 0">
             <div class="title3 title">发展历程</div>
-            <div class="history" :style="historyList[0] && `background-image: url('${historyList[0][0].historyImg}');`">
+            <div class="history" :style="historyImg !== '' && `background-image: url('${historyImg}');`">
                 <el-carousel ref="refCarousel" :autoplay="false" indicator-position="none" arrow="never" height="539px"
                     @change="(i) => historyActive = i">
-                    <el-carousel-item class="item" v-for="item in historyList" :key="item">
+                    <el-carousel-item class="item" v-for="item in historyList">
                         <div class="node" v-for="node in item">
                             <div class="icon-dot">
                                 <div></div>
@@ -134,6 +134,7 @@ const historyActive = ref(0)
 
 const companylist = ref([])
 const findfirm = ref('')
+const historyImg = ref('')
 const coredata = ref([])
 const findCulture = ref({})
 const historyList = ref([])
@@ -214,31 +215,18 @@ const initPageData = () => {
     })
     queryFindhistoryById({ pageIndex: 1, pageSize: 500 }).then(({ code, data }) => {
         if (code === 0) {
+
             let index = 0;
             let newArray = [];
-            while (index < data.length) {
-                newArray.push(data.slice(index, index += 4));
+            while (index < data[0].historyList.length) {
+                newArray.push(data[0].historyList.slice(index, index += 4));
             }
+            historyImg.value = data[0].historyImg
             historyList.value = newArray
         }
     })
-    queryFindCertById().then(({ code }) => {
-        const { data } = {
-            "code": 0,
-            "resultMsg": "加载完成",
-            "data": [
-                { "updateUserId": null, "updateUserName": null, "updateTime": null, "id": 1, "certImg": "https://uj-web-site.oss-cn-zhangjiakou.aliyuncs.com/1678849102773.jpeg", "companyId": 6 },
-                { "updateUserId": null, "updateUserName": null, "updateTime": null, "id": 2, "certImg": "https://uj-web-site.oss-cn-zhangjiakou.aliyuncs.com/1678849102773.jpeg", "companyId": 6 },
-                { "updateUserId": null, "updateUserName": null, "updateTime": null, "id": 3, "certImg": "https://uj-web-site.oss-cn-zhangjiakou.aliyuncs.com/1678849102773.jpeg", "companyId": 6 },
-                { "updateUserId": null, "updateUserName": null, "updateTime": null, "id": 4, "certImg": "https://uj-web-site.oss-cn-zhangjiakou.aliyuncs.com/1678849102773.jpeg", "companyId": 6 },
-                { "updateUserId": null, "updateUserName": null, "updateTime": null, "id": 5, "certImg": "https://uj-web-site.oss-cn-zhangjiakou.aliyuncs.com/1678849102773.jpeg", "companyId": 6 },
-                { "updateUserId": null, "updateUserName": null, "updateTime": null, "id": 6, "certImg": "https://uj-web-site.oss-cn-zhangjiakou.aliyuncs.com/1678849102773.jpeg", "companyId": 6 },
-                { "updateUserId": null, "updateUserName": null, "updateTime": null, "id": 6, "certImg": "https://uj-web-site.oss-cn-zhangjiakou.aliyuncs.com/1678849102773.jpeg", "companyId": 6 },
-                { "updateUserId": null, "updateUserName": null, "updateTime": null, "id": 6, "certImg": "https://uj-web-site.oss-cn-zhangjiakou.aliyuncs.com/1678849102773.jpeg", "companyId": 6 },
-                { "updateUserId": null, "updateUserName": null, "updateTime": null, "id": 6, "certImg": "https://uj-web-site.oss-cn-zhangjiakou.aliyuncs.com/1678849102773.jpeg", "companyId": 6 },
-                { "updateUserId": null, "updateUserName": null, "updateTime": null, "id": 6, "certImg": "https://uj-web-site.oss-cn-zhangjiakou.aliyuncs.com/1678849102773.jpeg", "companyId": 6 },
-            ]
-        }
+    queryFindCertById().then(({ code, data }) => {
+
         if (code === 0) {
             let index = 0;
             let newArray = [];

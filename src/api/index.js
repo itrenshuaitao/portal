@@ -165,13 +165,21 @@ export const queryFindCultureById = () => {
     })
 }
 // 公司介绍-发展历程
-export const queryFindhistoryById = params => {
+export const queryFindhistoryById = () => {
     return request({
-        url: '/website-rest/historyList',
+        url: '/website-rest/findhistoryVoList',
         method: 'get',
-        params
+        params: { companyId: 4 }
     })
 }
+// 公司介绍-发展历程背景图片
+// export const queryFindhistoryBg = params => {
+//     return request({
+//         url: '/website-rest/queryhistoryImgList',
+//         method: 'get',
+//         params
+//     })
+// }
 // 公司介绍-服务网络
 export const queryNnetworkLists = () => {
     return request({

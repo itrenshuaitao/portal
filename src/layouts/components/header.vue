@@ -1,5 +1,5 @@
 <template>
-  <el-header>
+  <el-header id="header-main">
     <div class="logo">
       <img src="@/assets/img/toplogo.png" alt />
     </div>
@@ -92,7 +92,7 @@
 </template>
 
 <script setup>
-import { reactive, ref, onMounted } from 'vue'
+import { reactive, ref, onMounted, nextTick,onUnmounted } from 'vue'
 import { useRouter } from 'vue-router';
 import { useStore } from "vuex";
 import { queryIndustryList, queryCaseList, queryNewsList, queryVideoList } from "@/api/index"
@@ -129,7 +129,23 @@ onMounted(() => {
   getAllCaseList(1)
   getNewsList(1)
   getVideoList(1)
+
+  nextTick(() => {
+    window.onscroll = function () {
+      var headerMain = document.getElementById('header-main');
+      if (window.pageYOffset >= 50) {
+        headerMain.classList.add('fixed');
+      } else {
+        headerMain.classList.remove('fixed');
+      }
+    }
+  })
 })
+
+//页面卸载
+onUnmounted(() => {
+  window.removeEventListener("scroll", showDiv);
+});
 
 const getSolutionList = () => {
 
@@ -201,6 +217,10 @@ defineExpose({
   margin: 0 auto;
   background-color: rgba(255, 255, 255, 0.3);
 
+  &.fixed {
+    background-color: #fff;
+  }
+
   .logo {
     width: 113px;
     height: 32px;
@@ -219,7 +239,7 @@ defineExpose({
 .booking-dialog {
   display: flex;
   justify-content: space-between;
-  color:#fff;
+  color: #fff;
 
   .box {
     width: 46%;

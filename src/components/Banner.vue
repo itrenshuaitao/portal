@@ -1,5 +1,5 @@
 <template>
-      <div v-if="store.state.bannerList[0]?.nbannerShow==0" class="banner">
+      <div v-if="store.state.bannerList[0]?.nbannerShow==0&&imgSrc" class="banner">
             <img :src="imgSrc" />
             <!-- <div class="text" :style="`color: ${color};`">
                 <p>{{title}}</p>

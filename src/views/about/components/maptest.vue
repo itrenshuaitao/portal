@@ -19,7 +19,6 @@ const chart = ref();
 
 
 const init = async (name, networkMapObj) => {
-    console.log(networkMapObj)
     // 获取图标 初始化
     var myChart = echarts.init(document.getElementById("echarts"));
 
@@ -73,7 +72,6 @@ const init = async (name, networkMapObj) => {
         ...networkMapObj,
         '上海': [121.454039, 31.245688],
     }
-    console.log(researchBaseMap)
     // name: ['华南', '华中', '华北', '华东', '大西南'],
 
     var partitionData = {//地图数据
@@ -417,7 +415,6 @@ const init = async (name, networkMapObj) => {
 
 
 
-    console.log(optionXyMap01)
 
 
     // 把option设置给myChart实例

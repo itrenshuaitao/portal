@@ -106,7 +106,7 @@ import Banner from "@/components/Banner.vue"
 import productCard from "@/components/productCard.vue";
 import CaseCard from "@/components/caseCard.vue"
 import { queryProductsList, queryCasesList } from "@/api/index"
-import { queryBannerImg } from "@/utils/index"
+import { queryBannerImg,handleArraySort } from "@/utils/index"
 
 
 const { proxy } = getCurrentInstance();
@@ -140,7 +140,8 @@ const getProductsList = () => {
   }
   queryProductsList(params).then(({ code, data }) => {
     if (code === 0) {
-      productsList.value = data
+      let list = handleArraySort(data, 'productsTopTime', 'productsTime')
+      productsList.value = list
     }
   })
 }

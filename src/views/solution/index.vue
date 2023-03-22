@@ -87,7 +87,7 @@ import 'swiper/css/navigation';
 
 import SwiperCore, { Autoplay, Navigation } from 'swiper';
 import { queryIndustryList, queryIndustryCaseList } from "@/api/index"
-import { queryBannerImg } from "@/utils/index"
+import { queryBannerImg,handleArraySort } from "@/utils/index"
 
 
 SwiperCore.use([Autoplay, Navigation]);
@@ -113,9 +113,11 @@ const getSolutionList = () => {
     }
     queryIndustryList(params).then(({ code, data }) => {
         if (code === 0) {
-            solutionList.value = data
-            problemList.value = [...data, ...data].slice(data.length - 2, data.length + 3)
-            if (data[0].id) getSolutionCaseList(data[0].id)
+      let list = handleArraySort(data, 'industryTopTime', 'industryTime')
+
+            solutionList.value = list
+            problemList.value = [...list, ...list].slice(list.length - 2, list.length + 3)
+            if (list[0].id) getSolutionCaseList(list[0].id)
         }
     })
 }

@@ -2,7 +2,7 @@
     <div v-if="pageData.list[0]?.sbannerShow === 0" class="show-imgs-container" @mouseover="pageData.isIn = true"
         @mouseout="pageData.isIn = false">
         <el-carousel ref="refCarousel" :interval="pageData.cutTime" arrow="never" :autoplay="pageData.autoplay"
-            trigger="click" indicator-position= "none" @change="handleChange">
+            trigger="click" indicator-position="none" @change="handleChange">
             <el-carousel-item v-for="(item, index) in pageData.list" :key="index">
                 <img v-if="item.fileType === 'img'" :src="item.sbannerImg" alt="这是图片" class="banner" />
                 <!--视频播放器 -->
@@ -51,7 +51,8 @@
 
             <div class="nav-slider">
                 <div class="container">
-                    <div  v-for="(item,index) in pageData.list" :class="`slide ${pageData.nowIndex==index&&'active'}`" @click="()=>handleSlideClick(index)">
+                    <div v-for="(item, index) in pageData.list" :class="`slide ${pageData.nowIndex == index && 'active'}`"
+                        @click="() => handleSlideClick(index)">
                         <div class="progress-bar">
                             <div class="progress-bar-slide">
 
@@ -76,6 +77,7 @@
 import { reactive, toRefs, ref, onMounted, toRaw, getCurrentInstance } from "vue";
 import { useRouter } from 'vue-router'
 import { getHomeBanner } from "@/api/index"
+import {handleArraySort } from "@/utils/index"
 const { proxy } = getCurrentInstance()
 const router = useRouter()
 const refCarousel = ref(null);
@@ -122,29 +124,30 @@ onMounted(() => {
 
 const getListBanner = () => {
 
-
-
-
     const params = {
         pageIndex: 1,
         pageSize: 100
     }
-
-
     getHomeBanner(params).then(({ code, data }) => {
 
         if (code === 0) {
             let videoArr = ['flv', 'avi', 'mov', 'mp4', 'wmv']
             let imgArr = ['jpeg', 'jpg', 'png', 'gif']
+
             data.map(item => {
                 let str = item.sbannerImg?.substring(item.sbannerImg.lastIndexOf('.') + 1).toLowerCase()
                 item.fileType = videoArr.includes(str) ? 'video' : imgArr.includes(str) ? 'img' : 'null'
             })
-            pageData.list = data
+
+
+
+            pageData.list = handleArraySort(data, 'sbannerTopTime', 'sbannerTime')
         }
     })
 
 }
+
+
 // 获取走马灯的索引
 const handleChange = (nowIndex, oldIndex) => {
 
@@ -164,7 +167,7 @@ const handleChange = (nowIndex, oldIndex) => {
         video.play()
     }
 }
-const handleSlideClick = (index)=> {
+const handleSlideClick = (index) => {
     pageData.nowIndex = index
     proxy.$refs.refCarousel.setActiveItem(index)
 
@@ -416,14 +419,17 @@ const toUrl = (url) => {
                         color: #fff;
                     }
                 }
-                &.active{
-                    .progress-bar{
+
+                &.active {
+                    .progress-bar {
                         width: 100%;
+
                         // animation: widthTrans 3s linear forwards;
-                        .progress-bar-slide{
+                        .progress-bar-slide {
                             animation: expansion .1s linear forwards;
                         }
                     }
+
                     .progress-titel {
                         color: #fff;
                     }
@@ -450,10 +456,11 @@ const toUrl = (url) => {
         width: 100%;
     }
 }
+
 @keyframes expansion {
-    100%{
+    100% {
         width: 100%;
     }
-        
-    }
+
+}
 </style>

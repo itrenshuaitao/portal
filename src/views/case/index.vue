@@ -32,7 +32,8 @@ import { ref, onMounted, reactive} from "vue"
 import ItemCard from "@/components/caseCard.vue"
 import Banner from "@/components/Banner.vue"
 import { queryCaseList, queryIndustryCaseList, queryIndustryList } from "@/api/index"
-import {queryBannerImg} from "@/utils/index"
+import {queryBannerImg, handleArraySort} from "@/utils/index"
+
 
 
 const active = ref("all")
@@ -89,8 +90,10 @@ const getAllCaseList = (pageIndex) => {
 const getCaseList = (caseIndustryId ) => {
     queryIndustryCaseList({ caseIndustryId }).then(({ code, data }) => {
         if (code === 0) {
-            caseListAll.value = data
-            caseList.value =data.slice(0,9)
+      let list = handleArraySort(data, 'caseTopTime', 'caseTime')
+
+            caseListAll.value = list
+            caseList.value =list.slice(0,9)
             pagination.total=data.length
         }
     })

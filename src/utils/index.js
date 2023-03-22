@@ -91,3 +91,21 @@ export const queryIndustryNameList = (ids) => {
   return arr.filter(i=>i!==undefined)
 
 }
+
+
+// 前端排序
+export const handleArraySort = (array, topTime, time)=>{
+  let list = []
+  let topList = []
+  array.map(item => {
+      item[topTime] ? topList.push(item) : list.push(item)
+  })
+  topList.sort((a, b) => {
+      return a[topTime] < b[topTime] ? 1 : -1
+
+  })
+  list.sort((a, b) => {
+      return a[time] > b[time] ? 1 : -1
+  })
+  return [...topList, ...list]
+}

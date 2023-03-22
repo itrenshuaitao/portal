@@ -18,7 +18,7 @@
                         :src="item.productsImg">
 
                 </div>
-                <ul class="slide">
+                <ul class="products-slide">
                     <li v-for="item in productsList">
                         <div>
                             <h2>{{ item.productsName }}</h2>
@@ -50,11 +50,13 @@
 
 <script setup>
 import { ref, onMounted, reactive, computed, watch, nextTick } from "vue"
-import {useRouter} from "vue-router"
+import { useRouter } from "vue-router"
 import CoreData from './CoreData.vue';
 import NewsCenter from './NewsCenter.vue';
 import Partners from './Partners.vue';
 import { getHomeProductsList, getHomeCoreDataList, getHomeNewsList, getHomePartnerList } from "@/api/index"
+import {handleArraySort } from "@/utils/index"
+
 const router = useRouter()
 const active = ref("products")
 const activeProducts = ref(0)
@@ -68,7 +70,6 @@ onMounted(() => {
     getCoreDataList()
     getNewsList()
     getPartnerList()
-    sildeAddEvent()
 
 })
 
@@ -86,17 +87,16 @@ const getPartnerList = () => {
     }
     getHomePartnerList(params).then(({ code, data }) => {
         if (code === 0) {
+            let list = handleArraySort(data, 'partnerTopTime', 'partnerTime')
 
-            let len = data.length;
+            let len = list.length;
             let n = 10; //每行显示10个
             let lineNum = len % n === 0 ? len / n : Math.floor((len / n) + 1);
             let res = [];
             for (let i = 0; i < lineNum; i++) {
-                let temp = data.slice(i * n, i * n + n);
+                let temp = list.slice(i * n, i * n + n);
                 res.push(JSON.parse(JSON.stringify(temp)));
             }
-
-
 
             partnerList.value = res;
 
@@ -107,7 +107,9 @@ const getPartnerList = () => {
 const getNewsList = () => {
     getHomeNewsList({ newsPlaces: 0 }).then(({ code, data }) => {
         if (code === 0) {
-            newsList.value = data.slice(0, 3)
+            let list = handleArraySort(data, 'newsTopTime', 'newsTime')
+
+            newsList.value = list.slice(0, 3)
 
         }
     })
@@ -121,7 +123,8 @@ const getCoreDataList = () => {
     }
     getHomeCoreDataList(params).then(({ code, data }) => {
         if (code === 0) {
-            coreDataList.value = data
+            let list = handleArraySort(data, 'coredataTopTime', 'coredataTime')
+            coreDataList.value = list
 
         }
     })
@@ -130,7 +133,8 @@ const getCoreDataList = () => {
 const getProductsList = () => {
     getHomeProductsList({ productsPlaces: 0 }).then(({ code, data }) => {
         if (code === 0) {
-            productsList.value = data.slice(0, 5)
+            let list = handleArraySort(data, 'productsTopTime', 'productsTime')
+            productsList.value = list.slice(0, 5)
 
         }
     })
@@ -147,13 +151,18 @@ const handleTabClick = (type) => {
 }
 const sildeAddEvent = () => {
 
-    document.getElementsByClassName('slide')[0]?.addEventListener("mouseover", handleMouseover, false)
+    document.getElementsByClassName('products-slide')[0]?.addEventListener("mouseover", handleMouseover, false)
 }
 
 const handleMouseover = (e) => {
-    const ul = document.getElementsByClassName('slide')[0];
+
+    console.log(e.target)
+    const ul = document.getElementsByClassName('products-slide')[0];
     const arr = Array.from(ul.children);
+    console.log(arr)
+
     const index = arr.indexOf(e.target);
+    console.log(index)
     if (index !== -1 && activeProducts.value !== index) {
         activeProducts.value = index
     }
@@ -228,7 +237,7 @@ const handleMouseover = (e) => {
         }
     }
 
-    .slide {
+    .products-slide {
         position: absolute;
         top: 0;
         height: 100%;
@@ -245,7 +254,7 @@ const handleMouseover = (e) => {
 
             &:hover {
                 div {
-                    top: 38%;
+                    top: 25%;
                 }
 
                 background-image: linear-gradient(to bottom, transparent, #0168e0);

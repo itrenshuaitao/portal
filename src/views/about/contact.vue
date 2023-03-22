@@ -12,8 +12,8 @@
                 </div>
             </div>
         </div>
-        <div style="padding: 50px 120px;">
-            <baidu-map ref="mapRef" />
+        <div v-if="mapList.length" style="padding: 50px 120px;">
+            <baidu-map :map-list="mapList" ref="mapRef" />
         </div>
 
     </div>
@@ -42,10 +42,8 @@ const initPageData = () => {
     })
     queryContactMap().then(({ code, data }) => {
         if (code == 0) {
-            console.log(data)
             let arr = []
             for (let i = 0; i < 4; i++) {
-                console.log(i)
                 arr.push({
                     name: data[0][`mapBase${i + 1}`],
                     tel: data[0][`mapPhone${i + 1}`],

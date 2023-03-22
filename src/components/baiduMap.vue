@@ -3,7 +3,10 @@
     </div>
 </template>
 <script setup name="BaiduMap">
-import { nextTick, ref, onMounted } from "vue";
+import { nextTick, ref, onMounted, toRaw } from "vue";
+const props = defineProps(['mapList'])
+const mapList = toRaw(props.mapList)
+
 
 const mapHeight = ref('70vh')
 onMounted(() => {
@@ -21,45 +24,56 @@ var labelStyle = {
     lineHeight: '20px',
     fontFamily: '微软雅黑'
 }
-
+console.log(mapList)
 const initMap = () => {
     var map = new BMapGL.Map('container');
     map.centerAndZoom(new BMapGL.Point(119.879921, 30.611771), 7);
     map.enableScrollWheelZoom(true);
-    // 创建点标记
-    //上海
-    var marker1 = new BMapGL.Marker(new BMapGL.Point(121.428438, 31.033779));
-    var label1 = new BMapGL.Label('上海产研基地', {
-        offset: new BMapGL.Size(-100, -25)
-    })
-    label1.setStyle(labelStyle);
-    marker1.setLabel(label1)
-    // 杭州
-    var marker2 = new BMapGL.Marker(new BMapGL.Point(120.228481, 30.299542));
-    var label2 = new BMapGL.Label('杭州产研基地', {
-        offset: new BMapGL.Size(-100, -25)
-    })
-    label2.setStyle(labelStyle);
-    marker2.setLabel(label2)
-    // 无锡
-    var marker3 = new BMapGL.Marker(new BMapGL.Point(120.37191, 31.546136));
-    var label3 = new BMapGL.Label('无锡产研基地', {
-        offset: new BMapGL.Size(-100, -25)
-    })
-    label3.setStyle(labelStyle);
-    marker3.setLabel(label3)
-    // 长春
-    var marker4 = new BMapGL.Marker(new BMapGL.Point(125.14176, 43.852017));
-    var label4 = new BMapGL.Label('长春分公司', {
-        offset: new BMapGL.Size(-100, -25)
-    })
-    label4.setStyle(labelStyle);
-    marker4.setLabel(label4)
-    // 在地图上添加点标记
-    map.addOverlay(marker1);
-    map.addOverlay(marker2);
-    map.addOverlay(marker3);
-    map.addOverlay(marker4);
+    let i = 0;
+    while (i < mapList.length) {
+        let marker = new BMapGL.Marker(new BMapGL.Point(mapList[i].mapAxis[0], mapList[i].mapAxis[1]));
+        let label = new BMapGL.Label(mapList[i].name, {
+            offset: new BMapGL.Size(-100, -25)
+        })
+        label.setStyle(labelStyle);
+        marker.setLabel(label)
+        map.addOverlay(marker);
+        i++
+    }
+    // // 创建点标记
+    // //上海
+    // var marker1 = new BMapGL.Marker(new BMapGL.Point(121.428438, 31.033779));
+    // var label1 = new BMapGL.Label('上海产研基地', {
+    //     offset: new BMapGL.Size(-100, -25)
+    // })
+    // label1.setStyle(labelStyle);
+    // marker1.setLabel(label1)
+    // // 杭州
+    // var marker2 = new BMapGL.Marker(new BMapGL.Point(120.228481, 30.299542));
+    // var label2 = new BMapGL.Label('杭州产研基地', {
+    //     offset: new BMapGL.Size(-100, -25)
+    // })
+    // label2.setStyle(labelStyle);
+    // marker2.setLabel(label2)
+    // // 无锡
+    // var marker3 = new BMapGL.Marker(new BMapGL.Point(120.37191, 31.546136));
+    // var label3 = new BMapGL.Label('无锡产研基地', {
+    //     offset: new BMapGL.Size(-100, -25)
+    // })
+    // label3.setStyle(labelStyle);
+    // marker3.setLabel(label3)
+    // // 长春
+    // var marker4 = new BMapGL.Marker(new BMapGL.Point());
+    // var label4 = new BMapGL.Label('长春分公司', {
+    //     offset: new BMapGL.Size(-100, -25)
+    // })
+    // label4.setStyle(labelStyle);
+    // marker4.setLabel(label4)
+    // // 在地图上添加点标记
+    // map.addOverlay(marker1);
+    // map.addOverlay(marker2);
+    // map.addOverlay(marker3);
+    // map.addOverlay(marker4);
 
 }
 

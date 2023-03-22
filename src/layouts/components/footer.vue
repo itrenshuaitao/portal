@@ -1,14 +1,14 @@
 <template>
   <div v-if="router.currentRoute.value?.matched[1]?.path !== '/home'" class="footer-booking">
     <div class="box">
-      <div class="box-top">
+      <!-- <div class="box-top">
         <div>
           <h2>
             让自动化生产更加可靠
           </h2>
         </div>
 
-      </div>
+      </div> -->
       <div class="box-footer">
         <el-button class="booking-button" type="primary" color="rgb(0, 53, 106)"
           @click="$emit('openBookingDialog')">预约体验</el-button>
@@ -92,15 +92,17 @@ const isShow = true;
   bottom: 0;
   z-index: 10;
   width: 100%;
-  height: 164px;
-  background-image: url(https://images.unsplash.com/photo-1678039529572-d415a9444e73?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2532&q=80);
+  height: 90px;
+  background-image: url(http://47.92.145.39:9003/images/20230316141447.jpg);
   background-repeat: no-repeat;
-  background-size: 100% 290px;
+  background-size: 100% 90px;
 
   .box {
     display: flex;
     flex-direction: column;
     align-items: center;
+    height: 100%;
+    justify-content: center;
 
     .box-top {
       margin-top: 33px;

@@ -1,45 +1,45 @@
 <template>
     <div class="news">
 
-        <Banner 
-            :imgSrc="toRaw(bannerImg)">
+        <Banner :imgSrc="toRaw(bannerImg)">
         </Banner>
         <div class="container">
-       
+
             <div class="news-list">
                 <div class="item" v-for="item in newsList">
-                    <ItemCard :news="item" @click="()=>router.push('/news/detail/'+item.id)"/>
+                    <ItemCard :news="item" @click="() => router.push('/news/detail/' + item.id)" />
                 </div>
             </div>
             <div style="display: flex;justify-content: center;">
-                <el-pagination background layout="prev, pager, next" :page-size="pagination.pageSize" :total="pagination.total" @current-change="paginationChange" />
+                <el-pagination background layout="prev, pager, next" :page-size="pagination.pageSize"
+                    :total="pagination.total" @current-change="paginationChange" />
             </div>
         </div>
     </div>
 </template>
     
 <script setup>
-import { ref, onMounted, reactive,toRaw} from "vue"
+import { ref, onMounted, reactive, toRaw } from "vue"
 import { useStore } from "vuex";
 import { useRouter } from 'vue-router'
 import ItemCard from "@/components/newsCard.vue"
 import Banner from "@/components/Banner.vue"
-import { queryNewsList} from "@/api/index"
-import {queryBannerImg} from "@/utils/index"
+import { queryNewsList } from "@/api/index"
+import { queryBannerImg } from "@/utils/index"
 const store = useStore();
 const router = useRouter()
 const newsList = ref([])
 const pagination = reactive({
-    total:0,
-    pageSize:9
+    total: 0,
+    pageSize: 9
 })
-const bannerImg=ref('')
+const bannerImg = ref('')
 
 
 
 onMounted(() => {
     getNewsList(1)
-    bannerImg.value=queryBannerImg(4)
+    bannerImg.value = queryBannerImg(4)
 })
 
 
@@ -47,12 +47,14 @@ const getNewsList = (pageIndex) => {
 
     const params = {
         pageIndex,
-        pageSize: pagination.pageSize
+        pageSize: pagination.pageSize,
+        sort: 1
+
     }
-    queryNewsList(params).then(({ code, data,totalResults }) => {
+    queryNewsList(params).then(({ code, data, totalResults }) => {
         if (code === 0) {
             newsList.value = data
-            pagination.total=totalResults
+            pagination.total = totalResults
         }
     })
 }

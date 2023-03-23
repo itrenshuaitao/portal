@@ -75,7 +75,6 @@ onMounted(() => {
 
 watch(productsList, async (newList, oldList) => {
     if (newList.length) {
-
         await nextTick(() => sildeAddEvent())
     }
 })
@@ -83,18 +82,18 @@ watch(productsList, async (newList, oldList) => {
 const getPartnerList = () => {
     const params = {
         pageIndex: 1,
-        pageSize: 1000
+        pageSize: 1000,
+        sort:1
     }
     getHomePartnerList(params).then(({ code, data }) => {
         if (code === 0) {
-            let list = handleArraySort(data, 'partnerTopTime', 'partnerTime')
 
-            let len = list.length;
+            let len = data.length;
             let n = 10; //每行显示10个
             let lineNum = len % n === 0 ? len / n : Math.floor((len / n) + 1);
             let res = [];
             for (let i = 0; i < lineNum; i++) {
-                let temp = list.slice(i * n, i * n + n);
+                let temp = data.slice(i * n, i * n + n);
                 res.push(JSON.parse(JSON.stringify(temp)));
             }
 
@@ -108,7 +107,6 @@ const getNewsList = () => {
     getHomeNewsList({ newsPlaces: 0 }).then(({ code, data }) => {
         if (code === 0) {
             let list = handleArraySort(data, 'newsTopTime', 'newsTime')
-
             newsList.value = list.slice(0, 3)
 
         }
@@ -119,12 +117,12 @@ const getNewsList = () => {
 const getCoreDataList = () => {
     const params = {
         pageIndex: 1,
-        pageSize: 100
+        pageSize: 100,
+        sort:1
     }
     getHomeCoreDataList(params).then(({ code, data }) => {
         if (code === 0) {
-            let list = handleArraySort(data, 'coredataTopTime', 'coredataTime')
-            coreDataList.value = list
+            coreDataList.value = data
 
         }
     })

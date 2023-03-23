@@ -94,7 +94,6 @@
         <div v-if="pagination.total === jobList.length" class="more">已经到底了</div>
     </div>
 </template>
-
 <script setup>
 import { ref, onMounted, reactive, onUnmounted, getCurrentInstance, toRaw, nextTick } from "vue"
 import { ElMessage, ElMessageBox } from "element-plus";
@@ -157,7 +156,7 @@ const handleAvatarSuccess = (response, uploadFile) => {
 };
 const handleSubResume = () => {
     const { filePath, name, tel, remark } = formLabelAlign;
-    proxy.$refs.subForm.validate((valid) => {
+    proxy.$refs.subForm.validate((valid,err) => {
         if (valid) {
             const data = {
                 filePath,
@@ -170,6 +169,8 @@ const handleSubResume = () => {
                     dialogFormVisible.value = false
                 }
             })
+        }else{
+            console.error(formLabelAlign,err)
         }
     })
 

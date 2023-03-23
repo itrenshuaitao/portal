@@ -72,7 +72,8 @@ onMounted(() => {
 const getVideoList = (pageIndex) => {
     const params = {
         pageIndex,
-        pageSize: pagination.pageSize
+        pageSize: pagination.pageSize,
+        sort: 1
     }
     queryVideoList(params).then(({ code, data, totalResults }) => {
         if (code === 0) {
@@ -93,7 +94,7 @@ const getTopVideoList = () => {
 const switchVideoUrl = () => {
     isVideoVisible.value = false
 
-    let index = toRaw(topVideoList.value).findIndex(i => i.videoImgs === videoObj.value.videoImgs) === 2 ? 0 : toRaw(topVideoList.value).findIndex(i => i.videoImgs === videoObj.value.videoImgs) + 1
+    let index = toRaw(topVideoList.value).findIndex(i => i.videoImgs === videoObj.value.videoImgs) === topVideoList.value.length-1 ? 0 : toRaw(topVideoList.value).findIndex(i => i.videoImgs === videoObj.value.videoImgs) + 1
 
     videoObj.value = toRaw(topVideoList.value[index])
     nextTick(() => {

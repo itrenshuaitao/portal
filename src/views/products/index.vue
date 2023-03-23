@@ -54,7 +54,7 @@
           </template>
         </el-tab-pane>
       </el-tabs>
-      <el-carousel ref="carousel" :interval="4000" type="card" height="380px" indicator-position="none" :autoplay="false"
+      <el-carousel ref="carousel" :interval="4000" type="card" height="380px" pause-on-hover indicator-position="none" :autoplay="true"
         arrow="never" @change="val => activeTabName = val.toString()">
         <el-carousel-item>
           <div class="text">
@@ -129,19 +129,19 @@ onMounted(() => {
 const getCaseList = () => {
   queryCasesList({ casesPlace: '0' }).then(({ code, data }) => {
     if (code === 0) {
-      productsCaseList.value = data.sort((a, b) => b.caseTime < a.caseTime ? -1 : 1).slice(0, 2)
+      productsCaseList.value = data.sort((a, b) => b.caseTime < a.caseTime ? -1 : 1).slice(0, 3 )
     }
   })
 }
 const getProductsList = () => {
   const params = {
     pageIndex: 1,
-    pageSize: 1000
+    pageSize: 1000,
+    sort:1
   }
   queryProductsList(params).then(({ code, data }) => {
     if (code === 0) {
-      let list = handleArraySort(data, 'productsTopTime', 'productsTime')
-      productsList.value = list
+      productsList.value = data
     }
   })
 }
@@ -283,7 +283,7 @@ const cardClick = (id) => {
   .case-list {
     padding: 0 120px;
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: flex-start;
     margin-bottom: 46px;
 

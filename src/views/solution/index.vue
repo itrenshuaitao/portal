@@ -15,12 +15,11 @@
         </div>
         <div class="solution-box" v-if="solutionList[0] && solutionList[0].industryType === 0">
             <div class="title1 title">解决方案</div>
-            <swiper v-if="solutionList.length" class="swiper-container"
-                :navigation="{ nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }"
-                :observer="{ observer: true }" :space-between="6" :slides-per-view="5" loop @slideChange="slideChange">
+            <swiper v-if="solutionList.length" class="swiper-container" :navigation="{ nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }" :observer="{ observer: true }"  :space-between="6" :slides-per-view="5" loop @slideChange="slideChange"
+                >
                 <!-- :centered-slides="true" -->
-                <swiper-slide  v-for="item in solutionList" :class="`swiper-slide ${slideActive===item.id && 'active'}`" :key="item.id" :solution_id="item.id"
-                    @mouseenter="mouseOver" @click="()=>slideActive=slideActive==item.id?'':item.id">
+                <swiper-slide v-for="item in solutionList" :class="`swiper-slide ${slideActive === item.id && 'active'}`"
+                    :key="item.id" :solution_id="item.id" @mouseenter="mouseOver" @click="() => handleSlideClick(item)">
                     <img style="width:100%; height: 328px" :src="item.industryImg" alt="">
                     <div class="itemDiv">
                         <div class="icon">
@@ -87,7 +86,7 @@ import 'swiper/css/navigation';
 
 import SwiperCore, { Autoplay, Navigation } from 'swiper';
 import { queryIndustryList, queryIndustryCaseList } from "@/api/index"
-import { queryBannerImg,handleArraySort } from "@/utils/index"
+import { queryBannerImg, handleArraySort } from "@/utils/index"
 
 
 SwiperCore.use([Autoplay, Navigation]);
@@ -105,19 +104,28 @@ onMounted(() => {
     bannerImg.value = queryBannerImg(2)
 
 })
+
+const handleSlideClick = (item) => {
+    slideActive.value = slideActive.value == item.id ? '' : item.id
+    if (slideActive.value === item.id) {
+        getSolutionCaseList(item.id)
+    }
+
+}
+
 const getSolutionList = () => {
 
     const params = {
         pageIndex: 1,
-        pageSize: 1000
+        pageSize: 1000,
+        sort: 1
+
     }
     queryIndustryList(params).then(({ code, data }) => {
         if (code === 0) {
-      let list = handleArraySort(data, 'industryTopTime', 'industryTime')
-
-            solutionList.value = list
-            problemList.value = [...list, ...list].slice(list.length - 2, list.length + 3)
-            if (list[0].id) getSolutionCaseList(list[0].id)
+            solutionList.value = data
+            problemList.value = [...data, ...data].slice(data.length - 2, data.length + 3)
+            if (data[0].id) getSolutionCaseList(data[0].id)
         }
     })
 }
@@ -157,8 +165,8 @@ const mouseOver = (val) => {
         if ([0, 1].includes(index)) {
             lastIndex = [...list, ...list].findLastIndex(item => item.id === list[index].id)
             arr = [...list, ...list].slice(lastIndex - 2, lastIndex + 3)
-        } else if ([list_length - 2, list_length-1].includes(index)) {
-            lastIndex = [...list, ...list].findIndex(item => item.id=== list[index].id)
+        } else if ([list_length - 2, list_length - 1].includes(index)) {
+            lastIndex = [...list, ...list].findIndex(item => item.id === list[index].id)
 
             arr = [...list, ...list].slice(lastIndex - 2, lastIndex + 3)
 
@@ -243,7 +251,8 @@ const modules = [Autoplay, Navigation];
 
             }
 
-            &:hover, &.active{
+            &:hover,
+            &.active {
                 .itemDiv {
 
                     padding-top: 6rem;
@@ -402,7 +411,7 @@ const modules = [Autoplay, Navigation];
     .case-list {
         padding: 0 120px;
         display: flex;
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
         justify-content: flex-start;
         margin-bottom: 46px;
 

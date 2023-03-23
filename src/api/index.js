@@ -47,6 +47,14 @@ export const getHomePartnerList = (params) => {
         params
     })
 }
+// 预约体验转发
+export const bookingSendmail = data => {
+    return request({
+        url: '/website-rest/sendmail',
+        method: 'post',
+        data
+    })
+}
 // 产品列表
 export const queryProductsList = (params) => {
     return request({

@@ -1,8 +1,8 @@
 <template>
     <div v-if="pageData.list[0]?.sbannerShow === 0" class="show-imgs-container" @mouseover="pageData.isIn = true"
-        @mouseout="pageData.isIn = false">
-        <el-carousel ref="refCarousel" :interval="pageData.cutTime" arrow="never" :autoplay="pageData.autoplay"
-            trigger="click" indicator-position="none" @change="handleChange">
+        @mouseout="handleMouseout">
+        <el-carousel ref="refCarousel" :interval="pageData.cutTime" arrow="never" pause-on-hover
+            :autoplay="pageData.autoplay" trigger="click" indicator-position="none" @change="handleChange">
             <el-carousel-item v-for="(item, index) in pageData.list" :key="index">
                 <img v-if="item.fileType === 'img'" :src="item.sbannerImg" alt="这是图片" class="banner" />
                 <!--视频播放器 -->
@@ -74,10 +74,9 @@
 </template>
 <script setup>
 
-import { reactive, toRefs, ref, onMounted, toRaw, getCurrentInstance } from "vue";
+import { reactive, toRefs, ref, onMounted, toRaw, getCurrentInstance,watch } from "vue";
 import { useRouter } from 'vue-router'
 import { getHomeBanner } from "@/api/index"
-import {handleArraySort } from "@/utils/index"
 const { proxy } = getCurrentInstance()
 const router = useRouter()
 const refCarousel = ref(null);
@@ -121,12 +120,18 @@ onMounted(() => {
     getListBanner()
 })
 
+watch(pageData,async (newValue,oldValue) => {
+    // console.log("watch",newValue)
+pageData.autoplay = !newValue.isIn
+})
+
 
 const getListBanner = () => {
 
     const params = {
         pageIndex: 1,
-        pageSize: 100
+        pageSize: 100,
+        sort: 1
     }
     getHomeBanner(params).then(({ code, data }) => {
 
@@ -141,10 +146,14 @@ const getListBanner = () => {
 
 
 
-            pageData.list = handleArraySort(data, 'sbannerTopTime', 'sbannerTime')
+            pageData.list = data
         }
     })
 
+}
+
+const handleMouseout = () => {
+    pageData.isIn = false
 }
 
 
@@ -173,7 +182,6 @@ const handleSlideClick = (index) => {
 
 }
 const onPlay = (ev) => {
-    console.log('播放')
     pageData.autoplay = false
 
 }
@@ -188,9 +196,7 @@ const onCanplay = (ev) => {
     // console.log(ev, '可以播放')
 }
 const onEnded = (ev) => {
-    console.log(ev, '播放结束')
-    let isHover = document.getElementsByClassName("show-imgs-container")[0].classList.contains("on-mouse-over")
-    if (!isHover) {
+    if (!pageData.isIn) {
         pageData.autoplay = true
         proxy.$refs.refCarousel.next()
 
@@ -206,6 +212,8 @@ const toUrl = (url) => {
 
 </script>
 <style lang="scss">
+@import "@/assets/css/index.scss";
+
 .show-imgs-container {
     width: 100%;
     height: 100vh;
@@ -296,6 +304,10 @@ const toUrl = (url) => {
 
             .title {
                 visibility: visible;
+                color: rgb(255, 255, 255);
+                font-size: 58px;
+                font-weight: 600;
+                line-height: 81px;
 
                 .my-transition-enter-active {
                     transition-delay: 0s;
@@ -303,6 +315,11 @@ const toUrl = (url) => {
             }
 
             .title2 {
+                opacity: 0.85;
+                color: rgb(255, 255, 255);
+                font-size: 40px;
+                font-weight: 600;
+                line-height: 56px;
                 margin: 20px 0;
 
                 .my-transition-enter-active {
@@ -312,7 +329,11 @@ const toUrl = (url) => {
 
             .desc {
                 font-size: 14px;
-                line-height: 22px;
+                opacity: 0.85;
+                color: rgb(255, 255, 255);
+                font-size: 23px;
+                font-weight: 600;
+                line-height: 32px;
 
                 .my-transition-enter-active {
                     transition-delay: 0.6s;
@@ -320,11 +341,14 @@ const toUrl = (url) => {
             }
 
             .desc2 {
-                line-height: 30px;
-                font-size: 14px;
+                @include show_line(1);
+                height: 60px;
+                color: rgb(0, 75, 146);
+                font-size: 24px;
+                font-weight: 400;
+                line-height: 60px;
                 background-color: #fff;
-                border-radius: 20px;
-                color: #236cf0;
+                border-radius: 30px;
                 margin: 20px 0;
                 padding: 0 30px;
                 display: inline-block;
@@ -337,9 +361,11 @@ const toUrl = (url) => {
                 text-align: center;
                 font-size: 16px;
                 border-radius: 20px;
+                background: rgba(255, 255, 255, 0.5);
                 border: solid 1px #ffffff;
                 margin: 0 auto;
                 cursor: pointer;
+                color: rgb(0, 75, 146);
 
 
 
@@ -377,7 +403,7 @@ const toUrl = (url) => {
                 height: 80px;
                 display: flex;
                 flex-direction: column;
-                flex: 0 0 196px;
+                // flex: 0 0 196px;
                 margin-right: 32px;
                 row-gap: 9px;
                 cursor: pointer;

@@ -54,8 +54,8 @@
           </template>
         </el-tab-pane>
       </el-tabs>
-      <el-carousel ref="carousel" :interval="4000" type="card" height="380px" pause-on-hover indicator-position="none" :autoplay="true"
-        arrow="never" @change="val => activeTabName = val.toString()">
+      <el-carousel ref="carousel" :interval="4000" type="card" height="380px" pause-on-hover indicator-position="none"
+        :autoplay="true" arrow="never" @change="val => activeTabName = val.toString()">
         <el-carousel-item>
           <div class="text">
             <h2>UJ-iPMS过程监控</h2>
@@ -72,7 +72,7 @@
           </div>
           <img class="img" src="http://www.ujoin-tech.com/uploadfile/upfiles/202005212008175ec66f31696da.png" alt="">
         </el-carousel-item>
-        <el-carousel-item>
+        <el-carousel-item :class="activeTabName ==0 && 'special'">
           <div class="text">
             <h2>UJ-IoM生产制造协同系统 </h2>
             <p> "联网数据采集是现代OEE系统应用的核心基础，通过机联网采集如：设备各种运行状态（状态、持续时间、发生次数）、生产节拍、产出数、生产工艺等参数。
@@ -106,7 +106,7 @@ import Banner from "@/components/Banner.vue"
 import productCard from "@/components/productCard.vue";
 import CaseCard from "@/components/caseCard.vue"
 import { queryProductsList, queryCasesList } from "@/api/index"
-import { queryBannerImg,handleArraySort } from "@/utils/index"
+import { queryBannerImg, handleArraySort } from "@/utils/index"
 
 
 const { proxy } = getCurrentInstance();
@@ -129,7 +129,7 @@ onMounted(() => {
 const getCaseList = () => {
   queryCasesList({ casesPlace: '0' }).then(({ code, data }) => {
     if (code === 0) {
-      productsCaseList.value = data.sort((a, b) => b.caseTime < a.caseTime ? -1 : 1).slice(0, 3 )
+      productsCaseList.value = data.sort((a, b) => b.caseTime < a.caseTime ? -1 : 1).slice(0, 3)
     }
   })
 }
@@ -137,7 +137,7 @@ const getProductsList = () => {
   const params = {
     pageIndex: 1,
     pageSize: 1000,
-    sort:1
+    sort: 1
   }
   queryProductsList(params).then(({ code, data }) => {
     if (code === 0) {
@@ -213,9 +213,9 @@ const cardClick = (id) => {
     flex-direction: row;
 
     .item {
-      width: 31%;
+      width: calc((100% - 32px) / 3);
       margin-bottom: 40px;
-      margin-right: 24px;
+      margin-right: 16px;
 
       &:nth-of-type(3n+0) {
         margin-right: 0;
@@ -234,10 +234,10 @@ const cardClick = (id) => {
 
     :deep(.el-carousel__item--card) {
 
-      //   width: 70%;
-      //   &.is-active{
-      //     // transform: translateX(261.75px) scale(1);
-      //   }
+      // &:nth-child(3).is-in-stage.special {
+      //   z-index: 0!important;
+      // }
+
       .text {
         position: absolute;
         padding: 100px 45px;
@@ -308,5 +308,4 @@ const cardClick = (id) => {
     line-height: 40px;
     cursor: pointer;
   }
-}
-</style>
+}</style>

@@ -5,8 +5,8 @@
         <div class="title">招聘信息</div>
         <div class="submit">
             <p>可投简历至邮箱：jiaie.gao@ujoin-tech.com</p>
-            <el-button class="sub-btn" :dark="isDark" plain @click="dialogFormVisible = true">我要应聘</el-button>
-            <el-dialog v-model="dialogFormVisible" width="35%" title="填写信息" @open="clearFormLabelAlign">
+            <el-button class="sub-btn" :dark="isDark" plain @click="postClick">我要应聘</el-button>
+            <el-dialog v-model="dialogFormVisible" destroy-on-close width="35%" title="填写信息" @open="clearFormLabelAlign">
                 <el-form label-position="right" ref="subForm" :rules="rules" label-width="100px" :model="formLabelAlign"
                     style="max-width: 460px">
                     <el-form-item label="姓名" prop="name">
@@ -231,6 +231,7 @@ const updataJobList = () => {
         height: 242px;
         background-image: url('@/assets/img/submit.png');
         background-repeat: no-repeat;
+        background-size: 100%;
         margin-bottom: 82px;
         display: flex;
         flex-direction: column;
@@ -281,6 +282,7 @@ const updataJobList = () => {
             background: rgba(66, 159, 219, 0.08);
             border-radius: 16px;
             margin-bottom: 136px;
+            border: 1px solid rgb(66, 159, 219);
             display: flex;
             position: relative;
             padding-bottom: 27px;
@@ -294,7 +296,7 @@ const updataJobList = () => {
                     height: 322px;
                     padding: 14px 31px 25px 22px;
                     box-sizing: border-box;
-                    background: linear-gradient(180.00deg, rgba(25.36, 131.04, 199.22, 1.00) 0%, rgba(66, 159, 219, 0.50) 100%);
+                    background: linear-gradient(180.00deg, rgba(25.36, 131.04, 199.22, 1.00) 0%, rgba(66, 159, 219, 0.8) 100%);
                     box-shadow: 14px 15px 40px rgba(0, 84, 137, 0.25);
                     border-radius: 24px;
                     position: relative;

@@ -94,7 +94,7 @@ const getTopVideoList = () => {
 const switchVideoUrl = () => {
     isVideoVisible.value = false
 
-    let index = toRaw(topVideoList.value).findIndex(i => i.videoImgs === videoObj.value.videoImgs) === topVideoList.value.length-1 ? 0 : toRaw(topVideoList.value).findIndex(i => i.videoImgs === videoObj.value.videoImgs) + 1
+    let index = toRaw(topVideoList.value).findIndex(i => i.videoImgs === videoObj.value.videoImgs) === topVideoList.value.length - 1 ? 0 : toRaw(topVideoList.value).findIndex(i => i.videoImgs === videoObj.value.videoImgs) + 1
 
     videoObj.value = toRaw(topVideoList.value[index])
     nextTick(() => {
@@ -126,14 +126,20 @@ const handleClick = (obj) => {
 .video-center {
     .video-list {
         margin: 60px 120px 30px 120px;
+        width: calc(100% - 240px);
 
         .carousel {
             display: flex;
             justify-content: space-between;
+            width: 100%;
 
             .left {
+                width: calc(75% - 4px);
+
+
                 .video {
-                    width: calc(100vw - 584px);
+                    width: 100%;
+
                     border-radius: 4px;
                     overflow: hidden;
                 }
@@ -160,23 +166,23 @@ const handleClick = (obj) => {
             }
 
             .right {
-                margin-left: 24px;
+                width: calc(25% - 20px);
 
                 .item {
                     position: relative;
-                    width: 282px;
+                    // width: calc(25vw - 18px);
                     height: 158px;
                     background-color: aliceblue;
                     margin-bottom: 24px;
                     border-radius: 4px;
                     background-repeat: no-repeat;
-                    background-size: 282px 158px;
+                    background-size: 100% 158px;
 
                     .name {
                         box-sizing: border-box;
                         position: absolute;
                         bottom: 0;
-                        width: 282px;
+                        width: 100%;
                         height: 50px;
                         padding: 11px 16px;
                         background: linear-gradient(180.00deg, rgba(250, 251, 253, 0.05) 0%, rgba(242, 243, 245, 0.73) 154%);

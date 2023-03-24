@@ -30,6 +30,7 @@
     
 <script setup>
 import { ref, onMounted, reactive } from "vue"
+import { useRoute } from 'vue-router';
 
 import ItemCard from "@/components/caseCard.vue"
 import Banner from "@/components/Banner.vue"
@@ -37,6 +38,7 @@ import { queryCaseList, queryIndustryCaseList, queryIndustryList } from "@/api/i
 import { queryBannerImg } from "@/utils/index"
 
 
+const route = useRoute()
 
 const active = ref("all")
 const solutionList = ref([])
@@ -49,18 +51,15 @@ const pagination = reactive({
 const bannerImg = ref('')
 
 
-const items = ref([
-    { type: '', label: '全部' },
-    { type: '', label: '军工行业' },
-    { type: '', label: '汽车行业' },
-    { type: '', label: '模具行业' },
-    { type: '', label: '其他行业' },
-
-])
 
 onMounted(() => {
     getSolutionList()
-    getAllCaseList(1)
+    if (route.query.solutionId) {
+        handleIndustryClick(route.query.solutionId)
+    } else {
+        getAllCaseList(1)
+    }
+
     bannerImg.value = queryBannerImg(3)
 
 })

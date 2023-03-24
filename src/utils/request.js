@@ -45,6 +45,10 @@ request.interceptors.response.use(
             window.location.reload();
           });
         }   
+      } else if(data.code ===200&&data.resultMsg){
+        ElMessage.success({
+          message: data.resultMsg,
+        });
       } else {
         if (data.msg) {
           ElMessage.warning({

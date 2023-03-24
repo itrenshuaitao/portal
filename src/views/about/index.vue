@@ -35,14 +35,20 @@
             <div class="title2 title">企业文化</div>
             <div class="culture">
                 <div>
+                    <i :style="`background-image: url(${img1});`"></i>
                     <p>使命</p>
                     <p>{{ findCulture.cultureMission }} </p>
                 </div>
                 <div>
+                    <i :style="`background-image: url(${img2});`"></i>
+
                     <p>愿景</p>
                     <p>{{ findCulture.cultrueVision }} </p>
                 </div>
                 <div>
+                    <i :style="`background-image: url(${img3});`"></i>
+
+
                     <p>价值观</p>
                     <p>
                         {{ findCulture.cultrueValues }}
@@ -125,6 +131,9 @@ import { ref, onMounted, reactive, onUnmounted, getCurrentInstance, toRaw, nextT
 
 import Banner from "@/components/Banner.vue"
 import MapView from "./components/maptest.vue"
+import img1 from "@/assets/img/x-ab1.png"
+import img2 from "@/assets/img/x-ab2.png"
+import img3 from "@/assets/img/x-ab3.png"
 import { queryCompanylist, queryFindfirmById, queryFindcoredataById, queryFindCultureById, queryFindhistoryById, queryFindCertById } from "@/api/index"
 import { queryBannerImg } from "@/utils/index"
 const { proxy } = getCurrentInstance()
@@ -365,7 +374,7 @@ const showImage = (val) => {
 
 .culture {
     margin: 80px 208px 120px 208px;
-    height: 210px;
+    height: 230px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -376,7 +385,8 @@ const showImage = (val) => {
         text-align: center;
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
+        justify-content: flex-start;
+        align-items: center;
         transition: padding 0.3s linear;
 
         &:hover {
@@ -388,11 +398,20 @@ const showImage = (val) => {
         }
 
         :nth-child(1) {
-            margin-top: 70px;
+            display: inline-block;
+            width: 54px;
+            height: 54px;
+            background-size: 54px 54px;
+            background-repeat: no-repeat;
+            margin-bottom: 16px;
+
+        }
+
+        :nth-child(2) {
             color: rgb(62, 73, 84);
             font-size: 20px;
             font-weight: 500;
-            line-height: 28px;
+            line-height: 20px;
             letter-spacing: 0px;
 
             &::after {
@@ -401,7 +420,7 @@ const showImage = (val) => {
                 position: relative;
                 left: 50%;
                 transform: translateX(-50%);
-                top: 0px;
+                top: 10px;
                 width: 24px;
                 height: 2px;
                 background: rgb(25, 108, 255);
@@ -409,7 +428,9 @@ const showImage = (val) => {
             }
         }
 
-        :nth-child(2) {
+        :nth-child(3) {
+            margin-top: 32px;
+
             color: rgb(108, 123, 139);
             font-size: 14px;
             font-weight: 400;

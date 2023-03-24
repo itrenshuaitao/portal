@@ -72,7 +72,7 @@ import { reactive, ref, onMounted, nextTick, getCurrentInstance } from 'vue'
 import { useRouter } from 'vue-router';
 import { useStore } from "vuex";
 
-import { queryIndustryList, queryCaseList, queryNewsList, queryVideoList, bookingSendmail } from "@/api/index"
+import {queryProductsList, queryIndustryList, queryCaseList, queryNewsList, queryVideoList, bookingSendmail } from "@/api/index"
 const { proxy } = getCurrentInstance()
 
 const store = useStore();
@@ -122,6 +122,7 @@ const openDialog = () => {
 }
 
 onMounted(() => {
+  getProductsList()
   getSolutionList()
   getAllCaseList(1)
   getNewsList(1)
@@ -165,6 +166,19 @@ const clearForm = () => {
     form.tel = '',
     form.industry = '',
     form.message = ''
+}
+
+const getProductsList = () => {
+  const params = {
+    pageIndex: 1,
+    pageSize: 1000,
+    sort:1
+  }
+  queryProductsList(params).then(({ code, data }) => {
+    if (code === 0) {
+      store.commit('setProductsList', data)
+    }
+  })
 }
 const getSolutionList = () => {
 

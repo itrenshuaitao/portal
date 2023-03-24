@@ -1,5 +1,5 @@
 <template>
-  <div v-if="router.currentRoute.value?.matched[1]?.path !== '/home'" class="footer-booking">
+  <div v-if="router.currentRoute.value?.matched[1]?.path !== '/home'" class="footer-booking" :style="`background-image: url(${footerData.bottomObj?.bottomImg});`">
     <div class="box">
       <!-- <div class="box-top">
         <div>
@@ -22,56 +22,46 @@
 
         <li>
           <p>产品</p>
-          <span>PMS</span>
-          <span>CDS</span>
-          <span>IPS</span>
-          <span>MCM</span>
-          <span>TOM</span>
-          <span>机床联网</span>
-          <span>生产执行系统</span>
+          <span v-for="item in productsList" @click="proxy.$router.push({path:'/products/detail/'+item.id})">{{ item.productsName }}</span>
+       
         </li>
         <li>
           <p>案例分享</p>
-          <span>3C行业</span>
-          <span>汽车行业</span>
-          <span>医疗行业</span>
-          <span>航天航空/军工行业</span>
-          <span>模具行业</span>
-          <span>其他通用行业</span>
+          <span v-for="item in solutionList" @click="proxy.$router.push({path:'/case',query:{solutionId:item.id}})">{{ item.industryName }}</span>
         </li>
         <li>
           <p>活动中心</p>
-          <span>新闻中心</span>
-          <span>视频中心</span>
+          <span @click="proxy.$router.push('/news')">新闻中心</span>
+          <span @click="proxy.$router.push('/video')">视频中心</span>
         </li>
         <li>
           <p>关于友机</p>
-          <span>公司简介</span>
-          <span>人才招聘</span>
-          <span>联系我们</span>
+          <span @click="proxy.$router.push('/about')">公司介绍</span>
+          <span @click="proxy.$router.push('/about/recruit')">人才招聘</span>
+          <span @click="proxy.$router.push('/about/contact')">联系我们</span>
         </li>
       </ul>
       <div class="line"></div>
       <div class="info">
         <div class="top">
           <div>
-            <p class="tel">400-631-9969</p>
-            <p class="email">info@ujoin-tech.com</p>
+            <p class="tel">{{ footerData.info?.contactBottomPhone }}</p>
+            <p class="email">{{ footerData.info?.contactBottomEmail }}</p>
           </div>
 
-          <img src="@/assets/img/ico.jpg" alt />
+          <img :src="footerData.info?.contactBottomQrcode" alt />
         </div>
         <div class="bottom">
-          <p>杭州产研基地： </p>
+          <p>杭州产研基地：</p>
 
           <span>
-            杭州市上城区鸿泰路128号环翼城4幢1401室
+            {{footerData.addressList?.[0]}}
           </span>
-          <p>无锡产研基地</p>
-          <span>无锡市新吴区灵江路7号</span>
+          <p>无锡产研基地：</p>
+          <span>{{footerData.addressList?.[1]}}</span>
           <p>长春分公司：</p>
           <span>
-            长春市汽车开发区乙一路盛世汽车产业园D5栋317室</span>
+            {{footerData.addressList?.[2]}}</span>
         </div>
 
 
@@ -83,9 +73,38 @@
 </template>
 
 <script setup>
+import { onMounted, reactive,getCurrentInstance,computed } from "vue"
 import { useRouter } from 'vue-router';
+import {useStore} from "vuex"
+import { queryContactList,queryBottomList } from "@/api/index"
+
+const { proxy } = getCurrentInstance()
+const store = useStore();
+const footerData=reactive({
+  info:{},
+  addressList:[],
+  bottomObj:{}
+})
+
+const solutionList = computed(()=> store.state.solutionList.slice(0,6))
+const productsList = computed(()=> store.state.productsList.slice(0,7))
 let router = useRouter()
 const isShow = true;
+onMounted(() => {
+  queryContactList().then(({ code, data }) => {
+        if (code === 0) {
+          footerData.info=data[0]
+          let arr = data[0].contactBottomAddress.split("；")
+          arr.map(i=>footerData.addressList.push(i))
+
+        }
+    })
+    queryBottomList().then(({code, data})=>{
+      if(code===0){
+    footerData.bottomObj = data[0]
+      }
+    })
+})
 </script>
 
 <style lang='scss' scoped>
@@ -97,7 +116,6 @@ const isShow = true;
   z-index: 10;
   width: 100%;
   height: 90px;
-  background-image: url(http://47.92.145.39:9003/images/20230316141447.jpg);
   background-repeat: no-repeat;
   background-size: 100% 90px;
 
@@ -249,7 +267,7 @@ const isShow = true;
           margin-top: 20px;
           margin-bottom: 12px;
         }
-   
+
       }
 
 

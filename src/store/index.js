@@ -5,7 +5,8 @@ const store = createStore({
     return {
       count: 0,
       bannerList:[],
-      solutionList:[]
+      solutionList:[],
+      productsList:[]
     }
   },
   mutations: {
@@ -17,6 +18,9 @@ const store = createStore({
     },
     setSolutionList(state,list){
       state.solutionList = list
+    },
+    setProductsList(state,list){
+      state.productsList = list
     }
 
   },

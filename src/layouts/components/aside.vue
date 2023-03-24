@@ -8,19 +8,19 @@
             <li class="booking" @click="$emit('openBookingDialog')">
 
             </li>
-            <el-popover placement="left" title="咨询热线" :width="200" trigger="hover" content="400 631 9969">
+            <el-popover placement="left" title="咨询热线" :width="200" trigger="hover" :content="asideObj.sidewaysTitle3">
                 <template #reference>
                     <li class="phone"> </li>
                 </template>
             </el-popover>
 
-            <el-popover placement="left" title="关注我们" :width="200" trigger="hover" content="400 631 9969">
+            <el-popover placement="left" title="关注我们" :width="200" trigger="hover">
                 <template #reference>
                     <li class="ico">
 
                     </li>
                 </template>
-                <img src="@/assets/img/ico.jpg" style="width: 138px;" />
+                <img :src="asideObj.sidewaysQrcode" style="width: 138px;" />
             </el-popover>
 
 
@@ -34,13 +34,23 @@
 </template>
 
 <script setup>
-
+import { onMounted, ref } from "vue"
+import { querySidewaysList } from "@/api/index"
+const asideObj = ref({})
 const handleToTop = () => {
     window.scrollTo({
         top: 0,
         behavior: "smooth"
     });
 }
+
+onMounted(() => {
+    querySidewaysList().then(({ code, data }) => {
+        if (code === 0) {
+            asideObj.value = data[0]
+        }
+    })
+})
 
 </script>
 

@@ -22,6 +22,8 @@ const props = defineProps(['products'])
     height: 342px;
     padding: 16px;
     background-color: #f7f7f7;
+    box-shadow: 0px 18px 30px rgba(220, 220, 220, 0.5);
+
     border: 1px solid rgb(255, 255, 255);
     border-radius: 4px;
     transition: all .3s;
@@ -42,12 +44,11 @@ const props = defineProps(['products'])
     }
 
     &:hover {
-        // box-shadow: 0px 18px 30px rgba(220, 220, 220, 0.5);
-        background: rgb(255, 255, 255), linear-gradient(-51.95deg, rgba(246, 246, 250, 1) 93%, rgba(254, 255, 254, 1) 3%);
+        background: linear-gradient(-51.95deg, rgba(246,246,250,1.00) 0%,rgba(254,255,254,1.00) 100%);
         border: 1px solid rgb(0, 75, 146);
         box-shadow: 0px 8px 15px rgba(196, 196, 196, 0.5);
         border-radius: 4px;
-        transform: scale(1.003);
+        transform: scale(1.03);
 
         .img {
 

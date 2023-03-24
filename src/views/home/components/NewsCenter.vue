@@ -1,23 +1,26 @@
 <template>
     <div class="news-center">
-        <el-carousel indicator-position="none" :autoplay="false">
+        <el-carousel ref="refCarousel" indicator-position="none" arrow="never" :autoplay="false">
             <el-carousel-item v-for="item in props.newsList" :key="item">
                 <div class="text">
                     <p class="news-title">
                         {{ item.newsName }}
                     </p>
                     <p class="news-desc">
-                     {{ item.newsTitle }}    </p>
+                        {{ item.newsTitle }} </p>
                     <p class="time">
-                        {{item.newsTime}}
+                        {{ item.newsTime }}
                     </p>
-                    <div class="to-desc" @click="proxy.$router.push('./news/detail/'+item.id)">查看详情</div>
+                    <div class="to-desc" @click="proxy.$router.push('./news/detail/' + item.id)">查看详情</div>
                 </div>
                 <div>
                     <img :src="item.newsImg" />
                 </div>
             </el-carousel-item>
+
         </el-carousel>
+        <div class="left pointer"  @click="proxy.$refs.refCarousel.prev()"></div>
+        <div class="right pointer"  @click="proxy.$refs.refCarousel.next()"></div>
         <div class="more-news" @click="toNews">
             查看更多新闻
         </div>
@@ -37,6 +40,30 @@ const toNews = () => {
 <style lang='scss' scoped>
 .news-center {
     padding: 0 160px;
+    position: relative;
+
+
+    .left {
+        width: 40px;
+        height: 40px;
+        background-image: url('@/assets/img/left.png');
+        background-size: 40px 40px;
+        background-repeat: no-repeat;
+        position: absolute;
+        top: 213px;
+        left: 80px;
+    }
+
+    .right {
+        width: 40px;
+        height: 40px;
+        background-image: url('@/assets/img/right.png');
+        background-size: 40px 40px;
+        background-repeat: no-repeat;
+        position: absolute;
+        top: 213px;
+        right: 80px;
+    }
 
     &:deep(.el-carousel__container) {
         height: 466px;
@@ -63,6 +90,7 @@ const toNews = () => {
                 border-radius: 4px;
                 padding: 60px 32px 20px 32px;
                 box-sizing: border-box;
+
                 .news-title {
                     font-size: 26px;
                     font-weight: 400;

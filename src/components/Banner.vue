@@ -40,7 +40,7 @@ const props = defineProps({
         img {
             display: block;
             width: 100%;
-            height: 342px;
+            height: 456px;
         }
 
         .text {

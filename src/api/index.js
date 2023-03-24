@@ -243,3 +243,24 @@ export const queryContactMap = () => {
         method: 'get',
     })
 }
+// 侧边导航
+export const querySidewaysList = () => {
+    return request({
+        url: '/website-rest/SidewaysList',
+        method: 'get',
+    })
+}
+// 底部滑块
+export const queryBottomList = () => {
+    return request({
+        url: '/website-rest/BottomList',
+        method: 'get',
+    })
+}
+// 底部信息栏
+export const queryContactList = () => {
+    return request({
+        url: '/website-rest/ContactList',
+        method: 'get',
+    })
+}

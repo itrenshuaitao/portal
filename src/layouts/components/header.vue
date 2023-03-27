@@ -19,7 +19,7 @@
       </el-sub-menu>
     </el-menu>
     <div class="booking">
-      <el-button type="primary" @click="openDialog">预约体验</el-button>
+      <el-button class="btn" type="primary" @click="openDialog">预约体验</el-button>
     </div>
   </el-header>
 
@@ -72,7 +72,7 @@ import { reactive, ref, onMounted, nextTick, getCurrentInstance } from 'vue'
 import { useRouter } from 'vue-router';
 import { useStore } from "vuex";
 
-import {queryProductsList, queryIndustryList, queryCaseList, queryNewsList, queryVideoList, bookingSendmail } from "@/api/index"
+import { queryProductsList, queryIndustryList, queryCaseList, queryNewsList, queryVideoList, bookingSendmail } from "@/api/index"
 const { proxy } = getCurrentInstance()
 
 const store = useStore();
@@ -172,7 +172,7 @@ const getProductsList = () => {
   const params = {
     pageIndex: 1,
     pageSize: 1000,
-    sort:1
+    sort: 1
   }
   queryProductsList(params).then(({ code, data }) => {
     if (code === 0) {
@@ -268,9 +268,35 @@ defineExpose({
     }
   }
 
+  :deep(.el-menu--horizontal>.el-menu-item.is-active) {
+    font-size: 16px;
+    padding: 0;
+    margin: 0 var(--el-menu-base-level-padding);
+    color: rgb(0, 75, 146) !important;
+    font-weight: 500;
+    border-bottom: 2px solid rgb(0, 75, 146);
+  }
+
+  :deep(.el-menu--horizontal>.el-menu-item) {
+
+    font-weight: 400;
+  }
+
+  .booking {
+    .btn {
+      background: linear-gradient(114.70deg, rgba(25,108,255,1.00) 0%,rgba(0,84,167,1.00) 100%);
+      box-shadow: inset 0px -1px 4px rgba(200, 232, 255, 0.41);
+      backdrop-filter: blur(21.75px);
+
+      border-radius:
+        4px;
+    }
+  }
+
   .el-menu-demo {
     border: none;
   }
+
 }
 
 .booking-dialog {

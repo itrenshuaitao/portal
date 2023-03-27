@@ -19,10 +19,16 @@
             </el-carousel-item>
 
         </el-carousel>
-        <div class="left pointer"  @click="proxy.$refs.refCarousel.prev()"></div>
-        <div class="right pointer"  @click="proxy.$refs.refCarousel.next()"></div>
-        <div class="more-news" @click="toNews">
-            查看更多新闻
+        <div class="left pointer" @click="proxy.$refs.refCarousel.prev()"></div>
+        <div class="right pointer" @click="proxy.$refs.refCarousel.next()"></div>
+
+        <div class="_more pointer" @click="toNews">
+            <span style="margin-right: 10px;">
+                查看更多新闻
+            </span>
+            <el-icon style="transform: rotate(270deg);">
+                <DArrowLeft />
+            </el-icon>
         </div>
     </div>
 </template>
@@ -73,7 +79,7 @@ const toNews = () => {
             justify-content: space-between;
 
             &>div {
-                width: 43%;
+                width: calc((100% - 55px) / 2);
                 height: 100%;
                 border-radius: 4px;
                 overflow: hidden;
@@ -85,6 +91,7 @@ const toNews = () => {
             }
 
             .text {
+                position: relative;
                 // height: 466px;
                 background: linear-gradient(180deg, #FAFBFD 0%, #F2F3F5 100%);
                 border-radius: 4px;
@@ -92,19 +99,21 @@ const toNews = () => {
                 box-sizing: border-box;
 
                 .news-title {
-                    font-size: 26px;
+                    font-size: 24px;
                     font-weight: 400;
                     color: #3E4954;
-                    line-height: 44px;
+                    line-height: 36px;
                     margin-bottom: 24px;
                 }
 
                 .news-desc {
+                    opacity: 0.85;
+                    color: rgb(108, 123, 139);
+                    font-family: AliPuHui55;
                     font-size: 14px;
-                    color: #6C7B8B;
-                    line-height: 17px;
+                    font-weight: 400;
+                    line-height: 20px;
                     margin-bottom: 30px;
-
                     overflow: hidden;
                     text-overflow: ellipsis;
                     /* 超出部分省略号 */
@@ -120,16 +129,20 @@ const toNews = () => {
                 }
 
                 .time {
-                    font-size: 20px;
-                    color: #333333;
-                    line-height: 23px;
+                    color: rgb(108, 123, 139);
+                    font-family: AliPuHui55;
+                    font-size: 14px;
+                    font-weight: 500;
+                    line-height: 20px;
                     margin-bottom: 18px;
+                    text-align: right;
                 }
 
                 .to-desc {
                     width: 112px;
                     height: 40px;
                     text-align: center;
+                    margin: 0 auto;
                     background: rgba(255, 255, 255, 0.5);
                     box-shadow: inset 0px -1px 4px 0px rgba(0, 75, 146, 0.65);
                     border-radius: 20px;
@@ -138,23 +151,28 @@ const toNews = () => {
                     color: #004B92;
                     line-height: 38px;
                     cursor: pointer;
+                    position: absolute;
+                    bottom: 23px;
+                    left: 50%;
+                    transform: translateX(-50%);
                 }
             }
         }
     }
 
-    .more-news {
+    ._more {
         margin: 46px auto;
-        width: 191px;
-        height: 40px;
-        text-align: center;
-        border-radius: 4px;
-        border: 1px solid #6C7B8B;
-        font-size: 24px;
+        color: rgb(108, 123, 139);
+        font-family: AliPuHui55;
+        font-size: 14px;
         font-weight: 400;
-        color: #6C7B8B;
-        line-height: 40px;
-        cursor: pointer;
+        line-height: 20px;
+        width: 140px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
 
     }
 }

@@ -37,6 +37,18 @@ body {
   font-size: 18px;
 }
 
+
+@font-face {
+  font-family:AliPuHui55;
+  src:url('../font/AlibabaPuHuiTi-2-55-Regular.ttf')
+}
+
+@font-face {
+  font-family:YouSheBiaoTiHei;
+  src:url('../font/YouSheBiaoTiHei.ttf')
+}
+
+
 .detail-wrapper {
   margin-top: 60px;
   padding: 0 120px;
@@ -340,4 +352,17 @@ th.gutter {
           transform-origin: left;
       }
   }
+}
+
+
+.big-logo::after {
+  content: '';
+  display: block;
+  position: absolute;
+  bottom: -334px;
+  right: -72px;
+  width: 240px;
+  height: 204px;
+  background-image: url('@/assets/img/big-logo.png');
+  z-index: -1;
 }

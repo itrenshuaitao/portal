@@ -10,7 +10,10 @@
                 :class="active == 'partners' && 'active'" @click="() => handleTabClick('partners')">合作伙伴</el-button>
         </div>
         <template v-if="productsList[0]?.productsShow === 0">
-            <div class="title title-products">产品概览</div>
+            <div class="title title-products">
+                <span data-desc="product summary"></span>
+                产品概览
+            </div>
 
             <div class="products-main">
                 <div class="products">
@@ -19,7 +22,7 @@
 
                 </div>
                 <ul class="products-slide">
-                    <li v-for="item in productsList">
+                    <li v-for="(item, index) in productsList" @mouseover="activeProducts = index">
                         <div>
                             <h2>{{ item.productsName }}</h2>
                             <P>{{ item.productsSubtitle }}</P>
@@ -36,11 +39,17 @@
         <!-- 核心数据 -->
         <CoreData v-if="coreDataList[0]?.coredataType === 0" :coreDataList="coreDataList" />
         <template v-if="newsList[0]?.newsType === 0">
-            <div class="title title-news">新闻中心</div>
+            <div class="title title-news">
+                <span data-desc="press center"></span>
+                新闻中心
+            </div>
             <NewsCenter :newsList="newsList" />
         </template>
         <template v-if="partnerList[0] && partnerList[0][0]?.partnerType === 0">
-            <div class="title title-partners">合作伙伴</div>
+            <div class="title title-partners">
+                <span data-desc="partner"></span>
+                合作伙伴
+            </div>
             <Partners :partnerList="partnerList" />
         </template>
 
@@ -55,7 +64,7 @@ import CoreData from './CoreData.vue';
 import NewsCenter from './NewsCenter.vue';
 import Partners from './Partners.vue';
 import { getHomeProductsList, getHomeCoreDataList, getHomeNewsList, getHomePartnerList } from "@/api/index"
-import {handleArraySort } from "@/utils/index"
+import { handleArraySort } from "@/utils/index"
 
 const router = useRouter()
 const active = ref("products")
@@ -75,7 +84,7 @@ onMounted(() => {
 
 watch(productsList, async (newList, oldList) => {
     if (newList.length) {
-        await nextTick(() => sildeAddEvent())
+        // await nextTick(() => sildeAddEvent())
     }
 })
 
@@ -83,7 +92,7 @@ const getPartnerList = () => {
     const params = {
         pageIndex: 1,
         pageSize: 1000,
-        sort:1
+        sort: 1
     }
     getHomePartnerList(params).then(({ code, data }) => {
         if (code === 0) {
@@ -118,7 +127,7 @@ const getCoreDataList = () => {
     const params = {
         pageIndex: 1,
         pageSize: 100,
-        sort:1
+        sort: 1
     }
     getHomeCoreDataList(params).then(({ code, data }) => {
         if (code === 0) {
@@ -149,7 +158,7 @@ const handleTabClick = (type) => {
 }
 const sildeAddEvent = () => {
 
-    document.getElementsByClassName('products-slide')[0]?.addEventListener("mouseover", handleMouseover, false)
+    document.getElementsByClassName('products-slide')[0]?.addEventListener("mouseover", handleMouseover, true)
 }
 
 const handleMouseover = (e) => {
@@ -157,11 +166,9 @@ const handleMouseover = (e) => {
     console.log(e.target)
     const ul = document.getElementsByClassName('products-slide')[0];
     const arr = Array.from(ul.children);
-    console.log(arr)
-
     const index = arr.indexOf(e.target);
-    console.log(index)
-    if (index !== -1 && activeProducts.value !== index) {
+    console.log(e.target.nodeName)
+    if (index !== -1 && activeProducts.value !== index && e.target.nodeName === 'LI') {
         activeProducts.value = index
     }
 }
@@ -173,8 +180,7 @@ const handleMouseover = (e) => {
 
     .tab {
         height: 60px;
-        background: #F9F9F9;
-        border: 1px solid #E5E5E5;
+        background: rgba(0, 75, 146, 0.05);
         padding: 0 120px;
         font-size: 14px;
         color: #3E4954;
@@ -182,11 +188,14 @@ const handleMouseover = (e) => {
 
         .active {
             font-size: 16px;
+            font-size: 16px;
             color: #0054A7;
             line-height: 18px;
         }
 
         .el-button {
+            font-weight: 600;
+            font-family: AliPuHui55 !important;
             margin: 20px 0;
         }
 
@@ -196,12 +205,28 @@ const handleMouseover = (e) => {
     }
 
     .title {
+        color: rgb(62, 73, 84);
+        font-family: YouSheBiaoTiHei;
+        font-size: 24px;
+        font-weight: 400;
         height: 56px;
-        font-size: 40px;
-        color: #3E4954;
-        line-height: 47px;
+        line-height: 31px;
         text-align: center;
         margin: 40px 0;
+        position: relative;
+
+        ::after {
+            content: attr(data-desc);
+            color: rgba(0, 0, 0, 0.15);
+            font-family: YouSheBiaoTiHei;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 18px;
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            transform: translate(-50%, 0);
+        }
     }
 
     .products-main {

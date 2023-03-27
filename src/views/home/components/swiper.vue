@@ -1,5 +1,5 @@
 <template>
-    <div v-if="pageData.list[0]?.sbannerShow === 0" class="show-imgs-container" @mouseover="pageData.isIn = true"
+    <div v-if="pageData.list[0]?.sbannerShow === 0" class="show-imgs-container big-logo" @mouseover="pageData.isIn = true"
         @mouseout="handleMouseout">
         <el-carousel ref="refCarousel" :interval="pageData.cutTime" arrow="never" pause-on-hover
             :autoplay="pageData.autoplay" trigger="click" indicator-position="none" @change="handleChange">
@@ -70,11 +70,11 @@
             </div>
         </el-carousel>
     </div>
-    <div v-else style="margin-top: 60px;"></div>
+    <div v-else style="margin-top: 60px;" class="big-logo"></div>
 </template>
 <script setup>
 
-import { reactive, toRefs, ref, onMounted, toRaw, getCurrentInstance,watch } from "vue";
+import { reactive, toRefs, ref, onMounted, toRaw, getCurrentInstance, watch } from "vue";
 import { useRouter } from 'vue-router'
 import { getHomeBanner } from "@/api/index"
 const { proxy } = getCurrentInstance()
@@ -82,7 +82,7 @@ const router = useRouter()
 const refCarousel = ref(null);
 const slideActive = ref(0);
 let pageData = reactive({
-    autoplay: true,//是否自动切换
+    autoplay: false,//是否自动切换
     isPlay: false,//播放状态
     isIn: false,//鼠标是否位于播放器内
     cutTime: 3000,//轮播时间，单位毫秒
@@ -120,10 +120,10 @@ onMounted(() => {
     getListBanner()
 })
 
-watch(pageData,async (newValue,oldValue) => {
-    // console.log("watch",newValue)
-pageData.autoplay = !newValue.isIn
-})
+// watch(pageData,async (newValue,oldValue) => {
+//     // console.log("watch",newValue)
+// pageData.autoplay = !newValue.isIn
+// })
 
 
 const getListBanner = () => {
@@ -279,6 +279,8 @@ const toUrl = (url) => {
             line-height: 24px;
             text-align: center;
             z-index: 1;
+            font-family: AliPuHui55;
+
 
             .my-transition-enter-active {
                 transition: all 0.3s ease-out;
@@ -318,7 +320,7 @@ const toUrl = (url) => {
                 opacity: 0.85;
                 color: rgb(255, 255, 255);
                 font-size: 40px;
-                font-weight: 600;
+                font-weight: 500;
                 line-height: 56px;
                 margin: 20px 0;
 
@@ -330,9 +332,9 @@ const toUrl = (url) => {
             .desc {
                 font-size: 14px;
                 opacity: 0.85;
-                color: rgb(255, 255, 255);
+                color: rgba(255, 255, 255, 0.8);
                 font-size: 23px;
-                font-weight: 600;
+                font-weight: 400;
                 line-height: 32px;
 
                 .my-transition-enter-active {
@@ -342,6 +344,7 @@ const toUrl = (url) => {
 
             .desc2 {
                 @include show_line(1);
+                font-family: PingFang SC;
                 height: 60px;
                 color: rgb(0, 75, 146);
                 font-size: 24px;
@@ -359,8 +362,9 @@ const toUrl = (url) => {
                 height: 40px;
                 line-height: 40px;
                 text-align: center;
-                font-size: 16px;
                 border-radius: 20px;
+                font-size: 24px;
+                font-weight: 400;
                 background: rgba(255, 255, 255, 0.5);
                 border: solid 1px #ffffff;
                 margin: 0 auto;

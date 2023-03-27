@@ -1,10 +1,11 @@
 <template>
     <div class="core-data">
         <div v-for="item in props.coreDataList">
-            <span>{{ item.coredataName }}</span>
             <!-- <number class="number" :ref="'number' + 1" :from="1000" :to="1000" :duration="5" easing="Power1.easeOut"
                 animationPaused /> -->
-            <span class="number">{{ item.coredataData }}</span>
+            <p class="number">{{ item.coredataData }}</p>
+            <span>{{ item.coredataName }}</span>
+
         </div>
 
 
@@ -65,26 +66,30 @@ const showDiv = () => {
     flex-wrap: wrap;
 
     div {
-        width: 33%;
+        width: 25%;
         text-align: center;
         padding: 12px 0;
         display: flex;
-        align-items: center;
+        display: flex;
         justify-content: center;
+        flex-direction: column;
+
 
         span {
-            font-size: 18px;
+            color: rgb(108, 123, 139);
+            font-family: PingFang SC;
+            font-size: 16px;
             font-weight: 400;
-            color: #6C7B8B;
-            line-height: 25px;
+            line-height: 22px;
+            margin-top: 14px;
         }
 
         .number {
-            margin-left: 14px;
-            font-size: 36px;
-            font-weight: 400;
-            color: #3E4954;
-            line-height: 50px;
+            color: rgb(0, 75, 146);
+            font-family: DIN;
+            font-size: 28px;
+            font-weight: 500;
+            line-height: 36px;
         }
     }
 

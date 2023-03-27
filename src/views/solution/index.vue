@@ -14,9 +14,14 @@
                 @click="() => handleTabClick('3')">解决案例</el-button>
         </div>
         <div class="solution-box" v-if="solutionList[0] && solutionList[0].industryType === 0">
-            <div class="title1 title">解决方案</div>
-            <swiper v-if="solutionList.length" class="swiper-container" :navigation="{ nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }" :observer="{ observer: true }"  :space-between="6" :slides-per-view="5" loop @slideChange="slideChange"
-                >
+            <div class="title1 title">
+                <span data-desc="solution"></span>
+
+                解决方案
+            </div>
+            <swiper v-if="solutionList.length" class="swiper-container"
+                :navigation="{ nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }"
+                :observer="{ observer: true }" :space-between="6" :slides-per-view="5" loop @slideChange="slideChange">
                 <!-- :centered-slides="true" -->
                 <swiper-slide v-for="item in solutionList" :class="`swiper-slide ${slideActive === item.id && 'active'}`"
                     :key="item.id" :solution_id="item.id" @mouseenter="mouseOver" @click="() => handleSlideClick(item)">
@@ -38,7 +43,11 @@
             <div class="swiper-button-next"></div><!--右箭头。如果放置在swiper-container外面，需要自定义样式。-->
         </div>
 
-        <div class="title2 title">行业痛点</div>
+        <div class="title2 title">
+            <span data-desc="Industry pain point"></span>
+
+            行业痛点
+        </div>
         <div class="problem">
             <div>
                 <h2>{{ problemList[2]?.industryTitle }}</h2>
@@ -60,7 +69,11 @@
         </div>
 
 
-        <div class="title3 title">解决案例</div>
+        <div class="title3 title">
+            <span data-desc="case resolution"></span>
+
+            解决案例
+        </div>
         <div class="case-list">
             <div class="item" v-for="item in caseList">
                 <CaseCard :case="item" />
@@ -190,8 +203,7 @@ const modules = [Autoplay, Navigation];
 
     .tab {
         height: 60px;
-        background: #F9F9F9;
-        border: 1px solid #E5E5E5;
+        background: rgba(0, 75, 146, 0.05);
         padding: 0 120px;
         font-size: 14px;
         color: #3E4954;
@@ -199,11 +211,14 @@ const modules = [Autoplay, Navigation];
 
         .active {
             font-size: 16px;
+            font-size: 16px;
             color: #0054A7;
             line-height: 18px;
         }
 
         .el-button {
+            font-weight: 600;
+            font-family: AliPuHui55 !important;
             margin: 20px 0;
         }
 
@@ -213,12 +228,28 @@ const modules = [Autoplay, Navigation];
     }
 
     .title {
+        color: rgb(62, 73, 84);
+        font-family: YouSheBiaoTiHei;
+        font-size: 24px;
+        font-weight: 400;
         height: 56px;
-        font-size: 40px;
-        color: #3E4954;
-        line-height: 47px;
+        line-height: 31px;
         text-align: center;
         margin: 40px 0;
+        position: relative;
+
+        ::after {
+            content: attr(data-desc);
+            color: rgba(0, 0, 0, 0.15);
+            font-family: YouSheBiaoTiHei;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 18px;
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            transform: translate(-50%, 0);
+        }
     }
 
     .solution-box {
@@ -437,5 +468,4 @@ const modules = [Autoplay, Navigation];
         cursor: pointer;
     }
 
-}
-</style>
+}</style>

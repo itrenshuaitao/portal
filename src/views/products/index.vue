@@ -13,7 +13,11 @@
         @click="() => handleTabClick('3')">产品案例</el-button>
     </div>
     <template v-if="productsList[0]?.productsShow == 0">
-      <div class="title1 title">产品集合</div>
+      <div class="title1 title">
+        <span data-desc="product gather"></span>
+
+        产品集合
+      </div>
       <div class="product-list">
         <div class="item" v-for="item in productsList">
           <productCard :products="item" @click="() => cardClick(item.id)" />
@@ -21,7 +25,11 @@
       </div>
     </template>
 
-    <div class="title2 title">产品亮点</div>
+    <div class="title2 title">
+      <span data-desc="product features"></span>
+
+      产品亮点
+    </div>
     <div class="highlights">
       <el-tabs v-model="activeTabName" stretch @tab-click="handleHighlightsClick">
         <el-tab-pane name="0">
@@ -72,7 +80,7 @@
           </div>
           <img class="img" src="http://www.ujoin-tech.com/uploadfile/upfiles/202005212008175ec66f31696da.png" alt="">
         </el-carousel-item>
-        <el-carousel-item :class="activeTabName ==0 && 'special'">
+        <el-carousel-item :class="activeTabName == 0 && 'special'">
           <div class="text">
             <h2>UJ-IoM生产制造协同系统 </h2>
             <p> "联网数据采集是现代OEE系统应用的核心基础，通过机联网采集如：设备各种运行状态（状态、持续时间、发生次数）、生产节拍、产出数、生产工艺等参数。
@@ -84,7 +92,11 @@
       </el-carousel>
     </div>
     <template v-if="productsCaseList[0]?.caseType2 == 0">
-      <div class="title3 title">产品案例</div>
+      <div class="title3 title">
+        <span data-desc="product case"></span>
+
+        产品案例
+      </div>
       <div class="case-list">
         <div class="item" v-for="item in productsCaseList">
           <CaseCard :case="item" />
@@ -171,36 +183,54 @@ const cardClick = (id) => {
 
 
   .tab {
-    height: 60px;
-    background: #F9F9F9;
-    border: 1px solid #E5E5E5;
-    padding: 0 120px;
-    font-size: 14px;
-    color: #3E4954;
-    line-height: 17px;
+        height: 60px;
+        background: rgba(0, 75, 146, 0.05);
+        padding: 0 120px;
+        font-size: 14px;
+        color: #3E4954;
+        line-height: 17px;
 
-    .active {
-      font-size: 16px;
-      color: #0054A7;
-      line-height: 18px;
-    }
+        .active {
+            font-size: 16px;
+            font-size: 16px;
+            color: #0054A7;
+            line-height: 18px;
+        }
 
-    .el-button {
-      margin: 20px 0;
-    }
+        .el-button {
+            font-weight: 600;
+            font-family: AliPuHui55 !important;
+            margin: 20px 0;
+        }
 
-    .news {
-      margin: 20px;
+        .news {
+            margin: 20px;
+        }
     }
-  }
 
   .title {
+    color: rgb(62, 73, 84);
+    font-family: YouSheBiaoTiHei;
+    font-size: 24px;
+    font-weight: 400;
     height: 56px;
-    font-size: 40px;
-    color: #3E4954;
-    line-height: 47px;
+    line-height: 31px;
     text-align: center;
     margin: 40px 0;
+    position: relative;
+
+    ::after {
+      content: attr(data-desc);
+      color: rgba(0, 0, 0, 0.15);
+      font-family: YouSheBiaoTiHei;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 18px;
+      position: absolute;
+      top: 15px;
+      left: 50%;
+      transform: translate(-50%, 0);
+    }
   }
 
   .product-list {
@@ -308,4 +338,5 @@ const cardClick = (id) => {
     line-height: 40px;
     cursor: pointer;
   }
-}</style>
+}
+</style>

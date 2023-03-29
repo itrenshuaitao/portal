@@ -118,6 +118,15 @@ const getNewsList = () => {
     getHomeNewsList({ newsPlaces: 0 }).then(({ code, data }) => {
         if (code === 0) {
             let list = handleArraySort(data, 'newsTopTime', 'newsTime')
+            list.map(item => {
+                let test = item.newsDetail
+                test = test.replace(/(\n)/g, "");
+                test = test.replace(/(\t)/g, "");
+                test = test.replace(/(\r)/g, "");
+                test = test.replace(/<\/?[^>]*>/g, "");
+                test = test.replace(/\s*/g, "");
+                item.detail = test.slice(0,300)
+            })
             newsList.value = list.slice(0, 3)
 
         }

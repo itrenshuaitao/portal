@@ -14,7 +14,7 @@
                 </template>
             </el-popover>
 
-            <el-popover placement="left" title="关注我们" :width="200" trigger="hover">
+            <el-popover placement="left" title="添加客服微信" :width="200" trigger="hover">
                 <template #reference>
                     <li class="ico">
 

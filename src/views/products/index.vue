@@ -103,9 +103,15 @@
         </div>
 
       </div>
-      <div class="more" @click="() => proxy.$router.push('/case')">
-        查看更多案例
-      </div>
+
+      <div class="_more pointer" @click="() => proxy.$router.push('/case')">
+            <span style="margin-right: 10px;">
+              查看更多案例
+            </span>
+            <el-icon style="transform: rotate(270deg);">
+                <DArrowLeft />
+            </el-icon>
+        </div>
     </template>
 
 
@@ -311,7 +317,7 @@ const cardClick = (id) => {
         font-weight: 500;
         line-height: 34px;
         color: rgb(108, 123, 139);
-        font-family: Alibaba PuHuiTi;
+        font-family: AliPuHui55;
       }
       
     }

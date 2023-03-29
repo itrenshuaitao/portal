@@ -366,3 +366,19 @@ th.gutter {
   background-image: url('@/assets/img/big-logo.png');
   z-index: -1;
 }
+
+
+._more {
+  margin: 46px auto;
+  color: rgb(108, 123, 139);
+  font-family: AliPuHui55;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  width: 140px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+

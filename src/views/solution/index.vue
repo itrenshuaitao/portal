@@ -80,8 +80,14 @@
             </div>
 
         </div>
-        <div class="more" @click="() => proxy.$router.push('/case')">
-            查看更多案例
+
+        <div class="_more pointer" @click="() => proxy.$router.push('/case')">
+            <span style="margin-right: 10px;">
+              查看更多案例
+            </span>
+            <el-icon style="transform: rotate(270deg);">
+                <DArrowLeft />
+            </el-icon>
         </div>
 
 

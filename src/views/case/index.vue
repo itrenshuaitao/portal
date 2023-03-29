@@ -20,9 +20,9 @@
                     <ItemCard :case="item" />
                 </div>
             </div>
-            <div style="display: flex;justify-content: center;" class="pagination">
-                <el-pagination background layout="prev, pager, next" :page-size="pagination.pageSize" prev-text="上一页" next-text="下一页"
-                    :total="pagination.total" @current-change="paginationChange" />
+            <div style="display: flex;justify-content: center;" class="_pagination">
+                <el-pagination background layout="prev, pager, next" :page-size="pagination.pageSize" prev-text="上一页"
+                    next-text="下一页" :total="pagination.total" @current-change="paginationChange" />
             </div>
         </div>
     </div>
@@ -143,7 +143,7 @@ const paginationChange = (value) => {
             height: 32px;
             line-height: 32px;
             letter-spacing: 0px;
-            box-shadow: 0px -1px 4px 0 rgba(0, 0, 0, 0.15) inset, 0px 2px 5px 0px rgba(220, 220, 220, 0.5); 
+            box-shadow: 0px -1px 4px 0 rgba(0, 0, 0, 0.15) inset, 0px 2px 5px 0px rgba(220, 220, 220, 0.5);
             backdrop-filter: blur(21.75px);
 
             &.active {
@@ -167,19 +167,31 @@ const paginationChange = (value) => {
                 }
             }
         }
-        .pagination{
+
+        ._pagination {
             height: 32px;
             line-height: 32px;
-            :deep(.el-pagination.is-background .btn-prev),:deep(.el-pagination.is-background .btn-next),:deep(.el-pager li){
+
+            :deep(.el-pagination.is-background .btn-prev),
+            :deep(.el-pagination.is-background .btn-next),
+            :deep(.el-pager li) {
                 height: 32px;
                 line-height: 40px;
                 font-size: 14px !important;
                 color: rgb(62, 73, 84);
-                box-shadow: 0px -1px 4px 0 rgba(0, 0, 0, 0.15) inset, 0px 2px 5px 0px rgba(220, 220, 220, 0.5); 
-                padding: 9px 16px;
+                background: rgb(255, 255, 255);
+                border: none;
+                box-shadow: 0px 2px 5px rgba(220, 220, 220, 0.5), inset 0px -1px 4px rgba(0, 0, 0, 0.15);
+                backdrop-filter: blur(21.75px);
+                padding: 6px 16px;
+
+                &.is-active {
+                    box-shadow: 0px 2px 5px rgba(220, 220, 220, 0.5), inset 0px -1px 4px rgba(0, 75, 146, 0.65);
+                    backdrop-filter: blur(21.75px);
+                }
             }
         }
-        
+
     }
 }
 </style>

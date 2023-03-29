@@ -5,9 +5,9 @@
         <div class="base-list">
             <div class="content">
                 <div v-for="item in mapList">
-                    <h2>{{item.name}}</h2>
-                    <p>电话：{{item.tel}}</p>
-                    <p>邮箱：{{item.email}}</p>
+                    <h2>{{ item.name }}</h2>
+                    <p>电话：{{ item.tel }}</p>
+                    <p>邮箱：{{ item.email }}</p>
                     <p>地址：{{ item.address }}</p>
                 </div>
             </div>
@@ -76,21 +76,24 @@ const initPageData = () => {
 
     .content {
         height: 218px;
-        background: linear-gradient(180.00deg, rgba(250, 251, 253, 0.15) 0%, rgba(242, 243, 245, 1.00) 100%);
+        background: linear-gradient(180.00deg, rgba(250, 251, 253, 0.15) 0%, rgba(242, 243, 245, 0.7) 100%);
         box-shadow: inset 0px -1px 7px rgba(147, 147, 147, 0.41);
-        backdrop-filter: blur(10.87px);
+        backdrop-filter: blur(4.87px);
         border-radius: 4px;
         display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: space-around;
+        font-family: AliPuHui55;
 
         div {
             h2 {
+
                 color: rgb(62, 73, 84);
-                font-size: 24px;
+                font-size: 18px;
                 font-weight: 500;
-                line-height: 34px;
+                line-height: 25px;
+                margin-bottom: 16px;
             }
 
             p {
@@ -98,6 +101,7 @@ const initPageData = () => {
                 font-size: 14px;
                 font-weight: 400;
                 line-height: 20px;
+                margin-bottom: 8px;
             }
         }
     }

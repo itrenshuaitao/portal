@@ -8,8 +8,8 @@
                 :class="active == '2' && 'active'" @click="() => handleTabClick('2')">企业文化</el-button>
             <el-button v-if="companylist[3]?.companyType == 0" :type="plain" link :class="active == '3' && 'active'"
                 @click="() => handleTabClick('3')">发展历程</el-button>
-            <el-button v-if="companylist[4]?.companyType == 0" :type="plain" link :class="active == '4' && 'active'"
-                @click="() => handleTabClick('4')">服务网络</el-button>
+            <!-- <el-button v-if="companylist[4]?.companyType == 0" :type="plain" link :class="active == '4' && 'active'"
+                @click="() => handleTabClick('4')">服务网络</el-button> -->
             <el-button v-if="companylist[5]?.companyType == 0" :type="plain" link :class="active == '5' && 'active'"
                 @click="() => handleTabClick('5')">荣誉证书</el-button>
         </div>
@@ -96,11 +96,11 @@
             </div>
         </template>
         <template v-if="companylist[4]?.companyType == 0">
-            <div class="title4 title">
+            <!-- <div class="title4 title">
                 <span data-desc="service network"></span>
 
                 服务网络
-            </div>
+            </div> -->
             <MapView></MapView>
         </template>
         <template v-if="companylist[5]?.companyType == 0">
@@ -322,30 +322,30 @@ const showImage = (val) => {
 }
 
 .tab {
-        height: 60px;
-        background: rgba(0, 75, 146, 0.05);
-        padding: 0 120px;
-        font-size: 14px;
-        color: #3E4954;
-        line-height: 17px;
+    height: 60px;
+    background: rgba(0, 75, 146, 0.05);
+    padding: 0 120px;
+    font-size: 14px;
+    color: #3E4954;
+    line-height: 17px;
 
-        .active {
-            font-size: 16px;
-            font-size: 16px;
-            color: #0054A7;
-            line-height: 18px;
-        }
-
-        .el-button {
-            font-weight: 600;
-            font-family: AliPuHui55 !important;
-            margin: 20px 0;
-        }
-
-        .news {
-            margin: 20px;
-        }
+    .active {
+        font-size: 16px;
+        font-size: 16px;
+        color: #0054A7;
+        line-height: 18px;
     }
+
+    .el-button {
+        font-weight: 600;
+        font-family: AliPuHui55 !important;
+        margin: 20px 0;
+    }
+
+    .news {
+        margin: 20px;
+    }
+}
 
 .title {
     color: rgb(62, 73, 84);
@@ -418,14 +418,15 @@ const showImage = (val) => {
 
 .culture {
     margin: 80px 208px 120px 208px;
-    height: 230px;
+    height: 210px;
     display: flex;
     justify-content: space-between;
     align-items: center;
 
     div {
         height: 100%;
-        width: calc(100% / 3);
+        // width: calc(100% / 3);
+        width: 260px;
         text-align: center;
         display: flex;
         flex-direction: column;
@@ -434,7 +435,7 @@ const showImage = (val) => {
         transition: padding 0.3s linear;
 
         &:hover {
-            padding: 40px;
+            padding: 40px 30px;
             background: rgb(255, 255, 255), rgba(192, 228, 255, 0);
             box-shadow: 5px 2px 24px rgba(220, 220, 220, 0.5), inset 0px -1px 7px rgba(0, 75, 146, 0.65);
             backdrop-filter: blur(10.87px);
@@ -443,11 +444,11 @@ const showImage = (val) => {
 
         :nth-child(1) {
             display: inline-block;
-            width: 54px;
-            height: 54px;
-            background-size: 54px 54px;
+            width: 80px;
+            height: 80px;
+            background-position: 10px 10px;
             background-repeat: no-repeat;
-            margin-bottom: 16px;
+            margin-bottom: 6px;
 
         }
 
@@ -473,13 +474,12 @@ const showImage = (val) => {
         }
 
         :nth-child(3) {
-            margin-top: 32px;
-
+            padding-top: 20px;
             color: rgb(108, 123, 139);
             font-size: 14px;
             font-weight: 400;
             line-height: 20px;
-            margin-bottom: 25px;
+            text-align: left;
         }
     }
 }
@@ -682,4 +682,5 @@ const showImage = (val) => {
         }
     }
 
-}</style>
+}
+</style>

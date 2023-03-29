@@ -6,9 +6,8 @@
         <div class="submit">
             <p>可投简历至邮箱：jiaie.gao@ujoin-tech.com</p>
             <el-button class="sub-btn" :dark="isDark" plain @click="postClick">我要应聘</el-button>
-            <el-dialog v-model="dialogFormVisible"  destroy-on-close width="35%" title="填写信息"
-                @open="clearFormLabelAlign">
-                <el-form label-position="right" ref="subForm"  :rules="rules" label-width="100px" :model="formLabelAlign"
+            <el-dialog v-model="dialogFormVisible" destroy-on-close width="35%" title="填写信息" @open="clearFormLabelAlign">
+                <el-form label-position="right" ref="subForm" :rules="rules" label-width="100px" :model="formLabelAlign"
                     style="max-width: 460px">
                     <el-form-item label="姓名" prop="name">
                         <el-input v-model="formLabelAlign.name" />
@@ -34,7 +33,7 @@
                 <template #footer>
                     <span class="dialog-footer">
                         <el-button @click="dialogFormVisible = false">取消</el-button>
-                        <el-button type="primary"  @click="handleSubResume">
+                        <el-button type="primary" @click="handleSubResume">
                             提交
                         </el-button>
                     </span>
@@ -280,8 +279,8 @@ const updataJobList = () => {
         }
 
         .item {
-            width: calc((100vw - 260px)/2);
-            height: 378px;
+            width: calc((100vw - 310px)/2);
+            height: 272px;
             background: rgba(66, 159, 219, 0.08);
             border-radius: 16px;
             margin-bottom: 136px;
@@ -295,8 +294,8 @@ const updataJobList = () => {
                 margin-left: 18px;
 
                 .job-name {
-                    width: 226px;
-                    height: 322px;
+                    width: 154px;
+                    height: 189px;
                     padding: 14px 31px 25px 22px;
                     box-sizing: border-box;
                     background: linear-gradient(180.00deg, rgba(25.36, 131.04, 199.22, 1.00) 0%, rgba(66, 159, 219, 0.8) 100%);
@@ -309,43 +308,37 @@ const updataJobList = () => {
 
                     p {
                         margin-bottom: 10px;
+                        font-size: 12px;
+                        line-height: 18px;
                     }
 
                     p:nth-child(1) {
-                        font-size: 32px;
-                        font-weight: 500;
-                        line-height: 47px;
-                        margin-bottom: 24px;
-                    }
-
-                    p:nth-child(2) {
-                        font-size: 18px;
-                        line-height: 27px;
-                    }
-
-                    p:nth-child(3),
-                    p:nth-child(4) {
+                        margin-bottom: 8px;
+                        font-family: Noto Sans SC;
                         font-size: 20px;
+                        font-weight: 500;
                         line-height: 30px;
                     }
 
+
                     div {
                         position: absolute;
-                        right: 31px;
-                        bottom: 25px;
-                        font-size: 28px;
+                        right: 14px;
+                        bottom: 16px;
+                        font-size: 12px;
+                        line-height: 18px;
                     }
                 }
 
                 .line {
                     position: absolute;
-                    bottom: 68px;
-                    left: 32px;
-                    width: 171px;
-                    height: 90px;
+                    bottom: 130px;
+                    left: 37px;
+                    width: 114px;
+                    height: 60px;
                     background-image: url('@/assets/img/line.png');
                     background-repeat: no-repeat;
-                    background-size: 171px 90px;
+                    background-size: 114px 60px;
                 }
 
                 .sub {
@@ -353,17 +346,17 @@ const updataJobList = () => {
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    width: 169px;
-                    height: 53px;
+                    width: 108px;
+                    height: 36px;
                     background: rgb(255, 191, 137);
                     box-shadow: 5px 6px 23px rgba(255, 133, 43, 0.46);
                     border-radius: 8px;
                     text-align: center;
                     color: rgb(140, 64, 0);
-                    font-size: 26px;
+                    font-size: 16px;
                     font-weight: 500;
                     margin-left: 31px;
-                    margin-top: -20px;
+                    margin-top: -44px;
                 }
             }
 
@@ -409,10 +402,11 @@ const updataJobList = () => {
     }
 
     .more {
-        color: rgba(0, 108, 166, 0.47);
-        font-size: 24px;
+        color: rgb(13, 44, 77);
+        font-family: AliPuHui55;
+        font-size: 14px;
         font-weight: 400;
-        line-height: 36px;
+        line-height: 20px;
         display: flex;
         align-items: center;
         justify-content: center;

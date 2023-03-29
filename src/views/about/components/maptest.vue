@@ -1,6 +1,6 @@
 <template>
     <div style="padding: 66px 120px;">
-        <div ref="chart" id="echarts" style="width: 100%;height:500px;"></div>
+        <div ref="chart" id="echarts" style="width: 100%;height:600px;"></div>
     </div>
 </template>
    
@@ -84,7 +84,7 @@ const init = async (name, networkMapObj) => {
 
 
     var colors = [
-        ["#1DE9B6", "#FFDB5C", "#FFDB5C", "#04B9FF", "#04B9FF"],
+        ["#1DE9B6", "#FFDB5C",  "#04B9FF", "#04B9FF"],
         ["#1DE9B6", "#04B9FF", "#5DBD32", "#FFC809", "#FB95D5", "#BDA29A", "#6E7074", "#546570", "#C4CCD3"],
         ["#37A2DA", "#67E0E3", "#32C5E9", "#9FE6B8", "#FFDB5C", "#FF9F7F", "#FB7293", "#E062AE", "#E690D1", "#E7BCF3", "#9D96F5", "#8378EA", "#8378EA"],
         ["#DD6B66", "#759AA0", "#E69D87", "#8DC1A9", "#EA7E53", "#EEDD78", "#73A373", "#73B9BC", "#7289AB", "#91CA8C", "#F49F42"],
@@ -286,8 +286,8 @@ const init = async (name, networkMapObj) => {
             title:
                 [
                     {
-                        text: n == 0 ? '业务覆盖面' : n == 1 ? '产研基地' : '销售服务网络',
-                        // subtext: '   数据由整车物流部提供',
+                        text: '服务网络',
+                        subtext: n == 0 ? '业务覆盖面' : n == 1 ? '产研基地' : '销售服务中心',
                         left: '35%',
                         top: '10%',
                         textStyle: {

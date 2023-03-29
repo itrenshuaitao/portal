@@ -39,10 +39,10 @@ const props = defineProps(['case'])
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 404px;
+    height: 390px;
     padding: 16px;
     // background-color: #f7f7f7;
-    background: linear-gradient(-51.95deg, rgba(246,246,250,1.00) 0%,rgba(254,255,254,1.00) 100%);
+    background: linear-gradient(-51.95deg, rgba(246, 246, 250, 1.00) 0%, rgba(254, 255, 254, 1.00) 100%);
     border: 1px solid rgb(255, 255, 255);
     box-shadow: 0px 18px 30px rgba(220, 220, 220, 0.5);
     border-radius: 4px;
@@ -69,7 +69,7 @@ const props = defineProps(['case'])
     &:hover {
         // box-shadow: 0px 18px 30px rgba(220, 220, 220, 0.5);
         background: rgb(255, 255, 255), linear-gradient(-51.95deg, rgba(246, 246, 250, 1) 93%, rgba(254, 255, 254, 1) 3%);
-        border: 1px solid rgb(0, 75, 146);
+        border: 2px solid rgb(0, 75, 146);
         box-shadow: 0px 8px 15px rgba(196, 196, 196, 0.5);
         border-radius: 4px;
         transform: scale(1.003);
@@ -103,10 +103,9 @@ const props = defineProps(['case'])
     }
 
     .action {
-
         display: flex;
         flex-wrap: nowrap;
-        flex-direction: row;
+        flex-direction: row-reverse;
         justify-content: space-between;
         align-items: center;
 
@@ -118,8 +117,13 @@ const props = defineProps(['case'])
             letter-spacing: 0px;
             text-align: left;
             text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+
 
             .right-arrow {
+                margin-left: 8px;
                 display: inline-block;
                 vertical-align: middle;
                 width: 20px;
@@ -151,4 +155,5 @@ const props = defineProps(['case'])
 
 
     }
-}</style>
+}
+</style>

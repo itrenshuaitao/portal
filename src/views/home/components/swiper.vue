@@ -3,7 +3,7 @@
         @mouseout="handleMouseout">
         <el-carousel ref="refCarousel" :interval="pageData.cutTime" arrow="never" pause-on-hover
             :autoplay="pageData.autoplay" trigger="click" indicator-position="none" @change="handleChange">
-            <el-carousel-item v-for="(item, index) in pageData.list" :key="index">
+            <el-carousel-item v-for="(item, index) in pageData.list" :key="index" @click="toUrl(item.sbannerUrl)">
                 <img v-if="item.fileType === 'img'" :src="item.sbannerImg" alt="这是图片" class="banner" />
                 <!--视频播放器 -->
 
@@ -60,7 +60,7 @@
                         </div>
                         <div class="progress-titel">
                             <span>
-                                {{ item.sbannerName }}
+                                {{ item.sbannerName.slice(0, 10) }}
                             </span>
                         </div>
                     </div>
@@ -219,10 +219,13 @@ const toUrl = (url) => {
 </script>
 <style lang="scss">
 @import "@/assets/css/index.scss";
-
+.big-logo{
+    z-index: 0;
+}
 .show-imgs-container {
     width: 100%;
     height: 100vh;
+    position: relative;
 
     .el-carousel {
         width: 100%;
@@ -311,6 +314,8 @@ const toUrl = (url) => {
             }
 
             .title {
+                @include show_line(1);
+
                 visibility: visible;
                 color: rgb(255, 255, 255);
                 font-size: 58px;
@@ -323,6 +328,7 @@ const toUrl = (url) => {
             }
 
             .title2 {
+                @include show_line(1);
                 opacity: 0.85;
                 color: rgb(255, 255, 255);
                 font-size: 40px;
@@ -336,6 +342,7 @@ const toUrl = (url) => {
             }
 
             .desc {
+                @include show_line(2);
                 font-size: 14px;
                 opacity: 0.85;
                 color: rgba(255, 255, 255, 0.8);

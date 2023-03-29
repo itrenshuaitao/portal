@@ -1,5 +1,6 @@
 <template>
-  <div v-if="router.currentRoute.value?.matched[1]?.path !== '/home'" class="footer-booking" :style="`background-image: url(${footerData.bottomObj?.bottomImg});`">
+  <div v-if="router.currentRoute.value?.matched[1]?.path !== '/home'" class="footer-booking"
+    :style="`background-image: url(${footerData.bottomObj?.bottomImg});`">
     <div class="box">
       <!-- <div class="box-top">
         <div>
@@ -10,8 +11,7 @@
 
       </div> -->
       <div class="box-footer">
-        <el-button class="booking-button" type="primary" color="rgb(0, 53, 106)"
-          @click="$emit('openBookingDialog')">预约体验</el-button>
+        <div class="booking-button" @click="$emit('openBookingDialog')">预约体验</div>
       </div>
     </div>
   </div>
@@ -22,12 +22,15 @@
 
         <li>
           <p>产品</p>
-          <span v-for="item in productsList" @click="proxy.$router.push({path:'/products/detail/'+item.id})">{{ item.productsName }}</span>
-       
+          <span v-for="item in productsList" @click="proxy.$router.push({ path: '/products/detail/' + item.id })">{{
+            item.productsName }}</span>
+
         </li>
         <li>
           <p>案例分享</p>
-          <span v-for="item in solutionList" @click="proxy.$router.push({path:'/case',query:{solutionId:item.id}})">{{ item.industryName }}</span>
+          <span v-for="item in solutionList"
+            @click="proxy.$router.push({ path: '/case', query: { solutionId: item.id } })">{{
+              item.industryName }}</span>
         </li>
         <li>
           <p>活动中心</p>
@@ -44,24 +47,23 @@
       <div class="line"></div>
       <div class="info">
         <div class="top">
-          <div>
-            <p class="tel">{{ footerData.info?.contactBottomPhone }}</p>
-            <p class="email">{{ footerData.info?.contactBottomEmail }}</p>
-          </div>
+
 
           <img :src="footerData.info?.contactBottomQrcode" alt />
+          <p class="tel">{{ footerData.info?.contactBottomPhone }}</p>
+          <p class="email">{{ footerData.info?.contactBottomEmail }}</p>
         </div>
         <div class="bottom">
           <p>杭州产研基地：</p>
 
           <span>
-            {{footerData.addressList?.[0]}}
+            {{ footerData.addressList?.[0] }}
           </span>
           <p>无锡产研基地：</p>
-          <span>{{footerData.addressList?.[1]}}</span>
+          <span>{{ footerData.addressList?.[1] }}</span>
           <p>长春分公司：</p>
           <span>
-            {{footerData.addressList?.[2]}}</span>
+            {{ footerData.addressList?.[2] }}</span>
         </div>
 
 
@@ -73,37 +75,37 @@
 </template>
 
 <script setup>
-import { onMounted, reactive,getCurrentInstance,computed } from "vue"
+import { onMounted, reactive, getCurrentInstance, computed } from "vue"
 import { useRouter } from 'vue-router';
-import {useStore} from "vuex"
-import { queryContactList,queryBottomList } from "@/api/index"
+import { useStore } from "vuex"
+import { queryContactList, queryBottomList } from "@/api/index"
 
 const { proxy } = getCurrentInstance()
 const store = useStore();
-const footerData=reactive({
-  info:{},
-  addressList:[],
-  bottomObj:{}
+const footerData = reactive({
+  info: {},
+  addressList: [],
+  bottomObj: {}
 })
 
-const solutionList = computed(()=> store.state.solutionList.slice(0,6))
-const productsList = computed(()=> store.state.productsList.slice(0,7))
+const solutionList = computed(() => store.state.solutionList.slice(0, 6))
+const productsList = computed(() => store.state.productsList.slice(0, 7))
 let router = useRouter()
 const isShow = true;
 onMounted(() => {
   queryContactList().then(({ code, data }) => {
-        if (code === 0) {
-          footerData.info=data[0]
-          let arr = data[0].contactBottomAddress.split("；")
-          arr.map(i=>footerData.addressList.push(i))
+    if (code === 0) {
+      footerData.info = data[0]
+      let arr = data[0].contactBottomAddress.split("；")
+      arr.map(i => footerData.addressList.push(i))
 
-        }
-    })
-    queryBottomList().then(({code, data})=>{
-      if(code===0){
-    footerData.bottomObj = data[0]
-      }
-    })
+    }
+  })
+  queryBottomList().then(({ code, data }) => {
+    if (code === 0) {
+      footerData.bottomObj = data[0]
+    }
+  })
 })
 </script>
 
@@ -115,7 +117,7 @@ onMounted(() => {
   bottom: 0;
   z-index: 10;
   width: 100%;
-  height: 90px;
+  height: 68px;
   background-repeat: no-repeat;
   background-size: 100% 90px;
 
@@ -147,11 +149,19 @@ onMounted(() => {
 
     .box-footer {
       .booking-button {
-        width: 168px;
-        height: 53px;
-        font-size: 24px;
-        font-weight: 400;
-        line-height: 34px;
+        width: 112px;
+        height: 36px;
+
+
+        background: rgba(0, 57, 110, 0.5);
+        box-shadow: inset 0px -1px 4px rgb(255, 255, 255);
+        backdrop-filter: blur(21.75px);
+        border-radius: 20px;
+        color: rgb(255, 255, 255);
+        font-family: AliPuHui55;
+        text-align: center;
+        line-height: 36px;
+        cursor: pointer;
       }
     }
 
@@ -174,14 +184,15 @@ onMounted(() => {
   padding: 0;
   overflow: hidden;
   background-color: #3E4954;
+  font-family: AliPuHui55;
 
 
 
   &-content {
-    margin: 0 auto;
+    margin: 0 66px 0 120px;
     padding-top: 20px;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     height: 100%;
 
     .content-nav {
@@ -189,6 +200,7 @@ onMounted(() => {
       justify-content: space-around;
       font-size: 16px;
       color: #FFFFFF;
+      flex-grow: 0.3;
       line-height: 19px;
 
       li {
@@ -196,16 +208,21 @@ onMounted(() => {
         flex-direction: column;
         padding: 0 20px;
         //justify-content: center;
+        margin-right: 44px;
         align-items: flex-start;
-        font-family: Alibaba PuHuiTi 2.0;
+          font-family: AliPuHui55;
+
+        &:nth-child(4) {
+          margin-right: 0;
+        }
 
         p {
           font-weight: 600;
-          padding: 24px 0;
+          padding: 18px 0;
         }
 
         span {
-          padding: 18px 0;
+          padding: 7px 0;
           line-height: 16px;
           transition: 0.3s;
           cursor: pointer;
@@ -220,40 +237,45 @@ onMounted(() => {
     }
 
     .line {
-      position: absolute;
-      right: 38%;
+      // position: absolute;
+      // right: 38%;
       width: 1px;
-      height: 90%;
+      height: 218px;
       background: #D8D8D8;
     }
 
     .info {
+      flex-grow: 0.3;
+
       display: flex;
-      flex-direction: column;
+      flex-direction: row-reverse;
+      justify-content: space-around;
       align-items: flex-start;
       color: rgb(255, 255, 255);
 
 
       .top {
         display: flex;
+        flex-direction: column;
         align-items: center;
 
         .tel {
+          font-size: 20px;
+          font-weight: 400;
+          line-height: 28px;
 
-          font-size: 32px;
-          font-weight: 500;
-          line-height: 45px;
-          margin-bottom: 16px;
+          margin-bottom: 6px;
         }
 
         .email {
-          font-size: 16px;
+          font-size: 20px;
           font-weight: 400;
-          line-height: 22px;
+          line-height: 28px;
         }
 
         img {
-          margin-left: 12px;
+          margin-bottom: 10px;
+          margin-top: 36px;
           width: 100px;
           height: 100px;
           padding: 10px;
@@ -270,7 +292,8 @@ onMounted(() => {
           margin-top: 20px;
           margin-bottom: 12px;
         }
-        span{
+
+        span {
           font-size: 12px;
         }
 

@@ -5,8 +5,8 @@
         <div class="video-list">
             <div class="carousel">
                 <div class="left">
-                    <div v-if="isVideoVisible" class="video">
-                        <VideoPlay :video_url="videoObj.videoImgs" :poster="videoObj.videoImg"
+                    <div v-show="isVideoVisible" class="video">
+                        <VideoPlay v-if="isVideoVisible" :video_url="videoObj.videoImgs" :poster="videoObj.videoImg"
                             @switchVideoUrl="switchVideoUrl">
                         </VideoPlay>
                     </div>
@@ -35,9 +35,9 @@
                     </div>
                 </div>
             </div>
-            <div style="display: flex;justify-content: center;">
-                <el-pagination background layout="prev, pager, next" :page-size="pagination.pageSize"
-                    :total="pagination.total" @current-change="(value) => getVideoList(value)" />
+            <div style="display: flex;justify-content: center;" class="_pagination">
+                <el-pagination background layout="prev, pager, next" :page-size="pagination.pageSize" prev-text="上一页"
+                    next-text="下一页" :total="pagination.total" @current-change="(value) => getVideoList(value)" />
             </div>
         </div>
 
@@ -67,6 +67,7 @@ onMounted(() => {
     bannerImg.value = queryBannerImg(5)
     getVideoList(1)
     getTopVideoList()
+
 })
 
 const getVideoList = (pageIndex) => {
@@ -83,7 +84,7 @@ const getVideoList = (pageIndex) => {
     })
 }
 const getTopVideoList = () => {
-    queryTopVideoList({pageIndex:1,pageSize:999,sort:1}).then(({ code, data }) => {
+    queryTopVideoList({ pageIndex: 1, pageSize: 999, sort: 1 }).then(({ code, data }) => {
         if (code === 0) {
             topVideoList.value = data.slice(0, 3)
             isVideoVisible.value = true
@@ -105,9 +106,16 @@ const switchVideoUrl = () => {
 const changeVideoObj = (obj) => {
     isVideoVisible.value = false
     videoObj.value = toRaw(obj)
-    nextTick(() => {
+    nextTick(async () => {
+        await window.scrollTo({
+            top: 400,
+            behavior: "smooth"
+        });
+
         isVideoVisible.value = true
+
     })
+
 
 
 }
@@ -136,7 +144,7 @@ const handleClick = (obj) => {
             .left {
                 width: calc(75% - 4px);
                 background-color: rgb(248, 248, 248);
-                font-family: Alibaba PuHuiTi;   
+                font-family: Alibaba PuHuiTi;
 
 
                 .video {
@@ -169,7 +177,7 @@ const handleClick = (obj) => {
 
             .right {
                 width: calc(25% - 20px);
-                font-family: Alibaba PuHuiTi;   
+                font-family: Alibaba PuHuiTi;
 
                 .item {
                     position: relative;
@@ -235,9 +243,10 @@ const handleClick = (obj) => {
                         color: rgb(62, 73, 84);
                         font-size: 18px;
                         font-weight: 500;
-                        line-height: 25px;    
-                        font-family: Alibaba PuHuiTi;                  
+                        line-height: 25px;
+                        font-family: Alibaba PuHuiTi;
                     }
+
                     p {
                         color: rgb(108, 123, 139);
                         font-size: 14px;
@@ -248,6 +257,30 @@ const handleClick = (obj) => {
                     }
                 }
 
+            }
+        }
+
+        ._pagination {
+            height: 32px;
+            line-height: 32px;
+
+            :deep(.el-pagination.is-background .btn-prev),
+            :deep(.el-pagination.is-background .btn-next),
+            :deep(.el-pager li) {
+                height: 32px;
+                line-height: 40px;
+                font-size: 14px !important;
+                color: rgb(62, 73, 84);
+                background: rgb(255, 255, 255);
+                border: none;
+                box-shadow: 0px 2px 5px rgba(220, 220, 220, 0.5), inset 0px -1px 4px rgba(0, 0, 0, 0.15);
+                backdrop-filter: blur(21.75px);
+                padding: 6px 16px;
+
+                &.is-active {
+                    box-shadow: 0px 2px 5px rgba(220, 220, 220, 0.5), inset 0px -1px 4px rgba(0, 75, 146, 0.65);
+                    backdrop-filter: blur(21.75px);
+                }
             }
         }
     }

@@ -3,10 +3,17 @@
     <div class="logo">
       <img src="@/assets/img/toplogo.png" alt />
     </div>
-    <el-menu :default-active="router.currentRoute.value?.matched[1]?.path" class="el-menu-demo" mode="horizontal"
-      background-color="rgba(255,255,255,0)" :ellipsis="false" :router="true">
+    <el-menu :default-active="router.currentRoute.value?.fullPath" class="el-menu-demo" mode="horizontal"
+      background-color="rgba(255,255,255,0)" :ellipsis="false" :router="true" default-active>
       <el-menu-item index="/home">首页</el-menu-item>
-      <el-menu-item index="/products">产品</el-menu-item>
+      <!-- <el-menu-item index="/products">产品</el-menu-item> -->
+      <el-sub-menu index="/products">
+        <template #title>产品</template>
+        <el-menu-item index="/products">产品集合</el-menu-item>
+
+        <el-menu-item v-for="item in productsList" :index="`/products/detail/${item.id}`">{{item.productsName}}</el-menu-item>
+  
+      </el-sub-menu>
       <el-menu-item v-if="solutionList[0] && solutionList[0].industryType === 0" index="/solution">解决方案</el-menu-item>
       <el-menu-item v-if="caseList[0] && caseList[0].caseType === 0" index="/case">案例分享</el-menu-item>
       <el-menu-item v-if="newsList[0] && newsList[0].newsType === 0" index="/news">新闻中心</el-menu-item>
@@ -22,49 +29,50 @@
       <el-button class="btn" type="primary" @click="openDialog">预约体验</el-button>
     </div>
   </el-header>
+  <div class="dialog-main">
+    <el-dialog v-model="dialogFormVisible">
 
-  <el-dialog v-model="dialogFormVisible">
+      <div class="booking-dialog">
+        <div class="box left">
+          <p>预约体验</p>
+          <p>请提交需求，我们马上跟您取得联系</p>
+          <p>立即拨打服务热线：400 631 9969 </p>
+        </div>
+        <div class="box right">
+          <el-form ref="bookingRef" :model="form" :rules="rules" label-position="top">
+            <el-form-item label="公司名称" :label-width="formLabelWidth" prop="companyName">
+              <el-input v-model="form.companyName" autocomplete="off" />
+            </el-form-item>
+            <el-form-item label="公司所在行业" :label-width="formLabelWidth" prop="industry">
+              <el-select v-model="form.industry" clearable placeholder="请选择" style="width: 100%;">
+                <el-option v-for="(item) in solutionList" :label="item.industryName" :value="item.industryName" />
+                <el-option label="其他" value="其他" />
+              </el-select>
+            </el-form-item>
+            <el-form-item label="姓名" :label-width="formLabelWidth" prop="name">
+              <el-input v-model="form.name" autocomplete="off" />
+            </el-form-item>
 
-    <div class="booking-dialog">
-      <div class="box left">
-        <p>预约体验</p>
-        <p>请提交需求，我们马上跟您取得联系</p>
-        <p>立即拨打服务热线：400 631 9969 </p>
+            <el-form-item label="您的电话" :label-width="formLabelWidth" prop="tel">
+              <el-input v-model="form.tel" autocomplete="off" />
+            </el-form-item>
+
+            <el-form-item label="您遇到了哪些机械加工问题或疑问，欢迎给我们留言" :label-width="formLabelWidth">
+              <el-input v-model="form.message" autocomplete="off" type="textarea" />
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="submitForm">
+                立即预约
+              </el-button>
+            </el-form-item>
+
+          </el-form>
+        </div>
       </div>
-      <div class="box right">
-        <el-form ref="bookingRef" :model="form" :rules="rules" label-position="top">
-          <el-form-item label="公司名称" :label-width="formLabelWidth" prop="companyName">
-            <el-input v-model="form.companyName" autocomplete="off" />
-          </el-form-item>
-          <el-form-item label="公司所在行业" :label-width="formLabelWidth" prop="industry">
-            <el-select v-model="form.industry" clearable placeholder="请选择" style="width: 100%;">
-              <el-option v-for="(item) in solutionList" :label="item.industryName" :value="item.industryName" />
-              <el-option label="其他" value="其他" />
-            </el-select>
-          </el-form-item>
-          <el-form-item label="姓名" :label-width="formLabelWidth" prop="name">
-            <el-input v-model="form.name" autocomplete="off" />
-          </el-form-item>
-
-          <el-form-item label="您的电话" :label-width="formLabelWidth" prop="tel">
-            <el-input v-model="form.tel" autocomplete="off" />
-          </el-form-item>
-
-          <el-form-item label="您遇到了哪些机械加工问题或疑问，欢迎给我们留言" :label-width="formLabelWidth">
-            <el-input v-model="form.message" autocomplete="off" type="textarea" />
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="submitForm">
-              立即预约
-            </el-button>
-          </el-form-item>
-
-        </el-form>
-      </div>
-    </div>
 
 
-  </el-dialog>
+    </el-dialog>
+  </div>
 </template>
 
 <script setup>
@@ -79,6 +87,7 @@ const store = useStore();
 let router = useRouter()
 
 const solutionList = ref([])
+const productsList = ref([])
 const caseList = ref([])
 const newsList = ref([])
 const videoList = ref([])
@@ -122,6 +131,7 @@ const openDialog = () => {
 }
 
 onMounted(() => {
+  console.log(router)
   getProductsList()
   getSolutionList()
   getAllCaseList(1)
@@ -176,6 +186,7 @@ const getProductsList = () => {
   }
   queryProductsList(params).then(({ code, data }) => {
     if (code === 0) {
+      productsList.value = data
       store.commit('setProductsList', data)
     }
   })
@@ -252,7 +263,7 @@ defineExpose({
   align-content: center;
   align-items: center;
   margin: 0 auto;
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: rgba(255, 255, 255, 0.6);
 
   &.fixed {
     background-color: #fff;
@@ -281,11 +292,11 @@ defineExpose({
 
     font-weight: 400;
   }
-  
+
 
   .booking {
     .btn {
-      background: linear-gradient(114.70deg, rgba(25,108,255,1.00) 0%,rgba(0,84,167,1.00) 100%);
+      background: linear-gradient(114.70deg, rgba(25, 108, 255, 1.00) 0%, rgba(0, 84, 167, 1.00) 100%);
       box-shadow: inset 0px -1px 4px rgba(200, 232, 255, 0.41);
       backdrop-filter: blur(21.75px);
 
@@ -300,34 +311,41 @@ defineExpose({
 
 }
 
-.booking-dialog {
-  display: flex;
-  justify-content: space-between;
-  color: #fff;
+.dialog-main {
+  :deep(.el-dialog__body) {
+    padding: 0;
+    background-color: aqua;
 
-  .box {
-    width: 46%;
-    vertical-align: top;
+    .booking-dialog {
+      display: flex;
+      justify-content: flex-start;
+      color: #fff;
+      flex-direction: column;
+      align-items: center;
 
-    :deep(.el-form-item__label) {
-      font-size: small;
-    }
+      .box {
+        width: 46%;
+        vertical-align: top;
 
-    &.left {
-      padding: 40px 20px;
-      background-image: url('https://img95.699pic.com/photo/40015/4163.jpg_wh860.jpg');
-      background-repeat: no-repeat;
-      background-size: 340px 560px;
+        :deep(.el-form-item__label) {
+          font-size: small;
+        }
+
+        &.left {
+          padding: 40px 20px;
 
 
-      :nth-child(1) {
-        font-size: 28px;
-        font-weight: 700;
-        line-height: 28px;
-      }
 
-      :nth-child(2) {
-        margin: 30px 0 100px 0;
+          :nth-child(1) {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 28px;
+          }
+
+          :nth-child(2) {
+            margin: 30px 0 100px 0;
+          }
+        }
       }
     }
   }

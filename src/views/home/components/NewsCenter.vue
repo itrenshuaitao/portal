@@ -7,9 +7,9 @@
                         {{ item.newsName }}
                     </p>
                     <p class="news-desc">
-                        {{ item.newsTitle }} </p>
+                        {{ item.detail }} </p>
                     <p class="time">
-                        {{ item.newsTime }}
+                        {{ item.newsTime.replace(/-/g,"/") }}
                     </p>
                     <div class="to-desc" @click="proxy.$router.push('./news/detail/' + item.id)">查看详情</div>
                 </div>
@@ -72,7 +72,7 @@ const toNews = () => {
     }
 
     &:deep(.el-carousel__container) {
-        height: 466px;
+        height:377px;
 
         .el-carousel__item {
             display: flex;
@@ -172,8 +172,6 @@ const toNews = () => {
         display: flex;
         align-items: center;
         justify-content: center;
-        
-
     }
 }
 </style>

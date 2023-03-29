@@ -197,8 +197,10 @@ onMounted(() => {
         padding: 0 20px;
         //justify-content: center;
         align-items: flex-start;
+        font-family: Alibaba PuHuiTi 2.0;
 
         p {
+          font-weight: 600;
           padding: 24px 0;
         }
 
@@ -207,6 +209,7 @@ onMounted(() => {
           line-height: 16px;
           transition: 0.3s;
           cursor: pointer;
+          font-size: 12px;
 
           &:hover {
             color: #148FFA;
@@ -263,9 +266,12 @@ onMounted(() => {
         line-height: 22px;
 
         p {
-          font-weight: 700;
+          font-weight: 600;
           margin-top: 20px;
           margin-bottom: 12px;
+        }
+        span{
+          font-size: 12px;
         }
 
       }

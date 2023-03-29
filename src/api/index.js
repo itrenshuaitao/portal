@@ -130,16 +130,19 @@ export const queryNewsById = (params) => {
 //非置顶视频列表
 export const queryVideoList = (params) => {
     return request({
-        url: '/website-rest/querytopList',
+        // url: '/website-rest/querytopList',
+        url:'/website-rest/querysecondList',
         method: 'get',
         params
     })
 }
 //置顶视频列表
-export const queryTopVideoList = () => {
+export const queryTopVideoList = (params) => {
     return request({
-        url: '/website-rest/findVideoTop',
+        // url: '/website-rest/findVideoTop',
+        url:'/website-rest/queryfirstList',
         method: 'get',
+        params
     })
 }
 

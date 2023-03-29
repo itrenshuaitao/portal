@@ -281,6 +281,7 @@ defineExpose({
 
     font-weight: 400;
   }
+  
 
   .booking {
     .btn {

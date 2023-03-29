@@ -83,7 +83,7 @@ const getVideoList = (pageIndex) => {
     })
 }
 const getTopVideoList = () => {
-    queryTopVideoList().then(({ code, data }) => {
+    queryTopVideoList({pageIndex:1,pageSize:999,sort:1}).then(({ code, data }) => {
         if (code === 0) {
             topVideoList.value = data.slice(0, 3)
             isVideoVisible.value = true
@@ -135,23 +135,25 @@ const handleClick = (obj) => {
 
             .left {
                 width: calc(75% - 4px);
+                background-color: rgb(248, 248, 248);
+                font-family: Alibaba PuHuiTi;   
 
 
                 .video {
                     width: 100%;
-
                     border-radius: 4px;
                     overflow: hidden;
                 }
 
                 .info {
                     margin-left: 16px;
+                    padding-bottom: 23px;
 
                     h2 {
                         margin-top: 16px;
                         margin-bottom: 7px;
                         color: rgb(62, 73, 84);
-                        font-size: 24px;
+                        font-size: 18px;
                         font-weight: 500;
                         line-height: 34px;
                     }
@@ -167,6 +169,7 @@ const handleClick = (obj) => {
 
             .right {
                 width: calc(25% - 20px);
+                font-family: Alibaba PuHuiTi;   
 
                 .item {
                     position: relative;
@@ -189,7 +192,7 @@ const handleClick = (obj) => {
                         backdrop-filter: blur(5.44px);
                         border-radius: 4px;
                         color: rgb(62, 73, 84);
-                        font-size: 20px;
+                        font-size: 18px;
                         font-weight: 500;
                         line-height: 28px;
                     }
@@ -206,9 +209,10 @@ const handleClick = (obj) => {
             .item {
 
                 width: calc(25% - 18px);
-                height: 230px;
-                margin-bottom: 40px;
+                height: 243px;
+                margin-bottom: 24px;
                 margin-right: 24px;
+                background: rgba(246, 246, 250, 0.5);
                 overflow: hidden;
 
                 &:nth-of-type(4n+0) {
@@ -227,19 +231,20 @@ const handleClick = (obj) => {
 
                     h2 {
                         margin-top: 16px;
-                        margin-bottom: 7px;
+                        margin-bottom: 8px;
                         color: rgb(62, 73, 84);
-                        font-size: 20px;
+                        font-size: 18px;
                         font-weight: 500;
-                        line-height: 28px;
-
-                        p {
-                            color: rgb(108, 123, 139);
-                            font-size: 14px;
-                            font-weight: 400;
-                            line-height: 20px;
-
-                        }
+                        line-height: 25px;    
+                        font-family: Alibaba PuHuiTi;                  
+                    }
+                    p {
+                        color: rgb(108, 123, 139);
+                        font-size: 14px;
+                        font-weight: 400;
+                        line-height: 20px;
+                        font-family: Alibaba PuHuiTi;
+                        padding-bottom: 16px;
                     }
                 }
 

@@ -228,7 +228,7 @@ const updataJobList = () => {
 
     .submit {
         margin: 0 90px;
-        height: 242px;
+        height: 175px;
         background-image: url('@/assets/img/submit.png');
         background-repeat: no-repeat;
         background-size: 100%;
@@ -237,23 +237,25 @@ const updataJobList = () => {
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        border-radius: 28px;
 
         p {
             color: rgb(62, 73, 84);
-            font-size: 28px;
+            font-size: 18px;
             font-weight: 500;
             line-height: 41px;
             margin-bottom: 32px;
         }
 
         .sub-btn {
-            width: 228px;
-            height: 74px;
+            width: 156px;
+            height: 52px;
             color: rgb(69, 104, 128);
-            font-size: 36px;
+            font-size: 24px;
             font-weight: 500;
             line-height: 53px;
             background-color: rgb(179, 194, 208);
+            border-radius: 41px;
             // &:hover{
             //     color: #fff;
             // }
@@ -376,6 +378,7 @@ const updataJobList = () => {
                         font-weight: 500;
                         line-height: 27px;
                         margin-bottom: 5px;
+                        font-family: Noto Sans SC;
 
                         &::after {
                             content: '';
@@ -396,6 +399,7 @@ const updataJobList = () => {
                         font-weight: 400;
                         line-height: 21px;
                         margin-bottom: 36px;
+                        font-family: Noto Sans SC;
 
                     }
                 }

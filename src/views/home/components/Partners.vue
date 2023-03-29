@@ -13,7 +13,12 @@
 </template>
 
 <script setup>
+import {onMounted} from 'vue'
 const props = defineProps(['partnerList'])
+onMounted(()=>{
+    console.log(props.partnerList);
+})
+
 </script>
 
 <style lang='scss' scoped>

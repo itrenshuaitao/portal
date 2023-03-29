@@ -20,8 +20,8 @@
                     <ItemCard :case="item" />
                 </div>
             </div>
-            <div style="display: flex;justify-content: center;">
-                <el-pagination background layout="prev, pager, next" :page-size="pagination.pageSize"
+            <div style="display: flex;justify-content: center;" class="pagination">
+                <el-pagination background layout="prev, pager, next" :page-size="pagination.pageSize" prev-text="上一页" next-text="下一页"
                     :total="pagination.total" @current-change="paginationChange" />
             </div>
         </div>
@@ -137,14 +137,18 @@ const paginationChange = (value) => {
 
         .industry {
             margin-bottom: 10px;
+            font-family: Alibaba PuHuiTi;
             font-size: 14px;
             font-weight: 400;
-            line-height: 20px;
+            height: 32px;
+            line-height: 32px;
             letter-spacing: 0px;
+            box-shadow: 0px -1px 4px 0 rgba(0, 0, 0, 0.15) inset, 0px 2px 5px 0px rgba(220, 220, 220, 0.5); 
+            backdrop-filter: blur(21.75px);
 
             &.active {
-                background-color: #ecf5ff;
-                color: #409eff;
+                // background-color: #ecf5ff;
+                color: rgb(0, 75, 146);
             }
         }
 
@@ -154,15 +158,28 @@ const paginationChange = (value) => {
             justify-content: flex-start;
 
             .item {
-                width: calc((100% - 32px) / 3);
-                margin-right: 16px;
-                margin-bottom: 40px;
+                width: calc((100% - 48px) / 3);
+                margin-right: 24px;
+                margin-bottom: 24px;
 
                 &:nth-of-type(3n+0) {
                     margin-right: 0;
                 }
             }
         }
+        .pagination{
+            height: 32px;
+            line-height: 32px;
+            :deep(.el-pagination.is-background .btn-prev),:deep(.el-pagination.is-background .btn-next),:deep(.el-pager li){
+                height: 32px;
+                line-height: 40px;
+                font-size: 14px !important;
+                color: rgb(62, 73, 84);
+                box-shadow: 0px -1px 4px 0 rgba(0, 0, 0, 0.15) inset, 0px 2px 5px 0px rgba(220, 220, 220, 0.5); 
+                padding: 9px 16px;
+            }
+        }
+        
     }
 }
 </style>

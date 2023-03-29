@@ -397,17 +397,19 @@ const showImage = (val) => {
         align-items: center;
 
         :nth-child(1) {
-            color: rgb(25, 108, 255);
-            font-size: 32px;
-            font-weight: 600;
+            color: rgb(0, 75, 146);
+            font-size: 28px;
+            font-weight: 500;
             line-height: 45px;
+            font-family: DIN;
         }
 
         :nth-child(2) {
-            color: rgb(62, 73, 84);
+            color: rgb(108, 123, 139);
             font-size: 16px;
-            font-weight: 500;
+            font-weight: 400;
             line-height: 22px;
+            font-family: PingFang SC;
         }
 
 

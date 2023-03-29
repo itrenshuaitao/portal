@@ -83,7 +83,9 @@ const paginationChange = (value) => {
             .item {
                 width: calc((100% - 32px) / 3);
                 margin-right: 16px;
-                margin-bottom: 40px;
+                margin-bottom: 24px;
+                background: linear-gradient(-51.95deg, rgba(246,246,250,1.00) 0%,rgba(254,255,254,1.00) 100%);
+                box-shadow: 0px 8px 15px rgba(196, 196, 196, 0.5);
 
                 &:nth-of-type(3n+0) {
                     margin-right: 0;

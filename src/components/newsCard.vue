@@ -19,13 +19,14 @@ const props = defineProps(['news'])
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 342px;
+    height: 338px;
     padding: 16px;
     background-color: #f7f7f7;
     border: 1px solid rgb(255, 255, 255);
     border-radius: 4px;
     transition: all .3s;
     cursor: pointer;
+    font-family: Alibaba PuHuiTi;   
 
 
     .img {
@@ -63,10 +64,11 @@ const props = defineProps(['news'])
     .text {
         text-align: center;
         margin-bottom: 24px;
+        font-family: Alibaba PuHuiTi 2.0;
 
         h2 {
             color:rgb(62, 73, 84);
-            font-size: 24px;
+            font-size: 18px;
             font-weight: 500;
             line-height: 24px;
             -webkit-line-clamp: 1;
@@ -75,9 +77,9 @@ const props = defineProps(['news'])
 
         p {
             color: rgb(108, 123, 139);
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 400;
-            line-height: 16px;
+            line-height: 20px;
             margin-top: 9px;
         }
 

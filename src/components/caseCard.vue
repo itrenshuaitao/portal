@@ -39,13 +39,16 @@ const props = defineProps(['case'])
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 408px;
+    height: 404px;
     padding: 16px;
-    background-color: #f7f7f7;
+    // background-color: #f7f7f7;
+    background: linear-gradient(-51.95deg, rgba(246,246,250,1.00) 0%,rgba(254,255,254,1.00) 100%);
     border: 1px solid rgb(255, 255, 255);
+    box-shadow: 0px 18px 30px rgba(220, 220, 220, 0.5);
     border-radius: 4px;
     transition: all .3s;
     cursor: pointer;
+    font-family: Alibaba PuHuiTi;
 
 
     .img {
@@ -83,7 +86,7 @@ const props = defineProps(['case'])
     .text {
         h2 {
             color: rgb(62, 73, 84);
-            font-size: 24px;
+            font-size: 18px;
             font-weight: 500;
             line-height: 34px;
             margin-top: 20px

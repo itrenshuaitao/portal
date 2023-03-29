@@ -31,7 +31,7 @@
       产品亮点
     </div>
     <div class="highlights">
-      <el-tabs v-model="activeTabName" stretch @tab-click="handleHighlightsClick">
+      <el-tabs v-model="activeTabName" class="demo-tabs" stretch @tab-click="handleHighlightsClick">
         <el-tab-pane name="0">
           <template #label>
             <span class="custom-tabs-label">
@@ -63,7 +63,7 @@
         </el-tab-pane>
       </el-tabs>
       <el-carousel ref="carousel" :interval="4000" type="card" height="380px" pause-on-hover indicator-position="none"
-        :autoplay="true" arrow="never" @change="val => activeTabName = val.toString()">
+        :autoplay="false" arrow="never" @change="val => activeTabName = val.toString()">
         <el-carousel-item>
           <div class="text">
             <h2>UJ-iPMS过程监控</h2>
@@ -256,6 +256,15 @@ const cardClick = (id) => {
   .highlights {
     padding: 40px 200px;
     background: linear-gradient(180.00deg, rgba(250, 251, 253, 1) 0%, rgba(242, 243, 245, 1) 100%), rgb(242, 245, 248);
+    // :deep(.demo-tabs > .el-tabs__content) {
+    //   padding: 32px;
+    //   color: #6b778c;
+    //   font-size: 32px;
+    //   font-weight: 600;
+    // }
+    :deep(.el-tabs__active-bar){
+      color: red !important;
+    }
 
     :deep(.el-tabs__item) {
       height: auto;
@@ -288,6 +297,7 @@ const cardClick = (id) => {
         }
       }
     }
+    
 
     .custom-tabs-label {
       img {
@@ -297,10 +307,13 @@ const cardClick = (id) => {
       }
 
       p {
-        font-size: 24px;
+        font-size: 20px;
         font-weight: 500;
         line-height: 34px;
+        color: rgb(108, 123, 139);
+        font-family: Alibaba PuHuiTi;
       }
+      
     }
 
     .img {
@@ -309,6 +322,7 @@ const cardClick = (id) => {
       border-radius: 4px;
     }
   }
+
 
   .case-list {
     padding: 0 120px;

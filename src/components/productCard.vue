@@ -19,15 +19,17 @@ const props = defineProps(['products'])
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 342px;
+    height: 337px;
     padding: 16px;
-    background-color: #f7f7f7;
-    box-shadow: 0px 18px 30px rgba(220, 220, 220, 0.5);
+    background: linear-gradient(-51.95deg, rgba(246,246,250,1.00) 0%,rgba(254,255,254,1.00) 100%);
+    box-shadow: 0px 8px 15px rgba(196, 196, 196, 0.5);
+    backdrop-filter: blur(21.75px);
 
     border: 1px solid rgb(255, 255, 255);
     border-radius: 4px;
     transition: all .3s;
     cursor: pointer;
+
 
 
     .img {
@@ -44,8 +46,10 @@ const props = defineProps(['products'])
     }
 
     &:hover {
-        background: linear-gradient(-51.95deg, rgba(246,246,250,1.00) 0%,rgba(254,255,254,1.00) 100%);
+        // background: linear-gradient(-51.95deg, rgba(246,246,250,1.00) 0%,rgba(254,255,254,1.00) 100%);
         border: 1px solid rgb(0, 75, 146);
+        // box-shadow: 0px 8px 15px rgba(196, 196, 196, 0.5);
+        background: linear-gradient(-51.95deg, rgba(246,246,250,1.00) 0%,rgba(254,255,254,1.00) 100%);
         box-shadow: 0px 8px 15px rgba(196, 196, 196, 0.5);
         border-radius: 4px;
         transform: scale(1.03);
@@ -58,6 +62,7 @@ const props = defineProps(['products'])
         }
         .text h2{
             color: rgb(0, 75, 146);
+            font-size: 18px;
         }
 
     }
@@ -65,10 +70,11 @@ const props = defineProps(['products'])
     .text {
         text-align: center;
         margin-bottom: 24px;
+        font-family: Alibaba PuHuiTi;
 
         h2 {
             color:rgb(62, 73, 84);
-            font-size: 24px;
+            font-size: 16px;
             font-weight: 500;
             line-height: 24px;
             -webkit-line-clamp: 1;
@@ -77,7 +83,7 @@ const props = defineProps(['products'])
 
         p {
             color: rgb(108, 123, 139);
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 400;
             line-height: 16px;
             margin-top: 9px;

@@ -96,10 +96,11 @@ const getPartnerList = () => {
     }
     getHomePartnerList(params).then(({ code, data }) => {
         if (code === 0) {
-
             let len = data.length;
-            let n = 10; //每行显示10个
-            let lineNum = len % n === 0 ? len / n : Math.floor((len / n) + 1);
+            // let n = 10; //每行显示10个
+            let n = data.length / 3
+            // let lineNum = len % n === 0 ? len / n : Math.floor((len / n) + 1);
+            let lineNum = len % n === 0 ? len / n : Math.floor((len / n));
             let res = [];
             for (let i = 0; i < lineNum; i++) {
                 let temp = data.slice(i * n, i * n + n);
@@ -107,6 +108,7 @@ const getPartnerList = () => {
             }
 
             partnerList.value = res;
+            console.log(partnerList.value);
 
         }
     })

@@ -163,12 +163,19 @@ const handleTabClick = (val) => {
 
 const slideChange = (val) => {
     let index = toRaw(val).realIndex
+    changeProblemList(index)
     getSolutionCaseList(toRaw(solutionList.value)[index].id)
 }
+
 const mouseOver = (val) => {
     let list = toRaw(solutionList.value)
     let solution_id = val.target.getAttribute('solution_id')
     let index = list.findIndex(item => item.id.toString() === solution_id)
+    changeProblemList(index)
+}
+
+const changeProblemList  = (index) => {
+    let list = toRaw(solutionList.value)
     let list_length = list.length
 
     let arr

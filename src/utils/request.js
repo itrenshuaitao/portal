@@ -49,6 +49,7 @@ request.interceptors.response.use(
         ElMessage.success({
           message: data.resultMsg,
         });
+        return response.data;
       } else {
         if (data.msg) {
           ElMessage.warning({

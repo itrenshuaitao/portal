@@ -6,8 +6,9 @@
         <div class="submit">
             <p>可投简历至邮箱：jiaie.gao@ujoin-tech.com</p>
             <el-button class="sub-btn" :dark="isDark" plain @click="postClick">我要应聘</el-button>
-            <el-dialog v-model="dialogFormVisible" destroy-on-close width="35%" title="填写信息" @open="clearFormLabelAlign">
-                <el-form label-position="right" ref="subForm" :rules="rules" label-width="100px" :model="formLabelAlign"
+            <el-dialog v-model="dialogFormVisible"  destroy-on-close width="35%" title="填写信息"
+                @open="clearFormLabelAlign">
+                <el-form label-position="right" ref="subForm"  :rules="rules" label-width="100px" :model="formLabelAlign"
                     style="max-width: 460px">
                     <el-form-item label="姓名" prop="name">
                         <el-input v-model="formLabelAlign.name" />
@@ -33,7 +34,7 @@
                 <template #footer>
                     <span class="dialog-footer">
                         <el-button @click="dialogFormVisible = false">取消</el-button>
-                        <el-button type="primary" @click="handleSubResume">
+                        <el-button type="primary"  @click="handleSubResume">
                             提交
                         </el-button>
                     </span>
@@ -156,7 +157,7 @@ const handleAvatarSuccess = (response, uploadFile) => {
 };
 const handleSubResume = () => {
     const { filePath, name, tel, remark } = formLabelAlign;
-    proxy.$refs.subForm.validate((valid,err) => {
+    proxy.$refs.subForm.validate((valid, err) => {
         if (valid) {
             const data = {
                 filePath,
@@ -169,8 +170,8 @@ const handleSubResume = () => {
                     dialogFormVisible.value = false
                 }
             })
-        }else{
-            console.error(formLabelAlign,err)
+        } else {
+            console.error(formLabelAlign, err)
         }
     })
 

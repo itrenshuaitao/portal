@@ -82,7 +82,7 @@ const router = useRouter()
 const refCarousel = ref(null);
 const slideActive = ref(0);
 let pageData = reactive({
-    autoplay: false,//是否自动切换
+    autoplay: true,//是否自动切换
     isPlay: false,//播放状态
     isIn: false,//鼠标是否位于播放器内
     cutTime: 3000,//轮播时间，单位毫秒
@@ -120,10 +120,12 @@ onMounted(() => {
     getListBanner()
 })
 
-// watch(pageData,async (newValue,oldValue) => {
-//     // console.log("watch",newValue)
-// pageData.autoplay = !newValue.isIn
-// })
+watch(pageData, async (newValue, oldValue) => {
+    if (oldValue.isIn !== newValue.isIn) {
+        pageData.autoplay = !newValue.isIn
+    }
+
+})
 
 
 const getListBanner = () => {
@@ -168,6 +170,7 @@ const handleChange = (nowIndex, oldIndex) => {
             video.currentTime = 0
         }
         pageData.autoplay = false
+        pageData.nowIndex = nowIndex
         let video = document.getElementById(`myVideoPlayer${nowIndex}`)
         // video.addEventListener('ended', function () {
         //     console.log(`myVideoPlayer${nowIndex}`,'添加视频结束事件')
@@ -199,6 +202,9 @@ const onEnded = (ev) => {
     if (!pageData.isIn) {
         pageData.autoplay = true
         proxy.$refs.refCarousel.next()
+    } else if (!pageData.autoplay) {
+        let video = document.getElementById(`myVideoPlayer${pageData.nowIndex}`)
+        video.play()
 
     }
 }

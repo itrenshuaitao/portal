@@ -30,6 +30,7 @@
 
       产品亮点
     </div>
+
     <div class="highlights">
       <el-tabs v-model="activeTabName" class="demo-tabs" stretch @tab-click="handleHighlightsClick">
         <el-tab-pane name="0">
@@ -62,7 +63,11 @@
           </template>
         </el-tab-pane>
       </el-tabs>
-      <el-carousel ref="carousel" :interval="4000" type="card" height="380px" pause-on-hover indicator-position="none"
+      <DiySwiper ref="swiper" @slideChange="(val)=>slideChange(val)" />
+
+
+
+      <!-- <el-carousel ref="carousel" :interval="4000" type="card" height="380px" pause-on-hover indicator-position="none"
         :autoplay="false" arrow="never" @change="val => activeTabName = val.toString()">
         <el-carousel-item>
           <div class="text">
@@ -89,7 +94,7 @@
           </div>
           <img class="img" src="http://www.ujoin-tech.com/uploadfile/upfiles/20221008161117634130a5c229c.jpg" alt="">
         </el-carousel-item>
-      </el-carousel>
+      </el-carousel> -->
     </div>
     <template v-if="productsCaseList[0]?.caseType2 == 0">
       <div class="title3 title">
@@ -105,13 +110,13 @@
       </div>
 
       <div class="_more pointer" @click="() => proxy.$router.push('/case')">
-            <span style="margin-right: 10px;">
-              查看更多案例
-            </span>
-            <el-icon style="transform: rotate(270deg);">
-                <DArrowLeft />
-            </el-icon>
-        </div>
+        <span style="margin-right: 10px;">
+          查看更多案例
+        </span>
+        <el-icon style="transform: rotate(270deg);">
+          <DArrowLeft />
+        </el-icon>
+      </div>
     </template>
 
 
@@ -120,6 +125,7 @@
   
 <script setup>
 import { ref, getCurrentInstance, onMounted } from "vue"
+import DiySwiper from "./components/swiper.vue"
 import Banner from "@/components/Banner.vue"
 import productCard from "@/components/productCard.vue";
 import CaseCard from "@/components/caseCard.vue"
@@ -128,7 +134,7 @@ import { queryBannerImg, handleArraySort } from "@/utils/index"
 
 
 const { proxy } = getCurrentInstance();
-const carousel = ref(null)
+const swiper = ref(null)
 const active = ref("1")
 const activeTabName = ref('0')
 const productsList = ref([])
@@ -143,6 +149,10 @@ onMounted(() => {
 
 })
 
+const slideChange = (val) => {
+  console.log(val)
+  activeTabName.value = val.toString()
+}
 
 const getCaseList = () => {
   queryCasesList({ casesPlace: '0' }).then(({ code, data }) => {
@@ -174,7 +184,8 @@ const handleTabClick = (val) => {
   });
 }
 const handleHighlightsClick = (tab) => {
-  proxy.$refs.carousel.setActiveItem(Number(tab.props.name))
+  proxy.$refs.swiper.slideTo(Number(tab.props.name))
+  // proxy.$refs.carousel.setActiveItem(Number(tab.props.name))
 }
 
 const cardClick = (id) => {
@@ -189,30 +200,30 @@ const cardClick = (id) => {
 
 
   .tab {
-        height: 60px;
-        background: rgba(0, 75, 146, 0.05);
-        padding: 0 120px;
-        font-size: 14px;
-        color: #3E4954;
-        line-height: 17px;
+    height: 60px;
+    background: rgba(0, 75, 146, 0.05);
+    padding: 0 120px;
+    font-size: 14px;
+    color: #3E4954;
+    line-height: 17px;
 
-        .active {
-            font-size: 16px;
-            font-size: 16px;
-            color: #0054A7;
-            line-height: 18px;
-        }
-
-        .el-button {
-            font-weight: 600;
-            font-family: AliPuHui55 !important;
-            margin: 20px 0;
-        }
-
-        .news {
-            margin: 20px;
-        }
+    .active {
+      font-size: 16px;
+      font-size: 16px;
+      color: #0054A7;
+      line-height: 18px;
     }
+
+    .el-button {
+      font-weight: 600;
+      font-family: AliPuHui55 !important;
+      margin: 20px 0;
+    }
+
+    .news {
+      margin: 20px;
+    }
+  }
 
   .title {
     color: rgb(62, 73, 84);
@@ -262,13 +273,14 @@ const cardClick = (id) => {
   .highlights {
     padding: 40px 200px;
     background: linear-gradient(180.00deg, rgba(250, 251, 253, 1) 0%, rgba(242, 243, 245, 1) 100%), rgb(242, 245, 248);
+
     // :deep(.demo-tabs > .el-tabs__content) {
     //   padding: 32px;
     //   color: #6b778c;
     //   font-size: 32px;
     //   font-weight: 600;
     // }
-    :deep(.el-tabs__active-bar){
+    :deep(.el-tabs__active-bar) {
       color: red !important;
     }
 
@@ -303,7 +315,7 @@ const cardClick = (id) => {
         }
       }
     }
-    
+
 
     .custom-tabs-label {
       img {
@@ -319,7 +331,7 @@ const cardClick = (id) => {
         color: rgb(108, 123, 139);
         font-family: AliPuHui55;
       }
-      
+
     }
 
     .img {

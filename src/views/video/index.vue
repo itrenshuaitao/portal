@@ -13,7 +13,7 @@
                     <div class="info">
                         <h2>{{ videoObj.videoName }} </h2>
                         <p>
-                            {{ videoObj.videoTimes }}
+                            {{ videoObj?.videoTimes?.replace(/-/g, "/") }}
                         </p>
                     </div>
                 </div>
@@ -30,7 +30,7 @@
                     <div class="info">
                         <h2>{{ item.videoName }} </h2>
                         <p>
-                            {{ item.videoTimes }}
+                            {{ item?.videoTimes?.replace(/-/g, "/") }}
                         </p>
                     </div>
                 </div>

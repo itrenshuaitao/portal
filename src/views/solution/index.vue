@@ -83,7 +83,7 @@
 
         <div class="_more pointer" @click="() => proxy.$router.push('/case')">
             <span style="margin-right: 10px;">
-              查看更多案例
+                查看更多案例
             </span>
             <el-icon style="transform: rotate(270deg);">
                 <DArrowLeft />
@@ -180,7 +180,7 @@ const mouseOver = (val) => {
     changeProblemList(index)
 }
 
-const changeProblemList  = (index) => {
+const changeProblemList = (index) => {
     let list = toRaw(solutionList.value)
     let list_length = list.length
 
@@ -353,6 +353,9 @@ const modules = [Autoplay, Navigation];
         height: 613px;
         padding: 0 120px;
         background: linear-gradient(180deg, #FAFBFD 0%, #F2F3F5 100%);
+        :nth-child(1){
+            flex-grow:1
+        }
 
         h2 {
             color: rgb(62, 73, 84);
@@ -394,7 +397,7 @@ const modules = [Autoplay, Navigation];
                 width: 100px;
                 height: 100px;
                 text-align: center;
-                background: rgba(255, 255, 255, 0.25);
+                background: #eeeff0;
                 box-shadow: 0px 2px 4px 0px rgba(220, 220, 220, 0.5), inset 0px -1px 4px 0px #C8E8FF;
                 backdrop-filter: blur(3px);
                 border-radius: 50%;
@@ -402,6 +405,7 @@ const modules = [Autoplay, Navigation];
                 font-size: 20px;
                 font-weight: 500;
                 line-height: 100px;
+
 
                 &.longText {
                     font-size: 14px
@@ -413,6 +417,7 @@ const modules = [Autoplay, Navigation];
                 width: 130px;
                 height: 130px;
                 box-shadow: 0px 2px 5px rgba(220, 220, 220, 0.5), inset 0px -1px 4px rgb(69, 156, 222);
+                background: rgba(192, 228, 255, 0.25);
                 backdrop-filter: blur(8.15px);
                 top: 39%;
                 transform: rotateY(-50%);

@@ -11,8 +11,9 @@
         <template #title>产品</template>
         <el-menu-item index="/products">产品集合</el-menu-item>
 
-        <el-menu-item v-for="item in productsList" :index="`/products/detail/${item.id}`">{{item.productsName}}</el-menu-item>
-  
+        <el-menu-item v-for="item in productsList" :index="`/products/detail/${item.id}`">{{ item.productsName
+        }}</el-menu-item>
+
       </el-sub-menu>
       <el-menu-item v-if="solutionList[0] && solutionList[0].industryType === 0" index="/solution">解决方案</el-menu-item>
       <el-menu-item v-if="caseList[0] && caseList[0].caseType === 0" index="/case">案例分享</el-menu-item>
@@ -33,39 +34,39 @@
     <el-dialog v-model="dialogFormVisible">
 
       <div class="booking-dialog">
-        <div class="box left">
+        <div class="box top">
           <p>预约体验</p>
-          <p>请提交需求，我们马上跟您取得联系</p>
           <p>立即拨打服务热线：400 631 9969 </p>
         </div>
-        <div class="box right">
-          <el-form ref="bookingRef" :model="form" :rules="rules" label-position="top">
+        <div class="box form">
+          <el-form ref="bookingRef" :model="form" :rules="rules">
             <el-form-item label="公司名称" :label-width="formLabelWidth" prop="companyName">
-              <el-input v-model="form.companyName" autocomplete="off" />
+              <el-input v-model="form.companyName" placeholder="请输入" autocomplete="off" />
             </el-form-item>
-            <el-form-item label="公司所在行业" :label-width="formLabelWidth" prop="industry">
-              <el-select v-model="form.industry" clearable placeholder="请选择" style="width: 100%;">
+            <el-form-item label="所在行业" :label-width="formLabelWidth" prop="industry">
+              <el-select popper-class="select-industry" v-model="form.industry" clearable placeholder="请选择"
+                style="width: 100%;">
                 <el-option v-for="(item) in solutionList" :label="item.industryName" :value="item.industryName" />
                 <el-option label="其他" value="其他" />
               </el-select>
             </el-form-item>
             <el-form-item label="姓名" :label-width="formLabelWidth" prop="name">
-              <el-input v-model="form.name" autocomplete="off" />
+              <el-input v-model="form.name" placeholder="请输入" autocomplete="off" />
             </el-form-item>
 
-            <el-form-item label="您的电话" :label-width="formLabelWidth" prop="tel">
-              <el-input v-model="form.tel" autocomplete="off" />
+            <el-form-item label="电话" :label-width="formLabelWidth" prop="tel">
+              <el-input v-model="form.tel" placeholder="请输入" autocomplete="off" />
             </el-form-item>
 
-            <el-form-item label="您遇到了哪些机械加工问题或疑问，欢迎给我们留言" :label-width="formLabelWidth">
-              <el-input v-model="form.message" autocomplete="off" type="textarea" />
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" @click="submitForm">
-                立即预约
-              </el-button>
+            <el-form-item label="备注" :label-width="formLabelWidth">
+              <el-input v-model="form.message" placeholder="您遇到了哪些机械加工问题或疑问,欢迎给我们留言..." autocomplete="off" :rows="5"
+                type="textarea" />
             </el-form-item>
 
+            <p class="tip">选择友机，即刻开启智造无忧之旅！</p>
+            <div class="sub-buttom pointer" @click="submitForm">
+              立即预约
+            </div>
           </el-form>
         </div>
       </div>
@@ -95,7 +96,7 @@ const videoList = ref([])
 
 
 const dialogFormVisible = ref(false)
-const formLabelWidth = '140px'
+const formLabelWidth = '70px'
 
 const form = reactive({
   name: '',
@@ -131,7 +132,6 @@ const openDialog = () => {
 }
 
 onMounted(() => {
-  console.log(router)
   getProductsList()
   getSolutionList()
   getAllCaseList(1)
@@ -311,10 +311,32 @@ defineExpose({
 
 }
 
+.select-industry {
+   .el-select-dropdown__item {
+    font-size: 14px;
+    font-family: AliPuHui55;
+
+  }
+}
+
+
 .dialog-main {
-  :deep(.el-dialog__body) {
+  :deep(.el-dialog) {
+    background: rgb(246, 246, 246);
+    width: 606px;
     padding: 0;
-    background-color: aqua;
+    border-radius: 24px;
+    overflow: hidden;
+
+    .el-dialog__header {
+      display: none;
+    }
+
+    .el-dialog__body {
+      padding: 0;
+    }
+
+
 
     .booking-dialog {
       display: flex;
@@ -322,28 +344,106 @@ defineExpose({
       color: #fff;
       flex-direction: column;
       align-items: center;
+      width: 606px;
+      font-family: AliPuHui55;
 
       .box {
-        width: 46%;
         vertical-align: top;
+        width: 100%;
 
         :deep(.el-form-item__label) {
           font-size: small;
         }
 
-        &.left {
-          padding: 40px 20px;
 
+        &.top {
+          width: 100%;
+          background: linear-gradient(270.00deg, rgba(114.75, 164.25, 191.25, 1.00) 0%, rgba(0, 20.97, 136.61, 1.00) 100%);
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          height: 152px;
 
+          &::after {
+            content: '';
+            display: block;
+            width: 935.5px;
+            height: 127px;
+            margin-top: 16px;
+            background: rgb(246, 246, 246);
+            border-radius: 50% / 100% 100% 0 0;
+          }
 
           :nth-child(1) {
-            font-size: 28px;
-            font-weight: 700;
-            line-height: 28px;
+            color: rgb(255, 255, 255);
+            font-family: AliPuHui55;
+            font-size: 24px;
+            font-weight: 600;
+            line-height: 34px;
+            margin-top: 26px;
           }
 
           :nth-child(2) {
-            margin: 30px 0 100px 0;
+            margin-top: 7px;
+
+          }
+        }
+
+        &.form {
+          padding: 0 50px 0 20px;
+          box-sizing: border-box;
+
+          .el-form-item__label {
+            font-family: AliPuHui55;
+            opacity: 0.85;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 32px;
+            text-align: justify;
+            text-align-last: justify;
+            display: block;
+            word-break: break-all;
+            text-justify: distribute;
+            position: relative;
+            padding-right: 14px;
+
+            &::after {
+              content: '*';
+              position: absolute;
+              left: -10px;
+              color: red;
+            }
+
+            &::before {
+              display: none;
+            }
+
+          }
+
+
+
+          .tip {
+            color: rgb(0, 75, 146);
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 22px;
+            letter-spacing: 0px;
+            text-align: center;
+          }
+
+          .sub-buttom {
+            width: 125px;
+            height: 42px;
+            margin: 40px auto;
+            background: rgb(52, 79, 145);
+            box-shadow: 2px 2px 10px rgba(82, 125, 167, 0.32);
+            border-radius: 52px;
+            color: rgb(255, 255, 255);
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 42px;
+            letter-spacing: 0px;
+            text-align: center;
           }
         }
       }

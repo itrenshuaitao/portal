@@ -39,7 +39,7 @@ const props = defineProps(['case'])
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 390px;
+    height: 370px;
     padding: 16px;
     // background-color: #f7f7f7;
     background: linear-gradient(-51.95deg, rgba(246, 246, 250, 1.00) 0%, rgba(254, 255, 254, 1.00) 100%);
@@ -108,12 +108,14 @@ const props = defineProps(['case'])
         flex-direction: row-reverse;
         justify-content: space-between;
         align-items: center;
+        font-family: AliPuHui55;
+
 
         :nth-child(1) {
             color: rgb(0, 75, 146);
-            font-size: 20px;
+            font-size: 16px;
             font-weight: 400;
-            line-height: 28px;
+            line-height: 22px;
             letter-spacing: 0px;
             text-align: left;
             text-transform: uppercase;
@@ -149,7 +151,7 @@ const props = defineProps(['case'])
                 line-height: 32px;
                 letter-spacing: 0px;
                 text-align: center;
-                margin-left: 10px;
+                margin-right: 10px;
             }
         }
 

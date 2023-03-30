@@ -8,8 +8,8 @@
                 :class="active == '2' && 'active'" @click="() => handleTabClick('2')">企业文化</el-button>
             <el-button v-if="companylist[3]?.companyType == 0" :type="plain" link :class="active == '3' && 'active'"
                 @click="() => handleTabClick('3')">发展历程</el-button>
-            <!-- <el-button v-if="companylist[4]?.companyType == 0" :type="plain" link :class="active == '4' && 'active'"
-                @click="() => handleTabClick('4')">服务网络</el-button> -->
+            <el-button v-if="companylist[4]?.companyType == 0" :type="plain" link :class="active == '4' && 'active'"
+                @click="() => handleTabClick('4')">服务网络</el-button>
             <el-button v-if="companylist[5]?.companyType == 0" :type="plain" link :class="active == '5' && 'active'"
                 @click="() => handleTabClick('5')">荣誉证书</el-button>
         </div>
@@ -96,11 +96,11 @@
             </div>
         </template>
         <template v-if="companylist[4]?.companyType == 0">
-            <!-- <div class="title4 title">
+            <div class="title4 title">
                 <span data-desc="service network"></span>
 
                 服务网络
-            </div> -->
+            </div>
             <MapView></MapView>
         </template>
         <template v-if="companylist[5]?.companyType == 0">
@@ -339,12 +339,12 @@ const showImage = (val) => {
     .el-button {
         font-weight: 600;
         font-family: AliPuHui55 !important;
-        margin: 20px 0;
-    }
-
-    .news {
         margin: 20px;
     }
+
+    // .news {
+    //     margin: 20px;
+    // }
 }
 
 .title {
@@ -538,7 +538,7 @@ const showImage = (val) => {
                 .text {
                     width: 300px;
                     padding: 16px;
-
+                    word-wrap: break-word;
                     color: rgb(108, 123, 139);
                     font-size: 14px;
                     font-weight: 400;

@@ -84,7 +84,7 @@ const init = async (name, networkMapObj) => {
 
 
     var colors = [
-        ["#1DE9B6", "#FFDB5C",  "#04B9FF", "#04B9FF"],
+        ["#1DE9B6", "#FFDB5C", "#04B9FF", "#04B9FF"],
         ["#1DE9B6", "#04B9FF", "#5DBD32", "#FFC809", "#FB95D5", "#BDA29A", "#6E7074", "#546570", "#C4CCD3"],
         ["#37A2DA", "#67E0E3", "#32C5E9", "#9FE6B8", "#FFDB5C", "#FF9F7F", "#FB7293", "#E062AE", "#E690D1", "#E7BCF3", "#9D96F5", "#8378EA", "#8378EA"],
         ["#DD6B66", "#759AA0", "#E69D87", "#8DC1A9", "#EA7E53", "#EEDD78", "#73A373", "#73B9BC", "#7289AB", "#91CA8C", "#F49F42"],
@@ -245,31 +245,34 @@ const init = async (name, networkMapObj) => {
                 },
                 itemStyle: {
                     normal: {
-                        borderColor: 'rgba(147, 235, 248, 1)',
-                        borderWidth: 1,
-                        areaColor: {
-                            type: 'radial',
-                            x: 0.5,
-                            y: 0.5,
-                            r: 0.8,
-                            colorStops: [{
-                                offset: 0,
-                                color: 'rgba(147, 235, 248, 0)' // 0% 处的颜色
-                            }, {
-                                offset: 1,
-                                color: 'rgba(147, 235, 248, .2)' // 100% 处的颜色
-                            }],
-                            globalCoord: false // 缺省为 false
-                        },
-                        shadowColor: 'rgba(128, 217, 248, 1)',
+
+                        areaColor: '#214278',//地图区域的颜色
+                        borderColor: '#195BB9', //省市边界线00fcff 516a89
+                        // borderWidth: 1,
+                        // areaColor: {
+                        //     type: 'radial',
+                        //     x: 0.5,
+                        //     y: 0.5,
+                        //     r: 0.8,
+                        //     colorStops: [{
+                        //         offset: 0,
+                        //         color: 'rgba(147, 235, 248, 0)' // 0% 处的颜色
+                        //     }, {
+                        //         offset: 1,
+                        //         color: 'rgba(147, 235, 248, .2)' // 100% 处的颜色
+                        //     }],
+                        //     globalCoord: false // 缺省为 false
+                        // },
+                        // shadowColor: 'rgba(128, 217, 248, 1)',
                         // shadowColor: 'rgba(255, 255, 255, 1)',
-                        shadowOffsetX: -2,
-                        shadowOffsetY: 2,
-                        shadowBlur: 10
+                        // shadowOffsetX: -2,
+                        // shadowOffsetY: 2,
+                        // shadowBlur: 10
                     },
                     emphasis: {
-                        areaColor: '#389BB7',
-                        borderWidth: 0
+                        // areaColor: '#389BB7',
+                        // borderWidth: 0,
+                        color: '#112246' //悬浮背景
                     }
                 }
             },
@@ -282,16 +285,18 @@ const init = async (name, networkMapObj) => {
 
     for (var n = 0; n < year.length; n++) {
         optionXyMap01.options.push({
-            backgroundColor: '#013954',
+            // backgroundColor: '#013954',
+            // backgroundColor: '#6a9ac4',
+
             title:
                 [
                     {
-                        text: '服务网络',
-                        subtext: n == 0 ? '业务覆盖面' : n == 1 ? '产研基地' : '销售服务中心',
+                        text: n == 0 ? '业务覆盖面' : n == 1 ? '产研基地' : '销售服务中心',
+                        // subtext:,
                         left: '35%',
                         top: '10%',
                         textStyle: {
-                            color: '#fff',
+                            color: '#214278',
                             fontSize: 25
                         }
                     },
@@ -329,11 +334,12 @@ const init = async (name, networkMapObj) => {
                     roam: true,
                     itemStyle: {
                         normal: {
-                            areaColor: '#031525',
-                            borderColor: '#FFFFFF',
+                            areaColor: 'rgba(128, 128, 128, 0)',
+                            borderColor: '#49a7d5', //省市边界线00fcff 516a89
+
                         },
                         emphasis: {
-                            areaColor: '#2B91B7'
+                            areaColor: 'rgba(128, 128, 128, 0)',
                         }
                     },
                     animation: false,

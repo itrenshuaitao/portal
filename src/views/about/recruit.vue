@@ -2,12 +2,15 @@
     <div class="recruit">
         <Banner :imgSrc="bannerImg" />
         <img class="img" :src="backgroundImgUrl" alt="">
-        <div class="title">招聘信息</div>
+        <div class="title">
+            <span data-desc="recruitment information"></span>
+            招聘信息
+        </div>
         <div class="submit">
             <p>可投简历至邮箱：jiaie.gao@ujoin-tech.com</p>
             <el-button class="sub-btn" :dark="isDark" plain @click="postClick">我要应聘</el-button>
-            <el-dialog v-model="dialogFormVisible" destroy-on-close width="35%" title="填写信息" @open="clearFormLabelAlign">
-                <el-form label-position="right" ref="subForm" :rules="rules" label-width="100px" :model="formLabelAlign"
+            <el-dialog v-model="dialogFormVisible" destroy-on-close width="26%" title="填写信息" @open="clearFormLabelAlign">
+                <el-form label-position="right" ref="subForm" :rules="rules" label-width="80px" :model="formLabelAlign"
                     style="max-width: 460px">
                     <el-form-item label="姓名" prop="name">
                         <el-input v-model="formLabelAlign.name" />
@@ -218,12 +221,28 @@ const updataJobList = () => {
     }
 
     .title {
+        color: rgb(62, 73, 84);
+        font-family: YouSheBiaoTiHei;
+        font-size: 24px;
+        font-weight: 400;
         height: 56px;
-        font-size: 40px;
-        color: #3E4954;
-        line-height: 47px;
+        line-height: 31px;
         text-align: center;
         margin: 40px 0;
+        position: relative;
+
+        ::after {
+            content: attr(data-desc);
+            color: rgba(0, 0, 0, 0.15);
+            font-family: YouSheBiaoTiHei;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 18px;
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            transform: translate(-50%, 0);
+        }
     }
 
     .submit {
@@ -238,6 +257,34 @@ const updataJobList = () => {
         justify-content: center;
         align-items: center;
         border-radius: 28px;
+
+        :deep(.el-dialog) {
+            font-family: AliPuHui55 !important;
+
+            .el-form-item__label {
+                font-size: 16px;
+                font-family: AliPuHui55;
+                text-align: justify;
+                text-align-last: justify;
+                display: block;
+                word-break: break-all;
+                text-justify: distribute;
+                position: relative;
+                padding-right: 14px;
+
+                &::after {
+                    content: '*';
+                    position: absolute;
+                    left: -10px;
+                    color: red;
+                }
+
+                &::before {
+                    display: none;
+                }
+
+            }
+        }
 
         p {
             color: rgb(62, 73, 84);

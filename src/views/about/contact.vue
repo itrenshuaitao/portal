@@ -91,7 +91,7 @@ const initPageData = () => {
 
                 color: rgb(62, 73, 84);
                 font-size: 18px;
-                font-weight: 500;
+                font-weight: 600;
                 line-height: 25px;
                 margin-bottom: 16px;
             }

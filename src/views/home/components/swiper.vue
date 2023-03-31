@@ -34,7 +34,7 @@
                         </div>
 
                     </Transition>
-                    <Transition name="my-transition" class="link" appear>
+                    <Transition name="my-transition" v-if="item?.sbannerUrl" class="link" appear>
 
                         <div class="more" @click="() => toUrl(item.sbannerUrl)">
 

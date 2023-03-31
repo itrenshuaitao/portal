@@ -235,7 +235,7 @@ const init = async (name, networkMapObj) => {
             geo: {
                 show: true,
                 map: 'china',
-                roam: true,
+                roam: false,
                 zoom: 1.1,
                 center: [113.83531246, 34.0267395887],
                 label: {

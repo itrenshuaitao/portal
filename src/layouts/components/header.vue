@@ -217,6 +217,8 @@ const getAllCaseList = (pageIndex) => {
   queryCaseList(params).then(({ code, data }) => {
     if (code === 0) {
       caseList.value = data
+      store.commit('setCaseList', data)
+
     }
   })
 }
@@ -230,6 +232,8 @@ const getNewsList = (pageIndex) => {
   queryNewsList(params).then(({ code, data }) => {
     if (code === 0) {
       newsList.value = data
+      store.commit('setNewsList', data)
+
     }
   })
 }
@@ -243,11 +247,15 @@ const getVideoList = (pageIndex) => {
   queryVideoList(params).then(({ code, data }) => {
     if (code === 0) {
       videoList.value = data
+      store.commit('setVideoList', data)
+
     }
   })
   queryTopVideoList(params).then(({ code, data }) => {
     if (code === 0) {
       videoTopList.value = data
+      store.commit('setVideoTopList', data)
+
     }
   })
 }

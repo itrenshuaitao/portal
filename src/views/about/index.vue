@@ -82,7 +82,7 @@
                             </div>
                             <div class="right">
                                 <p class="time">{{ node.historyYear }}</p>
-                                <div class="text">{{ node.historyDetail }}</div>
+                                <div class="text"> {{ node.historyDetail }}</div>
                             </div>
                         </div>
                     </el-carousel-item>
@@ -98,7 +98,6 @@
         <template v-if="companylist[4]?.companyType == 0">
             <div class="title4 title">
                 <span data-desc="service network"></span>
-
                 服务网络
             </div>
             <MapView></MapView>
@@ -481,20 +480,23 @@ const showImage = (val) => {
             text-align: left;
         }
     }
-    :nth-child(1){
-        i{
+
+    :nth-child(1) {
+        i {
             background-position: 16px 13px;
             background-size: 54px 60px;
         }
     }
-    :nth-child(2){
-        i{
+
+    :nth-child(2) {
+        i {
             background-position: 10px 13px;
             background-size: 54px 47px;
         }
     }
-    :nth-child(3){
-        i{
+
+    :nth-child(3) {
+        i {
             background-position: 15px 13px;
             background-size: 54px 50px;
         }
@@ -553,6 +555,7 @@ const showImage = (val) => {
                 }
 
                 .text {
+                    white-space: pre-line;
                     width: 300px;
                     padding: 16px;
                     word-wrap: break-word;
@@ -699,5 +702,4 @@ const showImage = (val) => {
         }
     }
 
-}
-</style>
+}</style>

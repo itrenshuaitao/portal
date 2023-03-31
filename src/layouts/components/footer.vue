@@ -27,19 +27,19 @@
 
         </li>
 
-        <!-- <template v-if="caseList[0] && caseList[0].caseType === 0"> -->
+        <template v-if="caseList[0] && caseList[0].caseType === 0">
              <li>
           <p>案例分享</p>
           <span v-for="item in solutionList"
             @click="proxy.$router.push({ path: '/case', query: { solutionId: item.id } })">{{
               item.industryName }}</span>
         </li>
-        <!-- </template> -->
+        </template>
      
         <li>
           <p>活动中心</p>
-          <span @click="proxy.$router.push('/news')">新闻中心</span>
-          <span @click="proxy.$router.push('/video')">视频中心</span>
+          <span v-if="newsList[0] && newsList[0].newsType === 0" index="/news" @click="proxy.$router.push('/news')">新闻中心</span>
+          <span v-if="(videoList[0] && videoList[0].videoType === 0)||(videoTopList[0] && videoTopList[0].videoType === 0)" index="/video" @click="proxy.$router.push('/video')">视频中心</span>
         </li>
         <li>
           <p>关于友机</p>
@@ -94,6 +94,10 @@ const footerData = reactive({
 
 const solutionList = computed(() => store.state.solutionList.slice(0, 6))
 const productsList = computed(() => store.state.productsList.slice(0, 7))
+const caseList = computed(() => store.state.caseList)
+const videoList = computed(() => store.state.videoList)
+const videoTopList = computed(() => store.state.videoTopList)
+const newsList = computed(() => store.state.newsList)
 let router = useRouter()
 const isShow = true;
 onMounted(() => {

@@ -18,7 +18,7 @@
       <el-menu-item v-if="solutionList[0] && solutionList[0].industryType === 0" index="/solution">解决方案</el-menu-item>
       <el-menu-item v-if="caseList[0] && caseList[0].caseType === 0" index="/case">案例分享</el-menu-item>
       <el-menu-item v-if="newsList[0] && newsList[0].newsType === 0" index="/news">新闻中心</el-menu-item>
-      <el-menu-item v-if="videoList[0] && videoList[0].videoType === 0" index="/video">视频中心</el-menu-item>
+      <el-menu-item v-if="(videoList[0] && videoList[0].videoType === 0)||(videoTopList[0] && videoTopList[0].videoType === 0)" index="/video">视频中心</el-menu-item>
       <el-sub-menu index="/about">
         <template #title>关于友机</template>
         <el-menu-item index="/about">公司介绍</el-menu-item>
@@ -81,7 +81,7 @@ import { reactive, ref, onMounted, nextTick, getCurrentInstance } from 'vue'
 import { useRouter } from 'vue-router';
 import { useStore } from "vuex";
 
-import { queryProductsList, queryIndustryList, queryCaseList, queryNewsList, queryVideoList, bookingSendmail } from "@/api/index"
+import { queryProductsList, queryIndustryList, queryCaseList, queryNewsList, queryVideoList,queryTopVideoList, bookingSendmail } from "@/api/index"
 const { proxy } = getCurrentInstance()
 
 const store = useStore();
@@ -92,6 +92,7 @@ const productsList = ref([])
 const caseList = ref([])
 const newsList = ref([])
 const videoList = ref([])
+const videoTopList = ref([])
 
 
 
@@ -242,6 +243,11 @@ const getVideoList = (pageIndex) => {
   queryVideoList(params).then(({ code, data }) => {
     if (code === 0) {
       videoList.value = data
+    }
+  })
+  queryTopVideoList(params).then(({ code, data }) => {
+    if (code === 0) {
+      videoTopList.value = data
     }
   })
 }

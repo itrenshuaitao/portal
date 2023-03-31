@@ -446,7 +446,6 @@ const showImage = (val) => {
             display: inline-block;
             width: 80px;
             height: 80px;
-            background-position: 10px 10px;
             background-repeat: no-repeat;
             margin-bottom: 6px;
 
@@ -480,6 +479,24 @@ const showImage = (val) => {
             font-weight: 400;
             line-height: 20px;
             text-align: left;
+        }
+    }
+    :nth-child(1){
+        i{
+            background-position: 16px 13px;
+            background-size: 54px 60px;
+        }
+    }
+    :nth-child(2){
+        i{
+            background-position: 10px 13px;
+            background-size: 54px 47px;
+        }
+    }
+    :nth-child(3){
+        i{
+            background-position: 15px 13px;
+            background-size: 54px 50px;
         }
     }
 }

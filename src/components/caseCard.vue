@@ -139,7 +139,8 @@ const props = defineProps(['case'])
             display: flex;
 
             .industry-name {
-                width: 88px;
+                // width: 88px;
+                padding: 0px 16px;
                 height: 32px;
                 background: rgb(255, 255, 255);
                 box-shadow: 0px 2px 5px rgba(220, 220, 220, 0.5), inset 0px -1px 4px rgba(0, 75, 146, 0.65);

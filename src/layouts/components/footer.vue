@@ -26,12 +26,16 @@
             item.productsName }}</span>
 
         </li>
-        <li>
+
+        <!-- <template v-if="caseList[0] && caseList[0].caseType === 0"> -->
+             <li>
           <p>案例分享</p>
           <span v-for="item in solutionList"
             @click="proxy.$router.push({ path: '/case', query: { solutionId: item.id } })">{{
               item.industryName }}</span>
         </li>
+        <!-- </template> -->
+     
         <li>
           <p>活动中心</p>
           <span @click="proxy.$router.push('/news')">新闻中心</span>
@@ -210,7 +214,7 @@ onMounted(() => {
         //justify-content: center;
         margin-right: 44px;
         align-items: flex-start;
-          font-family: AliPuHui55;
+        font-family: AliPuHui55;
 
         &:nth-child(4) {
           margin-right: 0;
@@ -249,7 +253,7 @@ onMounted(() => {
 
       display: flex;
       flex-direction: row-reverse;
-      justify-content: space-around;
+      justify-content: space-between;
       align-items: flex-start;
       color: rgb(255, 255, 255);
 
@@ -283,14 +287,21 @@ onMounted(() => {
       }
 
       .bottom {
-        font-size: 16px;
+        color: rgb(255, 255, 255);
+        font-size: 12px;
         font-weight: 400;
-        line-height: 22px;
+        line-height: 17px;
+        :nth-child(1){
+          margin-top: 16px;
+        }
 
         p {
           font-weight: 600;
-          margin-top: 20px;
-          margin-bottom: 12px;
+          margin-top: 30px;
+          margin-bottom: 8px;
+          font-size: 14px;
+          line-height: 20px;
+          letter-spacing: 0px;
         }
 
         span {

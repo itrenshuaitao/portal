@@ -74,15 +74,25 @@
 
                 </div>
                 <div class="right">
-                    <div class="description">
+                    <div>
                         <p>职位描述</p>
-                        <p>{{ item.jobDescription }}</p>
+
+
+
+
+                        <div :class="`description ${moreObj.descData.includes(item.id) ? 'show' : 'hidden'}`">
+                            {{ item.jobDescription }}
+                            <i class="icon" @click="moreClick(item.id, 'desc')"></i>
+                        </div>
+
                     </div>
-                    <div class="Qualifications ">
+                    <div>
                         <p>任职资格</p>
-                        <p>
+                        <div :class="`description ${moreObj.jobShipData.includes(item.id) ? 'show' : 'hidden'}`">
                             {{ item.jobShip }}
-                        </p>
+                            <i class="icon" @click="moreClick(item.id, 'jobShip')"></i>
+
+                        </div>
 
                     </div>
                 </div>
@@ -130,6 +140,11 @@ const rules = reactive({
     ],
     filePath: [{ required: true, message: '请上传附件', trigger: 'change' }]
 })
+
+let moreObj = reactive({
+    descData: [],
+    jobShipData: []
+})
 onMounted(() => {
 
     bannerImg.value = queryBannerImg(7)
@@ -138,6 +153,25 @@ onMounted(() => {
     // handleSubResume()
 })
 
+
+const moreClick = (id, type) => {
+    if (type === 'desc') {
+        if (moreObj.descData.indexOf(id) === -1) {
+            moreObj.descData.push(id)
+
+        } else {
+            moreObj.descData.splice(moreObj.descData.indexOf(id), 1)
+        }
+    } else {
+        if (moreObj.jobShipData.indexOf(id) === -1) {
+            moreObj.jobShipData.push(id)
+
+        } else {
+            moreObj.jobShipData.splice(moreObj.jobShipData.indexOf(id), 1)
+        }
+    }
+
+}
 
 const postClick = () => {
     dialogFormVisible.value = true
@@ -215,6 +249,8 @@ const updataJobList = () => {
 }
 </script>
 <style lang='scss' scoped>
+@import "@/assets/css/index.scss";
+
 .recruit {
     .img {
         width: 100%;
@@ -320,6 +356,7 @@ const updataJobList = () => {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
+        align-items: flex-start;
 
         &:nth-last-of-type(-n+2) {
             margin-bottom: -90px;
@@ -327,7 +364,7 @@ const updataJobList = () => {
 
         .item {
             width: calc((100vw - 310px)/2);
-            height: 272px;
+            min-height: 272px;
             background: rgba(66, 159, 219, 0.08);
             border-radius: 16px;
             margin-bottom: 136px;
@@ -379,7 +416,8 @@ const updataJobList = () => {
 
                 .line {
                     position: absolute;
-                    bottom: 130px;
+                    top: 109px;
+
                     left: 37px;
                     width: 114px;
                     height: 60px;
@@ -410,6 +448,66 @@ const updataJobList = () => {
             .right {
                 margin-left: 43px;
                 margin-top: 31px;
+                margin-right: 20px;
+
+                .description {
+                    // @include show_line(4);
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: 4;
+                    position: relative;
+                    color: rgb(164, 164, 164);
+                    font-size: 13px;
+                    font-weight: 400;
+                    line-height: 21px;
+
+                    &.show {
+                        .icon {
+                            transform: rotateX(180deg);
+                        }
+                    }
+
+                    &.hidden {
+                        display: -webkit-box;
+
+                        overflow: hidden;
+                        max-height: 88px;
+
+                        &:after {
+                            content: "...";
+                            position: absolute;
+                            bottom: 0;
+                            right: 0;
+                            padding-right: 134px;
+                            padding-left: 4px;
+                            background: #F0F7FC;
+
+                        }
+
+                    }
+
+
+
+
+
+                    .icon {
+                        z-index: 1;
+                        position: absolute;
+                        bottom: 8px;
+                        right: 4px;
+                        display: block;
+                        width: 10px;
+                        height: 6px;
+                        float: right;
+                        clear: both;
+                        margin-top: -74px;
+                        background-image: url("@/assets/img/path (1).png");
+                        background-size: 10px 6px;
+                        background-repeat: no-repeat;
+                        cursor: pointer;
+                    }
+                }
+
+
 
                 div {
                     p:nth-child(1) {
@@ -434,13 +532,16 @@ const updataJobList = () => {
                     }
 
                     p:nth-child(2) {
-
+                        height: 95px;
+                        @include show_line(4);
+                        position: relative;
+                        line-height: 20px;
+                        max-height: 40px;
                         color: rgb(164, 164, 164);
-                        font-size: 14px;
+                        font-size: 13px;
                         font-weight: 400;
                         line-height: 21px;
-                        margin-bottom: 36px;
-                        font-family: Noto Sans SC;
+                        // margin-bottom: 36px;
 
                     }
                 }

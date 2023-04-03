@@ -337,7 +337,7 @@ const handleMouseover = (e) => {
                     -webkit-border-radius: 28px;
                     border-radius: 28px;
                     color: #46409f;
-                    margin-top: 120px;
+                    margin-top: 90px;
                 }
             }
         }

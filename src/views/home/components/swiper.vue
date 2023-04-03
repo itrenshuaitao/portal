@@ -244,6 +244,7 @@ const toUrl = (url) => {
         .banner {
             width: 100%;
             height: 100%;
+            object-fit: cover;
         }
 
         .my_video {

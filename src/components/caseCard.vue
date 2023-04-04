@@ -128,10 +128,11 @@ const props = defineProps(['case'])
                 margin-left: 8px;
                 display: inline-block;
                 vertical-align: middle;
-                width: 20px;
-                height: 20px;
+                width: 20PX;
+                height: 20PX;
                 background-image: url("@/assets/img/right-arrow.png");
                 background-repeat: no-repeat;
+                background-size: 20PX 20PX;
             }
         }
 

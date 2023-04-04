@@ -28,18 +28,21 @@
         </li>
 
         <template v-if="caseList[0] && caseList[0].caseType === 0">
-             <li>
-          <p>案例分享</p>
-          <span v-for="item in solutionList"
-            @click="proxy.$router.push({ path: '/case', query: { solutionId: item.id } })">{{
-              item.industryName }}</span>
-        </li>
+          <li>
+            <p>案例分享</p>
+            <span v-for="item in solutionList"
+              @click="proxy.$router.push({ path: '/case', query: { solutionId: item.id } })">{{
+                item.industryName }}</span>
+          </li>
         </template>
-     
+
         <li>
           <p>活动中心</p>
-          <span v-if="newsList[0] && newsList[0].newsType === 0" index="/news" @click="proxy.$router.push('/news')">新闻中心</span>
-          <span v-if="(videoList[0] && videoList[0].videoType === 0)||(videoTopList[0] && videoTopList[0].videoType === 0)" index="/video" @click="proxy.$router.push('/video')">视频中心</span>
+          <span v-if="newsList[0] && newsList[0].newsType === 0" index="/news"
+            @click="proxy.$router.push('/news')">新闻中心</span>
+          <span
+            v-if="(videoList[0] && videoList[0].videoType === 0) || (videoTopList[0] && videoTopList[0].videoType === 0)"
+            index="/video" @click="proxy.$router.push('/video')">视频中心</span>
         </li>
         <li>
           <p>关于友机</p>
@@ -198,7 +201,7 @@ onMounted(() => {
 
   &-content {
     margin: 0 66px 0 120px;
-    padding-top: 20px;
+    padding-top: 10px;
     display: flex;
     justify-content: space-between;
     height: 100%;
@@ -226,7 +229,7 @@ onMounted(() => {
 
         p {
           font-weight: 600;
-          padding: 18px 0;
+          padding: 12px 0;
         }
 
         span {
@@ -247,6 +250,7 @@ onMounted(() => {
     .line {
       // position: absolute;
       // right: 38%;
+      margin:auto 0;
       width: 1px;
       height: 218px;
       background: #D8D8D8;
@@ -283,7 +287,7 @@ onMounted(() => {
 
         img {
           margin-bottom: 10px;
-          margin-top: 36px;
+          // margin-top: 36px;
           width: 100px;
           height: 100px;
           padding: 10px;
@@ -295,8 +299,9 @@ onMounted(() => {
         font-size: 12px;
         font-weight: 400;
         line-height: 17px;
-        :nth-child(1){
-          margin-top: 16px;
+
+        :nth-child(1) {
+          margin-top: 12px;
         }
 
         p {
@@ -319,5 +324,4 @@ onMounted(() => {
 
 
   }
-}
-</style>
+}</style>

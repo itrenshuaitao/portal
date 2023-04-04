@@ -701,4 +701,11 @@ const showImage = (val) => {
         }
     }
 
-}</style>
+}
+:deep(.el-carousel__arrow--right){
+    right: 75px;
+}
+:deep(.el-carousel__arrow--left){
+    left: 75px;
+}
+</style>

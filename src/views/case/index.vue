@@ -123,11 +123,14 @@ const paginationChange = (value) => {
     
 <style lang="scss" scoped>
 .case {
+
     width: 100%;
     height: 100%;
 
     .container {
         padding: 24px 120px 58px 120px;
+        position: relative;
+        z-index: 1;
 
         .label {
             font-size: 16px;

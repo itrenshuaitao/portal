@@ -39,7 +39,7 @@ const props = defineProps(['case'])
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 370px;
+    height: 25.69444vw;
     padding: 16px;
     // background-color: #f7f7f7;
     background: linear-gradient(-51.95deg, rgba(246, 246, 250, 1.00) 0%, rgba(254, 255, 254, 1.00) 100%);
@@ -54,13 +54,13 @@ const props = defineProps(['case'])
     .img {
         border-radius: 4px;
         // margin: 0 auto;
-        height: 217px;
+        height: 15.06944vw;
 
         overflow: hidden;
 
         img {
             width: 100%;
-            height: 217px;
+            height: 15.06944vw;
             transition: all .3s;
 
         }

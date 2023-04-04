@@ -45,7 +45,7 @@ const toNews = () => {
 
 <style lang='scss' scoped>
 .news-center {
-    padding: 0 160px;
+    padding: 0 132px;
     position: relative;
 
 
@@ -72,30 +72,31 @@ const toNews = () => {
     }
 
     &:deep(.el-carousel__container) {
-        height:377px;
+        height:435px;
 
         .el-carousel__item {
             display: flex;
-            justify-content: space-between;
+            // justify-content: space-between;
 
             &>div {
-                width: calc((100% - 55px) / 2);
                 height: 100%;
                 border-radius: 4px;
                 overflow: hidden;
 
                 img {
-                    width: 99%;
+                    width: 704px;
                     height: 100%;
                 }
             }
 
             .text {
+                width: 452px;
                 position: relative;
+                margin-right: 16px;
                 // height: 466px;
                 background: linear-gradient(180deg, #FAFBFD 0%, #F2F3F5 100%);
                 border-radius: 4px;
-                padding: 60px 32px 20px 32px;
+                padding: 50px 32px 20px 32px;
                 box-sizing: border-box;
 
                 .news-title {

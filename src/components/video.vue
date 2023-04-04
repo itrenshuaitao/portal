@@ -20,7 +20,7 @@ export default {
         let data = reactive({
             options: {
                 width: "100%", //播放器高度
-                height: "450px", //播放器高度
+                height: "31.25vw", //播放器高度
                 color: "#409eff", //主题色
                 title: "", //视频名称
                 src: props.video_url, //视频源

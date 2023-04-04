@@ -58,7 +58,7 @@
               <el-input v-model="form.tel" placeholder="请输入" autocomplete="off" />
             </el-form-item>
 
-            <el-form-item label="备注" :label-width="formLabelWidth">
+            <el-form-item label="备注" :label-width="formLabelWidth" class="none">
               <el-input v-model="form.message" placeholder="您遇到了哪些机械加工问题或疑问,欢迎给我们留言..." autocomplete="off" :rows="5"
                 type="textarea" />
             </el-form-item>
@@ -268,14 +268,15 @@ defineExpose({
 <style lang='scss' scoped>
 .el-header {
   position: fixed;
+  padding: 0 120px;
   left: 0;
   top: 0;
   z-index: 50;
   width: 100%;
   display: flex;
-  justify-content: space-around;
   align-content: center;
   align-items: center;
+  justify-content: space-between;
   margin: 0 auto;
   background-color: rgba(255, 255, 255, 0.6);
 
@@ -433,6 +434,13 @@ defineExpose({
             }
 
           }
+
+          .none .el-form-item__label{
+                &::after {
+                    display: none;
+
+                }
+            }
 
 
 

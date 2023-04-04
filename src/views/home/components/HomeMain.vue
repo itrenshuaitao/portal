@@ -199,7 +199,6 @@ const handleMouseover = (e) => {
 
         .active {
             font-size: 16px;
-            font-size: 16px;
             color: #0054A7;
             line-height: 18px;
         }

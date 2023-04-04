@@ -29,9 +29,12 @@
                             </span>
                         </el-upload>
                     </el-form-item>
-                    <el-form-item label="备注">
-                        <el-input v-model="formLabelAlign.remark" type="textarea" />
-                    </el-form-item>
+                    <div >
+                        <el-form-item label="备注" class="none">
+                            <el-input v-model="formLabelAlign.remark" type="textarea" />
+                        </el-form-item>
+                    </div>
+
                 </el-form>
                 <template #footer>
                     <span class="dialog-footer">
@@ -315,10 +318,18 @@ const updataJobList = () => {
                     color: red;
                 }
 
+           
+
                 &::before {
                     display: none;
                 }
 
+            }
+            .none .el-form-item__label{
+                &::after {
+                    display: none;
+
+                }
             }
         }
 
@@ -461,6 +472,7 @@ const updataJobList = () => {
                     line-height: 21px;
 
                     &.show {
+                        white-space: pre-wrap;
                         .icon {
                             transform: rotateX(180deg);
                         }

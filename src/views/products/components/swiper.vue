@@ -5,13 +5,13 @@
             <div class="swiper-wrapper">
                 <div class="swiper-slide">
                     <div class="text">
-                        <h2>PMS-UJ刀具监控系统</h2>
+                        <h2>UJ-PMS智能加工过程监控系统</h2>
                         <p> 通过采集机床NC运行数据（程序号、刀具号、转速、进给倍率等）以及传感器数据（功率、振动），进行综合数据分析，提取每把刀具每次加工的加工曲线（去除主轴加减速以及不同转速下的摩擦力）进行实时监控
                         </p>
                     </div>
 
                     <div class="dimback">
-                        <img class="img" src="@/assets/img/PMS.jpg" alt="PMS-UJ刀具监控系统">
+                        <img class="img" src="@/assets/img/PMS.jpg" alt="UJ-PMS智能加工过程监控系统">
                     </div>
 
 
@@ -20,11 +20,11 @@
                 <div class="swiper-slide">
 
                     <div class="text">
-                        <h2>TOM-UJ刀具管理系统</h2>
+                        <h2>UJ-TOM刀具管理系统</h2>
                         <p> 基于联网监控机床刀具加工，实时采集刀具全生命周期管理、刀具流转管理、采购优化等，对刀具加工过程异常监控，减少刀具提前报废对刀仪数据对接，准确快速</p>
                     </div>
                     <div class="dimback">
-                        <img class="img" src="@/assets/img/TOM.jpg" alt="TOM-UJ刀具管理系统">
+                        <img class="img" src="@/assets/img/TOM.jpg" alt="UJ-TOM刀具管理系统">
                     </div>
 
 
@@ -34,12 +34,12 @@
 
 
                     <div class="text">
-                        <h2>IOM-UJ生产制造协同系统</h2>
+                        <h2>UJ-IOM生产制造协同系统</h2>
                         <p>实现最基础的设备运行状态数据之外，对于设备加工时的工艺和机械参数的监控，有利于收集产品质量检验所需的各项检验指标值，实现加工过程中的质量实时把控，降低由于自动化机器连续作业，且没有采取质量异常制动，从而导致的连续质量报废的损失
                         </p>
                     </div>
                     <div class="dimback">
-                        <img class="img" src="@/assets/img/IOM.jpg" alt="IOM-UJ生产制造协同系统">
+                        <img class="img" src="@/assets/img/IOM.jpg" alt="UJ-IOM生产制造协同系统">
 
                     </div>
 

@@ -200,7 +200,7 @@ onMounted(() => {
 
 
   &-content {
-    margin: 0 66px 0 120px;
+    margin: 0 66px 16px 120px;
     padding-top: 10px;
     display: flex;
     justify-content: space-between;

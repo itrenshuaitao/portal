@@ -11,8 +11,14 @@
         <template #title>产品</template>
         <el-menu-item index="/products">产品集合</el-menu-item>
 
-        <el-menu-item v-for="item in productsList" :index="`/products/detail/${item.id}`">{{ item.productsName
-        }}-<span class="sub">{{ item.productsSubtitle }}</span></el-menu-item>
+        <el-menu-item v-for="item in productsList" :index="`/products/detail/${item.id}`">
+          <span>
+            <span class="titie">{{ item.productsName}}-</span>
+            
+            <span class="sub">{{ item.productsSubtitle }}</span>
+          </span>
+
+        </el-menu-item>
 
       </el-sub-menu>
       <el-menu-item v-if="solutionList[0] && solutionList[0].industryType === 0" index="/solution">解决方案</el-menu-item>
@@ -332,159 +338,168 @@ defineExpose({
 }
 
 .products-menu {
-  .el-menu-item .sub {
+  .el-menu-item {
+    .sub {
     transform: scale(0.9) !important;
     color: #666666;
   }
+  .titie{
+    display: inline-block;
+    width: 60px;
+  }
+  
+  }
+
   .is-active>.sub {
-      color:  #409eff;;
-    }
+    color: #409eff;
+    ;
+  }
 
 }
 
-  .select-industry {
-    .el-select-dropdown__item {
-      font-size: 14px;
+.select-industry {
+  .el-select-dropdown__item {
+    font-size: 14px;
+    font-family: AliPuHui55;
+
+  }
+}
+
+
+.dialog-main {
+  :deep(.el-dialog) {
+    background: rgb(246, 246, 246);
+    width: 606px;
+    padding: 0;
+    border-radius: 24px;
+    overflow: hidden;
+
+    .el-dialog__header {
+      display: none;
+    }
+
+    .el-dialog__body {
+      padding: 0;
+    }
+
+
+
+    .booking-dialog {
+      display: flex;
+      justify-content: flex-start;
+      color: #fff;
+      flex-direction: column;
+      align-items: center;
+      width: 606px;
       font-family: AliPuHui55;
 
-    }
-  }
+      .box {
+        vertical-align: top;
+        width: 100%;
+
+        :deep(.el-form-item__label) {
+          font-size: small;
+        }
 
 
-  .dialog-main {
-    :deep(.el-dialog) {
-      background: rgb(246, 246, 246);
-      width: 606px;
-      padding: 0;
-      border-radius: 24px;
-      overflow: hidden;
-
-      .el-dialog__header {
-        display: none;
-      }
-
-      .el-dialog__body {
-        padding: 0;
-      }
-
-
-
-      .booking-dialog {
-        display: flex;
-        justify-content: flex-start;
-        color: #fff;
-        flex-direction: column;
-        align-items: center;
-        width: 606px;
-        font-family: AliPuHui55;
-
-        .box {
-          vertical-align: top;
+        &.top {
           width: 100%;
+          background: linear-gradient(270.00deg, rgba(114.75, 164.25, 191.25, 1.00) 0%, rgba(0, 20.97, 136.61, 1.00) 100%);
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          height: 152px;
 
-          :deep(.el-form-item__label) {
-            font-size: small;
+          &::after {
+            content: '';
+            display: block;
+            width: 935.5px;
+            height: 127px;
+            margin-top: 16px;
+            background: rgb(246, 246, 246);
+            border-radius: 50% / 100% 100% 0 0;
           }
 
+          :nth-child(1) {
+            color: rgb(255, 255, 255);
+            font-family: AliPuHui55;
+            font-size: 24px;
+            font-weight: 600;
+            line-height: 34px;
+            margin-top: 26px;
+          }
 
-          &.top {
-            width: 100%;
-            background: linear-gradient(270.00deg, rgba(114.75, 164.25, 191.25, 1.00) 0%, rgba(0, 20.97, 136.61, 1.00) 100%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            height: 152px;
+          :nth-child(2) {
+            margin-top: 7px;
+
+          }
+        }
+
+        &.form {
+          padding: 0 50px 0 20px;
+          box-sizing: border-box;
+
+          .el-form-item__label {
+            font-family: AliPuHui55;
+            opacity: 0.85;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 32px;
+            text-align: justify;
+            text-align-last: justify;
+            display: block;
+            word-break: break-all;
+            text-justify: distribute;
+            position: relative;
+            padding-right: 14px;
 
             &::after {
-              content: '';
-              display: block;
-              width: 935.5px;
-              height: 127px;
-              margin-top: 16px;
-              background: rgb(246, 246, 246);
-              border-radius: 50% / 100% 100% 0 0;
+              content: '*';
+              position: absolute;
+              left: -10px;
+              color: red;
             }
 
-            :nth-child(1) {
-              color: rgb(255, 255, 255);
-              font-family: AliPuHui55;
-              font-size: 24px;
-              font-weight: 600;
-              line-height: 34px;
-              margin-top: 26px;
+            &::before {
+              display: none;
             }
 
-            :nth-child(2) {
-              margin-top: 7px;
+          }
+
+          .none .el-form-item__label {
+            &::after {
+              display: none;
 
             }
           }
 
-          &.form {
-            padding: 0 50px 0 20px;
-            box-sizing: border-box;
-
-            .el-form-item__label {
-              font-family: AliPuHui55;
-              opacity: 0.85;
-              font-size: 14px;
-              font-weight: 400;
-              line-height: 32px;
-              text-align: justify;
-              text-align-last: justify;
-              display: block;
-              word-break: break-all;
-              text-justify: distribute;
-              position: relative;
-              padding-right: 14px;
-
-              &::after {
-                content: '*';
-                position: absolute;
-                left: -10px;
-                color: red;
-              }
-
-              &::before {
-                display: none;
-              }
-
-            }
-
-            .none .el-form-item__label {
-              &::after {
-                display: none;
-
-              }
-            }
 
 
+          .tip {
+            color: rgb(0, 75, 146);
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 22px;
+            letter-spacing: 0px;
+            text-align: center;
+          }
 
-            .tip {
-              color: rgb(0, 75, 146);
-              font-size: 16px;
-              font-weight: 400;
-              line-height: 22px;
-              letter-spacing: 0px;
-              text-align: center;
-            }
-
-            .sub-buttom {
-              width: 125px;
-              height: 42px;
-              margin: 40px auto;
-              background: rgb(52, 79, 145);
-              box-shadow: 2px 2px 10px rgba(82, 125, 167, 0.32);
-              border-radius: 52px;
-              color: rgb(255, 255, 255);
-              font-size: 16px;
-              font-weight: 400;
-              line-height: 42px;
-              letter-spacing: 0px;
-              text-align: center;
-            }
+          .sub-buttom {
+            width: 125px;
+            height: 42px;
+            margin: 40px auto;
+            background: rgb(52, 79, 145);
+            box-shadow: 2px 2px 10px rgba(82, 125, 167, 0.32);
+            border-radius: 52px;
+            color: rgb(255, 255, 255);
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 42px;
+            letter-spacing: 0px;
+            text-align: center;
           }
         }
       }
     }
-  }</style>
+  }
+}</style>

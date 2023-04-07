@@ -73,7 +73,7 @@
                 发展历程
             </div>
             <div class="history" :style="historyImg !== '' && `background-image: url('${historyImg}');`">
-                <el-carousel ref="refCarousel" :autoplay="false" indicator-position="none" arrow="never" height="539px"
+                <el-carousel ref="refCarousel" :autoplay="false" indicator-position="none" arrow="never" height="37.43056vw"
                     @change="(i) => historyActive = i">
                     <el-carousel-item class="item" v-for="item in historyList">
                         <div class="node" v-for="node in item">
@@ -109,7 +109,7 @@
                 荣誉证书
             </div>
 
-            <el-carousel height="700px" :autoplay="false" indicator-position="none">
+            <el-carousel height="48.61111vw" :autoplay="false" indicator-position="none">
                 <el-carousel-item v-for="arr in findCertList" :key="item">
                     <div class="certificate">
 

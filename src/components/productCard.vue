@@ -71,7 +71,7 @@ const props = defineProps(['products'])
     .text {
         text-align: center;
         margin-bottom: 24px;
-        font-family: Alibaba PuHuiTi;
+        font-family: AliPuHui55;
 
         h2 {
             color: rgb(62, 73, 84);

@@ -48,7 +48,7 @@ const props = defineProps(['case'])
     border-radius: 4px;
     transition: all .3s;
     cursor: pointer;
-    font-family: Alibaba PuHuiTi;
+    font-family: AliPuHui55;
 
 
     .img {

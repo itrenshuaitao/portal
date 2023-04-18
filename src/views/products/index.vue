@@ -150,7 +150,6 @@ onMounted(() => {
 })
 
 const slideChange = (val) => {
-  console.log(val)
   activeTabName.value = val.toString()
 }
 

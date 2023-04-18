@@ -371,7 +371,7 @@ const showImage = (val) => {
 }
 
 .synopsis {
-    margin: 40px 250px 60px 250px;
+    margin: 40px 120px 60px 120px;
     padding: 40px;
     background: linear-gradient(-51.95deg, rgba(246, 246, 250, 1.00) 0%, rgba(254, 255, 254, 1.00) 90%);
     border: 2px solid rgb(255, 255, 255);

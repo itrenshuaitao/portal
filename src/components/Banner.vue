@@ -7,7 +7,7 @@
                 </p>
             </div> -->
     </div>
-    <div v-else style="margin-top: 60px;"></div>
+    <div v-else style="margin-top: 4.16667vw;"></div>
 </template>
 
 <script setup>

@@ -364,6 +364,8 @@ th.gutter {
   width: 240px;
   height: 204px;
   background-image: url('@/assets/img/big-logo.png');
+  background-repeat: no-repeat;
+  background-size: 240px 204px;
   z-index: -1;
 }
 

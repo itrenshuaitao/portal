@@ -140,7 +140,7 @@ const paginationChange = (value) => {
 
         .industry {
             margin-bottom: 10px;
-            font-family: Alibaba PuHuiTi;
+            font-family: AliPuHui55;
             font-size: 14px;
             font-weight: 400;
             height: 32px;

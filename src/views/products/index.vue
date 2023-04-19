@@ -13,7 +13,7 @@
         @click="() => handleTabClick('3')">产品案例</el-button>
     </div>
     <template v-if="productsList[0]?.productsShow == 0">
-      <div class="title1 title">
+      <div class="title1 page-title">
         <span data-desc="product gather"></span>
 
         产品集合
@@ -25,7 +25,7 @@
       </div>
     </template>
 
-    <div class="title2 title">
+    <div class="title2 page-title">
       <span data-desc="product features"></span>
 
       产品亮点
@@ -97,7 +97,7 @@
       </el-carousel> -->
     </div>
     <template v-if="productsCaseList[0]?.caseType2 == 0">
-      <div class="title3 title">
+      <div class="title3 page-title">
         <span data-desc="product case"></span>
 
         产品案例
@@ -223,30 +223,6 @@ const cardClick = (id) => {
     }
   }
 
-  .title {
-    color: rgb(62, 73, 84);
-    font-family: YouSheBiaoTiHei;
-    font-size: 24px;
-    font-weight: 400;
-    height: 56px;
-    line-height: 31px;
-    text-align: center;
-    margin: 40px 0;
-    position: relative;
-
-    ::after {
-      content: attr(data-desc);
-      color: rgba(0, 0, 0, 0.15);
-      font-family: YouSheBiaoTiHei;
-      font-size: 14px;
-      font-weight: 400;
-      line-height: 18px;
-      position: absolute;
-      top: 15px;
-      left: 50%;
-      transform: translate(-50%, 0);
-    }
-  }
 
   .product-list {
     margin-left: 120px;

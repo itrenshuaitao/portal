@@ -144,7 +144,7 @@ const handleClick = (obj) => {
             .left {
                 width: calc(75% - 4px);
                 background-color: rgb(248, 248, 248);
-                font-family: Alibaba PuHuiTi;
+                font-family: AliPuHui55;
 
 
                 .video {
@@ -177,7 +177,7 @@ const handleClick = (obj) => {
 
             .right {
                 width: calc(25% - 20px);
-                font-family: Alibaba PuHuiTi;
+                font-family: AliPuHui55;
 
                 .item {
                     position: relative;
@@ -196,10 +196,10 @@ const handleClick = (obj) => {
                         width: 100%;
                         height: 50px;
                         padding: 11px 16px;
-                        background: linear-gradient(180.00deg, rgba(250, 251, 253, 0.05) 0%, rgba(242, 243, 245, 0.73) 154%);
+                        background: linear-gradient(180.00deg, rgba(39, 44, 54, 1), rgb(53, 61, 79) 154%);
                         backdrop-filter: blur(5.44px);
                         border-radius: 4px;
-                        color: rgb(62, 73, 84);
+                        color: rgb(255, 255, 255);
                         font-size: 18px;
                         font-weight: 500;
                         line-height: 28px;
@@ -241,10 +241,10 @@ const handleClick = (obj) => {
                         margin-top: 16px;
                         margin-bottom: 8px;
                         color: rgb(62, 73, 84);
-                        font-size: 18px;
+                        font-size: 16px;
                         font-weight: 500;
                         line-height: 25px;
-                        font-family: Alibaba PuHuiTi;
+                        font-family: AliPuHui55;
                     }
 
                     p {
@@ -252,7 +252,7 @@ const handleClick = (obj) => {
                         font-size: 14px;
                         font-weight: 400;
                         line-height: 20px;
-                        font-family: Alibaba PuHuiTi;
+                        font-family: AliPuHui55;
                         padding-bottom: 16px;
                     }
                 }

@@ -44,8 +44,40 @@ body {
 }
 
 @font-face {
-  font-family:YouSheBiaoTiHei;
-  src:url('../font/YouSheBiaoTiHei.ttf')
+  font-family:Source Han Sans CN;
+  src:url('../font/SourceHanSansSC-Medium.otf')
+}
+
+.page-title {
+  height: 56px;
+  text-align: center;
+  margin: 40px 0;
+  position: relative;
+
+  color: rgb(62, 73, 84);
+font-family: Source Han Sans CN;
+font-size: 32px;
+font-weight: 500;
+line-height: 48px;
+letter-spacing: 2px;
+
+  ::after {
+      content: attr(data-desc);
+      color: rgba(0, 0, 0, 0.15);
+      font-family: Source Han Sans CN;
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 27px;
+      letter-spacing: 0px;
+      text-align: left;
+      text-transform:uppercase;
+
+      position: absolute;
+      top: 28px;
+      left: 50%;
+
+      transform: translate(-50%, 0);
+  }
 }
 
 

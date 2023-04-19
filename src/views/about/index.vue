@@ -14,8 +14,8 @@
                 @click="() => handleTabClick('5')">荣誉证书</el-button>
         </div>
         <template v-if="companylist[0]?.companyType == 0">
-            <div class="title1 title">
-                <span data-desc="company profile"></span>
+            <div class="title1 page-title">
+                <span data-desc="COMPANY  PROFILE"></span>
 
                 企业介绍
             </div>
@@ -36,7 +36,7 @@
             </div>
         </div>
         <template v-if="companylist[2]?.companyType == 0">
-            <div class="title2 title">
+            <div class="title2 page-title">
                 <span data-desc="enterprise culture"></span>
 
                 企业文化
@@ -67,7 +67,7 @@
             </div>
         </template>
         <template v-if="companylist[3]?.companyType == 0">
-            <div class="title3 title">
+            <div class="title3 page-title">
                 <span data-desc="development history"></span>
 
                 发展历程
@@ -96,14 +96,14 @@
             </div>
         </template>
         <template v-if="companylist[4]?.companyType == 0">
-            <div class="title4 title">
+            <div class="title4 page-title">
                 <span data-desc="service network"></span>
                 服务网络
             </div>
             <MapView></MapView>
         </template>
         <template v-if="companylist[5]?.companyType == 0">
-            <div class="title5 title">
+            <div class="title5 page-title">
                 <span data-desc="certificate of honor"></span>
 
                 荣誉证书
@@ -345,30 +345,7 @@ const showImage = (val) => {
     // }
 }
 
-.title {
-    color: rgb(62, 73, 84);
-    font-family: YouSheBiaoTiHei;
-    font-size: 24px;
-    font-weight: 400;
-    height: 56px;
-    line-height: 31px;
-    text-align: center;
-    margin: 40px 0;
-    position: relative;
 
-    ::after {
-        content: attr(data-desc);
-        color: rgba(0, 0, 0, 0.15);
-        font-family: YouSheBiaoTiHei;
-        font-size: 14px;
-        font-weight: 400;
-        line-height: 18px;
-        position: absolute;
-        top: 15px;
-        left: 50%;
-        transform: translate(-50%, 0);
-    }
-}
 
 .synopsis {
     margin: 40px 120px 60px 120px;

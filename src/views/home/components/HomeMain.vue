@@ -10,7 +10,7 @@
                 :class="active == 'partners' && 'active'" @click="() => handleTabClick('partners')">合作伙伴</el-button>
         </div>
         <template v-if="productsList[0]?.productsShow === 0">
-            <div class="title title-products">
+            <div class="page-title title-products">
                 <span data-desc="product summary"></span>
                 产品概览
             </div>
@@ -39,14 +39,14 @@
         <!-- 核心数据 -->
         <CoreData v-if="coreDataList[0]?.coredataType === 0" :coreDataList="coreDataList" />
         <template v-if="newsList[0]?.newsType === 0">
-            <div class="title title-news">
+            <div class="page-title title-news">
                 <span data-desc="press center"></span>
                 新闻中心
             </div>
             <NewsCenter :newsList="newsList" />
         </template>
         <template v-if="partnerList[0] && partnerList[0][0]?.partnerType === 0">
-            <div class="title title-partners">
+            <div class="page-title title-partners">
                 <span data-desc="partner"></span>
                 合作伙伴
             </div>
@@ -214,30 +214,7 @@ const handleMouseover = (e) => {
         }
     }
 
-    .title {
-        color: rgb(62, 73, 84);
-        font-family: YouSheBiaoTiHei;
-        font-size: 24px;
-        font-weight: 400;
-        height: 56px;
-        line-height: 31px;
-        text-align: center;
-        margin: 40px 0;
-        position: relative;
 
-        ::after {
-            content: attr(data-desc);
-            color: rgba(0, 0, 0, 0.15);
-            font-family: YouSheBiaoTiHei;
-            font-size: 14px;
-            font-weight: 400;
-            line-height: 18px;
-            position: absolute;
-            top: 15px;
-            left: 50%;
-            transform: translate(-50%, 0);
-        }
-    }
 
     .products-main {
         position: relative;

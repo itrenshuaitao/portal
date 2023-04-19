@@ -2,7 +2,7 @@
     <div class="recruit">
         <Banner :imgSrc="bannerImg" />
         <img class="img" :src="backgroundImgUrl" alt="">
-        <div class="title">
+        <div class="page-title">
             <span data-desc="recruitment information"></span>
             招聘信息
         </div>
@@ -259,30 +259,6 @@ const updataJobList = () => {
         width: 100%;
     }
 
-    .title {
-        color: rgb(62, 73, 84);
-        font-family: YouSheBiaoTiHei;
-        font-size: 24px;
-        font-weight: 400;
-        height: 56px;
-        line-height: 31px;
-        text-align: center;
-        margin: 40px 0;
-        position: relative;
-
-        ::after {
-            content: attr(data-desc);
-            color: rgba(0, 0, 0, 0.15);
-            font-family: YouSheBiaoTiHei;
-            font-size: 14px;
-            font-weight: 400;
-            line-height: 18px;
-            position: absolute;
-            top: 15px;
-            left: 50%;
-            transform: translate(-50%, 0);
-        }
-    }
 
     .submit {
         margin: 0 90px;

@@ -14,7 +14,7 @@
                 @click="() => handleTabClick('3')">解决案例</el-button>
         </div>
         <div class="solution-box" v-if="solutionList[0] && solutionList[0].industryType === 0">
-            <div class="title1 title">
+            <div class="title1 page-title">
                 <span data-desc="solution"></span>
 
                 解决方案
@@ -43,7 +43,7 @@
             <div class="swiper-button-next"></div><!--右箭头。如果放置在swiper-container外面，需要自定义样式。-->
         </div>
 
-        <div class="title2 title">
+        <div class="title2 page-title">
             <span data-desc="Industry pain point"></span>
 
             行业痛点
@@ -69,7 +69,7 @@
         </div>
 
 
-        <div class="title3 title">
+        <div class="title3 page-title">
             <span data-desc="case resolution"></span>
 
             解决案例
@@ -239,30 +239,6 @@ const modules = [Autoplay, Navigation];
         }
     }
 
-    .title {
-        color: rgb(62, 73, 84);
-        font-family: YouSheBiaoTiHei;
-        font-size: 24px;
-        font-weight: 400;
-        height: 56px;
-        line-height: 31px;
-        text-align: center;
-        margin: 40px 0;
-        position: relative;
-
-        ::after {
-            content: attr(data-desc);
-            color: rgba(0, 0, 0, 0.15);
-            font-family: YouSheBiaoTiHei;
-            font-size: 14px;
-            font-weight: 400;
-            line-height: 18px;
-            position: absolute;
-            top: 15px;
-            left: 50%;
-            transform: translate(-50%, 0);
-        }
-    }
 
     .solution-box {
         position: relative;

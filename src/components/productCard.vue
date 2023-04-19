@@ -24,7 +24,7 @@ const props = defineProps(['products'])
     background: linear-gradient(-51.95deg, rgba(246, 246, 250, 1.00) 0%, rgba(254, 255, 254, 1.00) 100%);
     box-shadow: 0px 8px 15px rgba(196, 196, 196, 0.5);
     backdrop-filter: blur(21.75px);
-    font-family: AliPuHui55;
+    // font-family: AliPuHui55;
     border: 1px solid rgb(255, 255, 255);
     border-radius: 4px;
     transition: all .3s;
@@ -71,7 +71,7 @@ const props = defineProps(['products'])
     .text {
         text-align: center;
         margin-bottom: 24px;
-        font-family: AliPuHui55;
+        // font-family: AliPuHui55;
 
         h2 {
             color: rgb(62, 73, 84);

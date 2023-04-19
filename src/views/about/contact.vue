@@ -65,10 +65,13 @@ const initPageData = () => {
 }
 
 .base-list {
+    position: relative;
+    z-index: 1;
     width: 100%;
     height: 290px;
     background-image: url('@/assets/img/bg.png');
-    background-position: 3% -160px;
+    background-position: 3% -120px;
+    background-size: 104% 410px;
     background-repeat: no-repeat;
     padding: 35px 60px;
     box-sizing: border-box;

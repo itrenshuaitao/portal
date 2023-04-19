@@ -1,7 +1,7 @@
 import axios from "axios";
 import qs from "qs";
 import store from "../store/index.js";
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 import { ElMessage, ElLoading } from "element-plus";
 export const request = axios.create({
   baseURL: import.meta.env.VITE_API_DOMAIN, // api的base_url
@@ -12,15 +12,15 @@ export const request = axios.create({
 });
 // 请求拦截
 request.interceptors.request.use(
-  config => {
+  (config) => {
     const type = config.headers["Content-Type"];
     if (type.indexOf("json") < 0) {
       config.data = qs.stringify(config.data);
     }
-    return config
+    return config;
   },
-  err => {
-    return Promise.reject(err)
+  (err) => {
+    return Promise.reject(err);
   }
 );
 
@@ -35,31 +35,31 @@ request.interceptors.response.use(
         return response.data;
       } else if (data.code === 4002) {
         // 4002 登录凭证已失效，请重新登录！
-        let gather_eam = Cookies.get('gather_eam');
+        let gather_eam = Cookies.get("gather_eam");
         if (gather_eam == 1) {
-          let backUrl = Cookies.get('backUrl')
-          window.location = backUrl + 'gather'
+          let backUrl = Cookies.get("backUrl");
+          window.location = backUrl + "gather";
         } else {
           store.commit("LOGIN_OUT");
           setTimeout(() => {
             window.location.reload();
           });
-        }   
-      } else if(data.code ===200&&data.resultMsg){
+        }
+      } else if (data.code === 200 && data.resultMsg) {
         ElMessage.success({
           message: data.resultMsg,
         });
         return response.data;
       } else {
-        if (data.msg) {
-          ElMessage.warning({
-            message: data.msg,
-          });
-        } else {
-          ElMessage.warning({
-            message: data.resultMsg,
-          });
-        }
+        // if (data.msg) {
+        // ElMessage.warning({
+        //   message: data.msg,
+        // });
+        // } else {
+        //   ElMessage.warning({
+        //     message: data.resultMsg,
+        //   });
+        // }
         return response.data;
       }
     }

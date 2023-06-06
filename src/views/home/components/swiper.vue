@@ -155,11 +155,13 @@ let pageData = reactive({
 onMounted(() => {
   getListBanner();
 });
-
-watch(pageData, async (newValue, oldValue) => {
-  if (oldValue.isIn !== newValue.isIn) {
-    pageData.autoplay = !newValue.isIn;
+//开启深度监听
+watch(()=>pageData.isIn, async (newValue, oldValue) => {
+  if (oldValue !== newValue) {
+    pageData.autoplay = !newValue;
   }
+},{
+    deep:true
 });
 
 const getListBanner = () => {
@@ -184,7 +186,7 @@ const getListBanner = () => {
           : "null";
       });
       pageData.list = data;
-      nextTick(() => {
+    //   nextTick(() => {
         if (data[0].fileType === "video") pageData.autoplay = false;
         //  let Media = document.getElementById(`myVideoPlayer0`)
         //             console.log(Media)
@@ -217,7 +219,7 @@ const getListBanner = () => {
         // eventTester("ratechange"); //播放速率改变
         // eventTester("durationchange"); //资源长度改变
         // eventTester("volumechange"); //音量改变
-      });
+    //   });
     }
   });
 };
@@ -239,6 +241,8 @@ const handleChange = (nowIndex, oldIndex) => {
     pageData.nowIndex = nowIndex;
     let video = document.getElementById(`myVideoPlayer${nowIndex}`);
     video.play();
+  }else{
+    pageData.isIn = false;
   }
 };
 const handleSlideClick = (index) => {
@@ -246,7 +250,6 @@ const handleSlideClick = (index) => {
   proxy.$refs.refCarousel.setActiveItem(index);
 };
 const onPlay = (ev) => {
-  pageData.autoplay = false;
   nextTick(() => {
     loadingInstance.value.close();
   });

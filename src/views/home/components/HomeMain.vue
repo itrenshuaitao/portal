@@ -2,11 +2,11 @@
     <div class="main-container">
         <div class="tab"
             v-if="productsList[0]?.productsShow === 0 || newsList[0]?.newsType === 0 || partnerList[0] && partnerList[0][0]?.partnerType === 0">
-            <el-button v-if="productsList[0]?.productsShow === 0" :type="plain" link
+            <el-button v-if="productsList[0]?.productsShow === 0" plain link
                 :class="active == 'products' && 'active'" @click="() => handleTabClick('products')">产品概览</el-button>
-            <el-button v-if="newsList[0]?.newsType === 0" :type="plain" link class="news"
+            <el-button v-if="newsList[0]?.newsType === 0" plain link class="news"
                 :class="active == 'news' && 'active'" @click="() => handleTabClick('news')">新闻中心</el-button>
-            <el-button v-if="partnerList[0] && partnerList[0][0]?.partnerType === 0" :type="plain" link
+            <el-button v-if="partnerList[0] && partnerList[0][0]?.partnerType === 0" plain link
                 :class="active == 'partners' && 'active'" @click="() => handleTabClick('partners')">合作伙伴</el-button>
         </div>
         <template v-if="productsList[0]?.productsShow === 0">

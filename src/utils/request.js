@@ -65,7 +65,7 @@ request.interceptors.response.use(
     }
   },
   (error) => {
-    ElMessage.error({ message: error.message }); // for debug
+    // ElMessage.error({ message: error.message }); // for debug
     return Promise.reject(error);
   }
 );

@@ -89,7 +89,7 @@ export const constantRoutes = [
             name: 'NewsDetail',
             component: () => import('@/views/news/detail.vue'),
             meta: {
-              title: "产品详情",
+              title: "新闻详情",
               icon: 'icon-code',
             },
           },
@@ -114,15 +114,15 @@ export const constantRoutes = [
             icon: 'icon-code',
           },
         },
-        {
-          name: 'Recruit',
-          path: 'recruit',
-          component: () => import('@/views/about/recruit.vue'),
-          meta: {
-            title: "人才招聘",
-            icon: 'icon-code',
-          },
-        },
+        // {
+        //   name: 'Recruit',
+        //   path: 'recruit',
+        //   component: () => import('@/views/about/recruit.vue'),
+        //   meta: {
+        //     title: "人才招聘",
+        //     icon: 'icon-code',
+        //   },
+        // },
         {
           name: 'Contact',
           path: 'contact',

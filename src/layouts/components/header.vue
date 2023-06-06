@@ -13,7 +13,7 @@
 
         <el-menu-item v-for="item in productsList" :index="`/products/detail/${item.id}`">
           <span>
-            <span class="titie">{{ item.productsName}}-</span>
+            <span class="titie">{{ item.productsName}}</span>
             
             <span class="sub">{{ item.productsSubtitle }}</span>
           </span>
@@ -30,7 +30,7 @@
       <el-sub-menu index="/about">
         <template #title>关于友机</template>
         <el-menu-item index="/about">公司介绍</el-menu-item>
-        <el-menu-item index="/about/recruit">人才招聘</el-menu-item>
+        <!-- <el-menu-item index="/about/recruit">人才招聘</el-menu-item> -->
         <el-menu-item index="/about/contact">联系我们</el-menu-item>
       </el-sub-menu>
     </el-menu>
@@ -105,7 +105,7 @@ const videoTopList = ref([])
 
 
 const dialogFormVisible = ref(false)
-const formLabelWidth = '70px'
+const formLabelWidth = '4.86111vw'
 
 const form = reactive({
   name: '',

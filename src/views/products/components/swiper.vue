@@ -84,7 +84,7 @@ onMounted(() => {
                     if (Math.abs(slideProgress) > 1) {
                         modify = (Math.abs(slideProgress) - 1) * 0.4 + 1;
                     }
-                    let translate = slideProgress * modify * 318 + 'px';
+                    let translate = slideProgress * modify * 22.08333 + 'vw';
                     let scale = 1 - Math.abs(slideProgress) / 5;
                     let zIndex = 999 - Math.abs(Math.round(10 * slideProgress));
                     slide.transform('translateX(' + translate + ') scale(' + scale + ')');
@@ -132,47 +132,57 @@ defineExpose({
 
 
 
-#certify .swiper-slide {
-    width: 675px;
-    height: 379px;
-    background: #fff;
+#certify {
 
-    .text {
-        position: absolute;
-        padding: 100px 45px;
-        z-index: 1;
+    .swiper-slide {
+        width: 675px;
+        height: 379px;
+        background: #fff;
 
-        h2 {
-            color: rgb(241, 241, 241);
-            font-size: 24px;
-            font-weight: 500;
-            line-height: 34px;
-            margin-bottom: 24px;
+        // &.swiper-slide-duplicate-next,
+        // &.swiper-slide-duplicate,
+        // swiper-slide-duplicate swiper-slide-duplicate-active
+        // &.swiper-slide-duplicate-prev {
+        //     opacity: 0 !important;
+        // }
+
+        .text {
+            position: absolute;
+            padding: 100px 45px;
+            z-index: 1;
+
+            h2 {
+                color: rgb(241, 241, 241);
+                font-size: 24px;
+                font-weight: 500;
+                line-height: 34px;
+                margin-bottom: 24px;
+            }
+
+            p {
+                color: rgb(241, 241, 241);
+                font-size: 14px;
+                font-weight: 400;
+                line-height: 20px;
+            }
         }
-
-        p {
-            color: rgb(241, 241, 241);
-            font-size: 14px;
-            font-weight: 400;
-            line-height: 20px;
-        }
-    }
-
-    .img {
-        width: 100%;
-        height: 100%;
-        border-radius: 4px;
-
-
-    }
-
-    .dimback {
-        width: 100%;
-        height: 100%;
-        background: #000000;
 
         .img {
-            opacity: 0.5;
+            width: 100%;
+            height: 100%;
+            border-radius: 4px;
+
+
+        }
+
+        .dimback {
+            width: 100%;
+            height: 100%;
+            background: #000000;
+
+            .img {
+                opacity: 0.5;
+            }
         }
     }
 }

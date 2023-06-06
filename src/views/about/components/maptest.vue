@@ -236,6 +236,7 @@ const init = async (name, networkMapObj) => {
                 show: true,
                 map: 'china',
                 roam: false,
+                // left:'50%',//组件离容器左侧的距离。
                 zoom: 1.1,
                 center: [113.83531246, 34.0267395887],
                 label: {

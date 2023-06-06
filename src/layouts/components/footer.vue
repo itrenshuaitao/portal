@@ -47,7 +47,7 @@
         <li>
           <p>关于友机</p>
           <span @click="proxy.$router.push('/about')">公司介绍</span>
-          <span @click="proxy.$router.push('/about/recruit')">人才招聘</span>
+          <!-- <span @click="proxy.$router.push('/about/recruit')">人才招聘</span> -->
           <span @click="proxy.$router.push('/about/contact')">联系我们</span>
         </li>
       </ul>
@@ -195,13 +195,13 @@ onMounted(() => {
   padding: 0;
   overflow: hidden;
   background-color: #3E4954;
-  font-family: AliPuHui55;
+  // font-family: AliPuHui55;
 
 
 
   &-content {
-    margin: 0 66px 16px 120px;
-    padding-top: 10px;
+    margin: 0 66px 22px 120px;
+    padding-top: 22px;
     display: flex;
     justify-content: space-between;
     height: 100%;
@@ -221,7 +221,7 @@ onMounted(() => {
         //justify-content: center;
         margin-right: 44px;
         align-items: flex-start;
-        font-family: AliPuHui55;
+        // font-family: AliPuHui55;
 
         &:nth-child(4) {
           margin-right: 0;

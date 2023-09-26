@@ -1,5 +1,5 @@
 <template>
-    <div class="card">
+    <div class="card" :class="{'mobile-card':_isMobile()}">
         <div class="img">
             <img :src="products.productsImg" alt="">
         </div>
@@ -11,6 +11,7 @@
 </template>
 
 <script setup>
+import { _isMobile } from '@/utils/index'
 const props = defineProps(['products'])
 </script>
 
@@ -89,6 +90,48 @@ const props = defineProps(['products'])
             font-weight: 400;
             line-height: 20px;
             margin-top: 6px;
+        }
+
+    }
+
+
+}
+.mobile-card {
+    height: 460px;
+    .img {
+        border-radius: 4px;
+        overflow: hidden;
+        height: 320px;
+
+        img {
+            width: 100%;
+            height: 320px;
+            transition: all .3s;
+
+        }
+    }
+    .text {
+        text-align: center;
+        // margin-bottom: 24px;
+        // font-family: AliPuHui55;
+
+        h2 {
+            color: rgb(62, 73, 84);
+            overflow: auto;
+            font-size: 36px;
+            font-weight: 500;
+            line-height: 40px;
+            -webkit-line-clamp: 1;
+            margin-top: 30px;
+
+        }
+
+        p {
+            color: rgb(108, 123, 139);
+            font-size: 34px;
+            font-weight: 400;
+            line-height: 38px;
+            margin-top: 16px;
         }
 
     }

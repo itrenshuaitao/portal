@@ -1,5 +1,5 @@
 <template>
-    <el-aside class="aside">
+    <el-aside class="aside" :class="{'mobile-aside':_isMobile()}">
         <ul>
             <!-- <li>
                 <el-icon><Service /></el-icon>
@@ -8,13 +8,13 @@
             <li class="booking" @click="$emit('openBookingDialog')">
 
             </li>
-            <el-popover placement="left" title="咨询热线" :width="200" trigger="hover" :content="asideObj.sidewaysTitle3">
+            <el-popover placement="left" title="咨询热线" :width="180" trigger="hover" :content="asideObj.sidewaysTitle3" popper-class="popoverStyle">
                 <template #reference>
                     <li class="phone"> </li>
                 </template>
             </el-popover>
 
-            <el-popover placement="left" title="关注公众号" :width="200" trigger="hover">
+            <el-popover placement="left" title="添加客服微信" :width="_isMobile() ? 180 : 200" trigger="hover">
                 <template #reference>
                     <li class="ico">
 
@@ -36,6 +36,7 @@
 <script setup>
 import { onMounted, ref } from "vue"
 import { querySidewaysList } from "@/api/index"
+import { _isMobile } from '@/utils/index'
 const asideObj = ref({})
 const handleToTop = () => {
     window.scrollTo({
@@ -132,5 +133,75 @@ onMounted(() => {
     }
 
 
+}
+.mobile-aside{
+    width: 200px !important; 
+    ul {
+        padding: 30px 10px;
+        width: 160px;
+        background: #FFFFFF;
+        border-radius: 28px;
+        .el-popover.popoverStyle{
+            color: red;
+            font-size: 40px !important;
+        }
+
+
+        li {
+
+            margin: 0 auto;
+            width: 160px;
+            height: 160px;
+            background-repeat: no-repeat;
+            background-size: 160px;
+            cursor: pointer;
+
+
+            &.booking {
+
+                background-image: url(@/assets/img/booking.png);
+
+                &:hover {
+                    background-image: url(@/assets/img/booking-hover.png);
+                    height: 280px;
+
+                }
+
+            }
+
+            &.phone {
+                background-image: url(@/assets/img/phone.png);
+
+                &:hover {
+                    background-image: url(@/assets/img/phone-hover.png);
+
+                }
+            }
+
+            &.ico {
+                background-image: url(@/assets/img/ico.png);
+
+                &:hover {
+                    background-image: url(@/assets/img/ico-hover.png);
+
+                }
+            }
+        }
+    }
+
+    .top {
+        cursor: pointer;
+        margin-top: 24px;
+        width: 160px;
+        height: 160px;
+        background-image: url(@/assets/img/top.png);
+        background-repeat: no-repeat;
+        background-size: 160px;
+
+        &:hover {
+            background-image: url(@/assets/img/top-hover.png);
+
+        }
+    }
 }
 </style>

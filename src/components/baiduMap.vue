@@ -4,12 +4,16 @@
 </template>
 <script setup name="BaiduMap">
 import { nextTick, ref, onMounted, toRaw } from "vue";
+import { _isMobile } from '@/utils/index'
 const props = defineProps(['mapList'])
 const mapList = toRaw(props.mapList)
 
 
 const mapHeight = ref('70vh')
 onMounted(() => {
+    if( _isMobile()){
+        mapHeight.value = '20vh' 
+    }
     initMap()
 })
 
@@ -26,7 +30,7 @@ var labelStyle = {
     lineHeight: '20px',
     fontFamily: '微软雅黑'
 }
-console.log(mapList)
+// console.log(mapList)
 const initMap = () => {
     var map = new BMapGL.Map('container');
     map.centerAndZoom(new BMapGL.Point(119.879921, 30.611771), 7);

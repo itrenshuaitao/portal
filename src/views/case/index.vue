@@ -1,15 +1,18 @@
 <template>
-    <div class="case">
+    <div class="case" :class="{'mobile-case':_isMobile()}">
         <Banner :imgSrc="bannerImg">
         </Banner>
         <div class="container">
             <div>
-                <span class="label">
+                <span class="label" v-if="!_isMobile()" >
                     行业：
+                </span>
+                <span v-if="_isMobile()">
+                    <el-button  class="label" type="text">行业：</el-button>
                 </span>
                 <span>
                     <el-button :class="`industry ${active == 'all' && 'active'}`" round
-                        @click="() => handleIndustryClick('all')">全部</el-button>
+                        @click="() => handleIndustryClick('all')">全部</el-button><br v-if="_isMobile()"/>
 
                     <el-button round v-for="item in solutionList" @click="() => handleIndustryClick(item.id)"
                         :class="`industry ${active == item.id && 'active'}`">{{ item.industryName }}</el-button>
@@ -36,6 +39,7 @@ import ItemCard from "@/components/caseCard.vue"
 import Banner from "@/components/Banner.vue"
 import { queryCaseList, queryIndustryCaseList, queryIndustryList } from "@/api/index"
 import { queryBannerImg } from "@/utils/index"
+import { _isMobile } from '@/utils/index'
 
 
 const route = useRoute()
@@ -53,6 +57,7 @@ const bannerImg = ref('')
 
 
 onMounted(() => {
+    _isMobile() ?  pagination.pageSize = 8 : pagination.pageSize = 9
     getSolutionList()
     if (route.query.solutionId) {
         handleIndustryClick(route.query.solutionId)
@@ -74,6 +79,9 @@ const getSolutionList = () => {
     queryIndustryList(params).then(({ code, data }) => {
         if (code === 0) {
             solutionList.value = data
+            solutionList.value = solutionList.value.filter(item =>{
+                return item.industryName != '模具'
+            })
         }
     })
 }
@@ -191,6 +199,95 @@ const paginationChange = (value) => {
                 &.is-active {
                     box-shadow: 0px 2px 5px rgba(220, 220, 220, 0.5), inset 0px -1px 4px rgba(0, 75, 146, 0.65);
                     backdrop-filter: blur(21.75px);
+                }
+            }
+        }
+
+    }
+}
+.mobile-case {
+
+    width: 100%;
+    height: 100%;
+
+    .container {
+        padding: 24px 80px 58px 80px;
+        position: relative;
+        z-index: 1;
+
+        // .label {
+        //     font-size: 36px;
+        //     font-weight: 500;
+        //     line-height: 80px;
+        //     margin-bottom: 40px;
+        // }
+
+        .industry {
+            margin-bottom: 40px;
+            font-family: AliPuHui55;
+            font-size: 44px;
+            font-weight: 400;
+            height: 80px;
+            line-height: 80px;
+            letter-spacing: 0px;
+            box-shadow: 0px -1px 4px 0 rgba(0, 0, 0, 0.15) inset, 0px 2px 5px 0px rgba(220, 220, 220, 0.5);
+            backdrop-filter: blur(21.75px);
+            margin-right: 20px;
+
+            &.active {
+                color: rgb(0, 75, 146);
+            }
+        }
+        .label {
+            font-size: 44px;
+            font-weight: 500;
+            margin-bottom: 40px;
+            font-family: AliPuHui55;
+            height: 80px;
+            line-height: 80px;
+            color: #000;
+        }
+
+        .case-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+
+            .item {
+                width: calc((100% - 48px) / 2);
+                margin-right: 24px;
+                margin-bottom: 24px;
+
+                &:nth-of-type(3n+0) {
+                    margin-right: 0;
+                }
+            }
+        }
+
+        ._pagination {
+            height: 82px;
+            line-height: 82px;
+            margin-top: 30px;
+
+            :deep(.el-pagination.is-background .btn-prev),
+            :deep(.el-pagination.is-background .btn-next),
+            :deep(.el-pager li) {
+                width:8vw;
+                height: 72px;
+                line-height: 56px;
+                font-size: 44px !important;
+                color: rgb(62, 73, 84);
+                background: rgb(255, 255, 255);
+                border: none;
+                box-shadow: 0px 2px 5px rgba(220, 220, 220, 0.5),
+                inset 0px -1px 4px rgba(0, 0, 0, 0.15);
+                backdrop-filter: blur(21.75px);
+                padding: 6px 16px;
+
+                &.is-active {
+                box-shadow: 0px 2px 5px rgba(220, 220, 220, 0.5),
+                inset 0px -1px 4px rgba(0, 75, 146, 0.65);
+                backdrop-filter: blur(21.75px);
                 }
             }
         }

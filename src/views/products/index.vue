@@ -1,8 +1,8 @@
 <template>
-  <div class="product">
+  <div class="product" :class="{'mobile-product':_isMobile()}">
 
     <Banner :imgSrc="bannerImg">
-    </Banner>
+    </Banner>x
 
     <div class="tab">
       <el-button v-if="productsList[0]?.productsShow == 0" :type="plain" link :class="active == '1' && 'active'"
@@ -13,7 +13,7 @@
         @click="() => handleTabClick('3')">产品案例</el-button>
     </div>
     <template v-if="productsList[0]?.productsShow == 0">
-      <div class="title1 page-title">
+      <div class="title1 page-title"  :class="{'mobile-page-title':_isMobile()}">
         <span data-desc="product gather"></span>
 
         产品集合
@@ -25,7 +25,7 @@
       </div>
     </template>
 
-    <div class="title2 page-title">
+    <div class="title2 page-title"  :class="{'mobile-page-title':_isMobile()}">
       <span data-desc="product features"></span>
 
       产品亮点
@@ -97,7 +97,7 @@
       </el-carousel> -->
     </div>
     <template v-if="productsCaseList[0]?.caseType2 == 0">
-      <div class="title3 page-title">
+      <div class="title3 page-title"  :class="{'mobile-page-title':_isMobile()}">
         <span data-desc="product case"></span>
 
         产品案例
@@ -131,6 +131,7 @@ import productCard from "@/components/productCard.vue";
 import CaseCard from "@/components/caseCard.vue"
 import { queryProductsList, queryCasesList } from "@/api/index"
 import { queryBannerImg, handleArraySort } from "@/utils/index"
+import { _isMobile } from '@/utils/index'
 
 
 const { proxy } = getCurrentInstance();
@@ -169,6 +170,7 @@ const getProductsList = () => {
   queryProductsList(params).then(({ code, data }) => {
     if (code === 0) {
       productsList.value = data
+      console.log(productsList.value);
     }
   })
 }
@@ -343,6 +345,141 @@ const cardClick = (id) => {
     color: #6C7B8B;
     line-height: 40px;
     cursor: pointer;
+  }
+}
+.mobile-product{
+  .tab{
+      height: 80px;
+      background: rgba(0, 75, 146, 0.05);
+      padding: 10px 120px;
+      color: #3E4954;
+      line-height: 80px;
+
+      .active {
+          font-size: 32px;
+          color: #0054A7;
+          line-height: 18px;
+      }
+
+      .el-button {
+          font-size: 30px;
+          font-weight: 600;
+          font-family: AliPuHui55 !important;
+          margin: 20px 0;
+      }
+
+      .news {
+          margin: 20px;
+      }
+  }
+  .product-list {
+    // margin-left: 80px;
+    // margin-right: 80px;
+    margin: 0;
+    padding: 0 80px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    flex-direction: row;
+
+    .item {
+      width: calc((100% - 32px) / 2);
+      margin-bottom: 40px;
+      margin-right: 16px;
+
+      &:nth-of-type(3n+0) {
+        margin-right: 0;
+      }
+    }
+  }
+
+  .highlights {
+    padding: 40px 200px;
+    background: linear-gradient(180.00deg, rgba(250, 251, 253, 1) 0%, rgba(242, 243, 245, 1) 100%), rgb(242, 245, 248);
+    overflow: hidden;
+    :deep(.el-tabs__active-bar) {
+      color: red !important;
+    }
+
+    :deep(.el-tabs__item) {
+      height: auto;
+      padding-bottom: 22px;
+    }
+
+    :deep(.el-carousel__item--card) {
+
+      // &:nth-child(3).is-in-stage.special {
+      //   z-index: 0!important;
+      // }
+
+      .text {
+        position: absolute;
+        padding: 60px 45px;
+
+        h2 {
+          color: rgb(241, 241, 241);
+          font-size: 14px;
+          font-weight: 500;
+          line-height: 34px;
+          margin-bottom: 24px;
+        }
+
+        p {
+          color: rgb(241, 241, 241);
+          font-size: 28px;
+          font-weight: 400;
+          line-height: 30px;
+        }
+      }
+    }
+
+
+    .custom-tabs-label {
+      img {
+        width: 68px;
+        height: 51px;
+        margin-bottom: 16px;
+
+      }
+
+      p {
+        font-size: 40px;
+        font-weight: 500;
+        line-height: 34px;
+        color: rgb(108, 123, 139);
+        font-family: AliPuHui55;
+      }
+
+    }
+
+    .img {
+      width: 100%;
+      height: 100%;
+      border-radius: 4px;
+    }
+  }
+  .case-list {
+    padding: 0 80px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 6px;
+
+    .item {
+      width: calc((100% - 32px) / 2);
+      margin-right: 16px;
+      margin-bottom: 30px;
+    }
+  }
+  ._more{
+      margin: 46px auto;
+      color: rgb(108, 123, 139);
+      font-family: AliPuHui55;
+      font-size: 28px;
+      font-weight: 400;
+      line-height: 20px;
+      width: 100%;
+      height: 36px;
   }
 }
 </style>

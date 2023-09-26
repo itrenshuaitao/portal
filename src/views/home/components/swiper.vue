@@ -2,6 +2,7 @@
   <div
     v-if="pageData.list[0]?.sbannerShow === 0"
     class="show-imgs-container big-logo"
+    :class="{'mobile-show-imgs-container':_isMobile()}"
     @mouseover="pageData.isIn = true"
     @mouseout="handleMouseout"
   >
@@ -115,6 +116,7 @@ import {
 import { useRouter } from "vue-router";
 import { getHomeBanner } from "@/api/index";
 import { ElLoading } from "element-plus";
+import { _isMobile } from '@/utils/index'
 const { proxy } = getCurrentInstance();
 const router = useRouter();
 const refCarousel = ref(null);
@@ -470,6 +472,7 @@ const toUrl = (url) => {
     padding-bottom: 24px;
     overflow: hidden;
     padding-inline: 32px;
+    
 
     .container {
       position: relative;
@@ -517,6 +520,248 @@ const toUrl = (url) => {
           .progress-bar {
             animation: widthTrans 0.3s linear forwards;
             background-color: #fff;
+          }
+
+          .progress-titel {
+            color: #fff;
+          }
+        }
+
+        &.active {
+          .progress-bar {
+            width: 100%;
+
+            // animation: widthTrans 3s linear forwards;
+            .progress-bar-slide {
+              animation: expansion 0.1s linear forwards;
+            }
+          }
+
+          .progress-titel {
+            color: #fff;
+          }
+        }
+      }
+    }
+  }
+}
+.mobile-show-imgs-container{
+  height: 28vh;
+  .el-carousel__item {
+    width: 100%;
+    height: 100%;
+
+    .banner {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .my_video {
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      .d-loading {
+        display: none !important;
+        z-index: -1 !important;
+      }
+    }
+
+    video {
+      width: 100%;
+      height: 100%;
+      position: fixed;
+      display: inline-block;
+      vertical-align: baseline;
+      object-fit: fill; //消除留白
+    }
+
+    .d-play-btn {
+      display: none;
+    }
+
+    .play-btn {
+      font-size: 60px;
+      color: #fff;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    .text-position {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #fff;
+      font-size: 20px;
+      line-height: 24px;
+      text-align: center;
+      z-index: 1;
+      font-family: AliPuHui55;
+
+      .my-transition-enter-active {
+        transition: all 0.3s ease-out;
+      }
+
+      .my-transition-enter-active.desc2-transition {
+        transition-delay: 0.9s;
+      }
+
+      .my-transition-enter-active.link {
+        transition-delay: 1.2s;
+      }
+
+      .my-transition-leave-active {
+        transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1);
+      }
+
+      .my-transition-enter-from,
+      .my-transition-leave-to {
+        transform: translateY(50px);
+        opacity: 0;
+      }
+
+      .title {
+        @include show_line(1);
+
+        visibility: visible;
+        color: rgb(255, 255, 255);
+        font-size: 58px;
+        font-weight: 600;
+        line-height: 81px;
+
+        .my-transition-enter-active {
+          transition-delay: 0s;
+        }
+      }
+
+      .title2 {
+        @include show_line(1);
+        opacity: 0.85;
+        color: rgb(255, 255, 255);
+        font-size: 40px;
+        font-weight: 500;
+        line-height: 56px;
+        margin: 20px 0;
+
+        .my-transition-enter-active {
+          transition-delay: 0.3s;
+        }
+      }
+
+      .desc {
+        @include show_line(2);
+        font-size: 14px;
+        opacity: 0.85;
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 23px;
+        font-weight: 400;
+        line-height: 32px;
+
+        .my-transition-enter-active {
+          transition-delay: 0.6s;
+        }
+      }
+
+      .desc2 {
+        @include show_line(1);
+        font-family: PingFang SC;
+        height: 60px;
+        color: rgb(0, 75, 146);
+        font-size: 24px;
+        font-weight: 400;
+        line-height: 60px;
+        background-color: #fff;
+        border-radius: 30px;
+        margin: 20px 0;
+        padding: 0 30px;
+        display: inline-block;
+      }
+
+      .more {
+        width: 160px;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        border-radius: 20px;
+        font-size: 24px;
+        font-weight: 400;
+        background: rgba(255, 255, 255, 0.5);
+        border: solid 1px #ffffff;
+        margin: 0 auto;
+        cursor: pointer;
+        color: rgb(0, 75, 146);
+
+        a {
+          color: #ffffff;
+        }
+      }
+    }
+  }
+  .nav-slider {
+    position: absolute;
+    bottom: 2%;
+    width: 100%;
+    z-index: 10;
+    background-image: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.4));
+    padding-bottom: 24px;
+    overflow: hidden;
+    padding-inline: 32px;
+    // background-color: pink;
+
+    .container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      display: flex;
+      justify-content: center;
+      transition-property: transform;
+      box-sizing: content-box;
+
+      .slide {
+        height: 120px;
+        display: flex;
+        flex-direction: column;
+        // flex: 0 0 196px;
+        margin-right: 32px;
+        row-gap: 9px;
+        cursor: pointer;
+
+        .progress-bar {
+          width: 80px;
+          height: 5px;
+          // background-color: hsla(0, 0%, 100%, 0.48);
+          background-color: #fff;
+          border-radius: 2px;
+          overflow: hidden;
+
+          .progress-bar-slide {
+            background-color: #009eff;
+            width: 0;
+            height: 100%;
+          }
+        }
+
+        .progress-titel {
+          font-size: 36px;
+          line-height: 60px;
+          letter-spacing: -0.32px;
+          color: hsla(0, 0%, 100%, 0.48);
+
+          // span {}
+        }
+
+        &:hover {
+          .progress-bar {
+            animation: widthTrans 0.3s linear forwards;
+            // background-color: red
           }
 
           .progress-titel {

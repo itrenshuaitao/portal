@@ -1,6 +1,9 @@
 <template>
-    <div style="padding: 66px 120px;">
-        <div ref="chart" id="echarts" style="width: 100%;height:600px;"></div>
+    <div style="padding: 66px 120px;" v-if="!_isMobile()">
+        <div  ref="chart" id="echarts" style="width: 100%;height:600px;"></div>
+    </div>
+    <div style="padding: 66px 0 30px 0px;" v-else>
+        <div  ref="chart" id="echarts" style="width: 100%;height:260px;"></div>
     </div>
 </template>
    
@@ -9,6 +12,7 @@ import * as echarts from "echarts";   //引入echarts
 import china from "@/assets/china.json";
 import { queryNnetworkLists } from "@/api/index"
 import { getSalesOption } from "./test.js"
+import { _isMobile } from '@/utils/index'
 
 import { onMounted, reactive, ref } from "vue";
 
@@ -236,7 +240,8 @@ const init = async (name, networkMapObj) => {
                 show: true,
                 map: 'china',
                 roam: false,
-                // left:'50%',//组件离容器左侧的距离。
+                // left:'20%',//组件离容器左侧的距离。
+                right:_isMobile() ? '18%' : '',
                 zoom: 1.1,
                 center: [113.83531246, 34.0267395887],
                 label: {
@@ -294,11 +299,11 @@ const init = async (name, networkMapObj) => {
                     {
                         text: n == 0 ? '业务覆盖面' : n == 1 ? '产研基地' : '销售服务中心',
                         // subtext:,
-                        left: '35%',
+                        left:  _isMobile() ? '28%' : '35%',
                         top: '10%',
                         textStyle: {
                             color: '#214278',
-                            fontSize: 25
+                            fontSize: _isMobile() ? 14 : 25
                         }
                     },
                     // {
@@ -418,10 +423,6 @@ const init = async (name, networkMapObj) => {
 
 
     // optionXyMap01.options[0] = option
-
-
-
-
 
 
     // 把option设置给myChart实例

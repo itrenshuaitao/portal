@@ -1,7 +1,7 @@
 <template>
     <div>
         <Banner :imgSrc="bannerImg" />
-        <div class="tab">
+        <div class="tab" :class="{'mobile-tab':_isMobile()}">
             <el-button v-if="companylist[0]?.companyType == 0" :type="plain" link :class="active == '1' && 'active'"
                 @click="() => handleTabClick('1')">企业介绍</el-button>
             <el-button v-if="companylist[2]?.companyType == 0" :type="plain" link class="news"
@@ -14,16 +14,16 @@
                 @click="() => handleTabClick('5')">荣誉证书</el-button>
         </div>
         <template v-if="companylist[0]?.companyType == 0">
-            <div class="title1 page-title">
+            <div class="title1 page-title" :class="{'mobile-page-title':_isMobile()}">
                 <span data-desc="COMPANY  PROFILE"></span>
 
                 企业介绍
             </div>
-            <div class="synopsis" v-html="findfirm.firmProducts">
+            <div class="synopsis" v-html="findfirm.firmProducts" :class="{'mobile-synopsis':_isMobile()}">
             </div>
         </template>
 
-        <div v-if="companylist[1]?.companyType == 0" class="core-data">
+        <div v-if="companylist[1]?.companyType == 0" class="core-data" :class="{'mobile-core-data':_isMobile()}">
             <div class="item" v-for="(item, index) in coredata">
                 <span>
                     <number class="number" :ref="'number' + index" :from="0" :to="item.coredataData" :duration="5"
@@ -36,12 +36,13 @@
             </div>
         </div>
         <template v-if="companylist[2]?.companyType == 0">
-            <div class="title2 page-title">
+            <div class="title2 page-title" :class="{'mobile-page-title':_isMobile()}">
                 <span data-desc="enterprise culture"></span>
 
                 企业文化
             </div>
-            <div class="culture">
+            <!-- class="culture" :class="{'mobile-culture':_isMobile()}" -->
+            <div :class="_isMobile() ? 'mobile-culture' : 'culture'">
                 <div>
                     <i :style="`background-image: url(${img1});`"></i>
                     <p>使命</p>
@@ -58,25 +59,26 @@
 
 
                     <p>价值观</p>
-                    <p>
+                    <p v-if="!_isMobile()">
                         {{ findCulture.cultrueValues }}
                     </p>
+                    <p v-else v-html="findCulture.cultrueValues" style="padding: 0;"></p>
                 </div>
 
 
             </div>
         </template>
         <template v-if="companylist[3]?.companyType == 0">
-            <div class="title3 page-title">
+            <div class="title3 page-title" :class="{'mobile-page-title':_isMobile()}">
                 <span data-desc="development history"></span>
 
                 发展历程
             </div>
-            <div class="history" :style="historyImg !== '' && `background-image: url('${historyImg}');`">
+            <div class="history" :style="historyImg !== '' && `background-image: url('${historyImg}');`" :class="{'mobile-history':_isMobile()}">
                 <el-carousel ref="refCarousel" :autoplay="false" indicator-position="none" arrow="never" height="37.43056vw"
                     @change="(i) => historyActive = i">
-                    <el-carousel-item class="item" v-for="item in historyList">
-                        <div class="node" v-for="node in item">
+                    <el-carousel-item class="item" v-for="(item,index) in historyList" :key="index">
+                        <div class="node" v-for="(node,i) in item" :key="i">
                             <div class="icon-dot">
                                 <div></div>
                             </div>
@@ -96,14 +98,14 @@
             </div>
         </template>
         <template v-if="companylist[4]?.companyType == 0">
-            <div class="title4 page-title">
+            <div class="title4 page-title" :class="{'mobile-page-title':_isMobile()}">
                 <span data-desc="service network"></span>
                 服务网络
             </div>
             <MapView></MapView>
         </template>
         <template v-if="companylist[5]?.companyType == 0">
-            <div class="title5 page-title">
+            <div class="title5 page-title" :class="{'mobile-page-title':_isMobile()}">
                 <span data-desc="certificate of honor"></span>
 
                 荣誉证书
@@ -155,6 +157,7 @@ import img2 from "@/assets/img/x-ab2.png"
 import img3 from "@/assets/img/x-ab3.png"
 import { queryCompanylist, queryFindfirmById, queryFindcoredataById, queryFindCultureById, queryFindhistoryById, queryFindCertById } from "@/api/index"
 import { queryBannerImg } from "@/utils/index"
+import { _isMobile } from '@/utils/index'
 const { proxy } = getCurrentInstance()
 const bannerImg = ref('')
 const active = ref("1")
@@ -238,7 +241,11 @@ const initPageData = () => {
     })
     queryFindCultureById().then(({ code, data }) => {
         if (code === 0) {
-            findCulture.value = data[0]
+            findCulture.value = data[0]           
+            if(_isMobile()){
+                findCulture.value.cultrueValues = findCulture.value.cultrueValues.split('；').join("；<br>")
+                console.log(findCulture.value.cultrueValues);
+            }
         }
     })
     queryFindhistoryById({ pageIndex: 1, pageSize: 500 }).then(({ code, data }) => {
@@ -344,6 +351,30 @@ const showImage = (val) => {
     //     margin: 20px;
     // }
 }
+.mobile-tab{
+    height: 80px;
+    background: rgba(0, 75, 146, 0.05);
+    padding: 10px 120px;
+    color: #3E4954;
+    line-height: 80px;
+
+    .active {
+        font-size: 32px;
+        color: #0054A7;
+        line-height: 18px;
+    }
+
+    .el-button {
+        font-size: 30px;
+        font-weight: 600;
+        font-family: AliPuHui55 !important;
+        margin: 20px 10px;
+    }
+
+    .news {
+        margin: 20px;
+    }
+}
 
 
 
@@ -355,6 +386,17 @@ const showImage = (val) => {
     box-shadow: 0px 18px 30px rgba(220, 220, 220, 0.5);
     border-radius: 8px;
 }
+.mobile-synopsis {
+    margin: 40px 120px 60px 120px;
+    padding: 40px;
+    background: linear-gradient(-51.95deg, rgba(246, 246, 250, 1.00) 0%, rgba(254, 255, 254, 1.00) 90%);
+    border: 2px solid rgb(255, 255, 255);
+    box-shadow: 0px 18px 30px rgba(220, 220, 220, 0.5);
+    border-radius: 8px;
+    // zoom: 2;
+    
+}
+
 
 .core-data {
     display: flex;
@@ -382,6 +424,40 @@ const showImage = (val) => {
         :nth-child(2) {
             color: rgb(108, 123, 139);
             font-size: 16px;
+            font-weight: 400;
+            line-height: 22px;
+            font-family: PingFang SC;
+        }
+
+
+    }
+}
+.mobile-core-data {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    height: 240px;
+    width: 100%;
+    background: linear-gradient(180.00deg, rgba(250, 251, 253, 1.00) 0%, rgba(242, 243, 245, 1.00) 100%), rgb(242, 245, 248);
+
+    .item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        :nth-child(1) {
+            color: rgb(0, 75, 146);
+            font-size:48px;
+            font-weight: 500;
+            line-height: 45px;
+            font-family: DIN;
+            margin-bottom: 20px;
+        }
+
+        :nth-child(2) {
+            color: rgb(108, 123, 139);
+            font-size: 36px;
             font-weight: 400;
             line-height: 22px;
             font-family: PingFang SC;
@@ -472,6 +548,97 @@ const showImage = (val) => {
     }
 
     :nth-child(3) {
+        i {
+            background-position: 15px 13px;
+            background-size: 54px 50px;
+        }
+    }
+}
+.mobile-culture {
+    width: 100%;
+    height: 820px;
+    margin: 0;
+    padding: 80px 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+
+    div {
+        height: 280px;
+        // height: auto !important;
+        width: 47%;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        transition: padding 0.3s linear;
+
+        :nth-child(1) {
+            display: inline-block;
+            width: 80px;
+            height: 80px;
+            background-repeat: no-repeat;
+            margin-bottom: 6px;
+
+        }
+
+        :nth-child(2) {
+            color: rgb(62, 73, 84);
+            font-size: 40px;
+            font-weight: 500;
+            line-height: 20px;
+            letter-spacing: 0px;
+            margin-bottom: 10px;
+
+            &::after {
+                content: "";
+                display: block;
+                position: relative;
+                left: 50%;
+                transform: translateX(-50%);
+                top: 10px;
+                width: 24px;
+                height: 2px;
+                background: rgb(25, 108, 255);
+                border-radius: 3px;
+            }
+        }
+
+        :nth-child(3) {
+            // background-color: pink;
+            padding-top: 20px;
+            color: rgb(108, 123, 139);
+            font-size: 34px;
+            font-weight: 400;
+            line-height: 50px;
+            text-align: center;
+        }
+    }
+    div:nth-child(3){
+        height: 420px;
+        text-align: center;
+    }
+
+    :nth-child(1) {
+        i {
+            background-position: 16px 13px;
+            background-size: 54px 60px;
+        }
+    }
+
+    :nth-child(2) {
+        i {
+            background-position: 10px 13px;
+            background-size: 54px 47px;
+        }
+    }
+
+    :nth-child(3) {
+        width: 100%;
+        white-space: pre-line !important;
         i {
             background-position: 15px 13px;
             background-size: 54px 50px;
@@ -585,6 +752,117 @@ const showImage = (val) => {
     }
 }
 
+.mobile-history {
+    position: relative;
+    padding: 0px 60px;
+    background: linear-gradient(180.00deg, rgba(250, 251, 253, 1.00) 0%, rgba(242, 243, 245, 1.00) 100%), rgb(242, 245, 248);
+    background-repeat: no-repeat;
+    background-size: 100% 140%;
+    .el-carousel{
+        height: 1100px;
+    }
+
+    .item {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        height: 1100px;
+
+        .node {
+            width: calc((100% - 465px) /2);
+            height: 520px;
+            margin-left: 225px;
+            display: flex;
+
+            .icon-dot {
+                position: relative;
+
+
+                &::before {
+                    content: '';
+                    position: absolute;
+                    width: 2px;
+                    height: 138px;
+                    left: 19px;
+                    top: 20px;
+                    background: linear-gradient(180.00deg, rgba(3, 87, 176, 1.00) 0%, rgba(21, 104, 243, 0.00) 100%);
+                }
+            }
+
+            &:nth-child(3) {
+                margin-left: 0;
+            }
+
+
+
+            .right {
+                margin-left: 8px;
+
+                .time {
+                    color: rgb(62, 73, 84);
+                    font-size: 46px;
+                    font-weight: 600;
+                    line-height: 36px;
+                    margin-bottom: 17px;
+
+                }
+
+                .text {
+                    white-space: pre-line;
+                    width: 400px;
+                    padding: 16px;
+                    word-wrap: break-word;
+                    color: rgb(108, 123, 139);
+                    font-size: 34px;
+                    font-weight: 400;
+                    line-height: 40px;
+                    background: linear-gradient(-51.95deg, rgba(246, 246, 250, 1.00) 0%, rgba(254, 255, 254, 1.00) 90%);
+                    border: 2px solid rgb(255, 255, 255);
+                    box-shadow: 5px 2px 24px rgba(220, 220, 220, 0.5);
+                    border-radius: 4px;
+                    overflow: auto;
+                }
+            }
+        }
+    }
+
+    .position {
+        display: flex;
+        align-items: flex-end;
+        width: 240px;
+        height: 88px;
+        position: absolute;
+        bottom: 80px;
+        right: 163px;
+        color: rgb(0, 75, 146);
+        font-family: Times;
+
+        .left {
+            width: 80px;
+            height: 80px;
+            background-image: url('@/assets/img/left.png');
+            background-repeat: no-repeat;
+            background-size: 80px 80px;
+            margin-right: 18px;
+        }
+
+        .right {
+            width: 80px;
+            height: 80px;
+            background-image: url('@/assets/img/right.png');
+            background-repeat: no-repeat;
+            background-size: 80px 80px;
+            margin-right: 17px;
+
+        }
+
+        :nth-child(3) {
+            font-size: 36px;
+            font-weight: 400;
+        }
+    }
+}
+
 .certificate {
     height: 700px;
     // background-color: #2d7ecf;
@@ -684,5 +962,14 @@ const showImage = (val) => {
 }
 :deep(.el-carousel__arrow--left){
     left: 75px;
+}
+</style>
+
+<style>
+.mobile-synopsis p{
+    font-size: 36px;
+}
+.mobile-synopsis li{
+    font-size: 32px;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <div class="video-center">
+    <div class="video-center" :class="{'mobile-video-center':_isMobile()}">
         <Banner :imgSrc="bannerImg">
         </Banner>
         <div class="video-list">
@@ -25,7 +25,7 @@
                 </div>
             </div>
             <div class="list">
-                <div v-for="item in videoList" class="item pointer" @click="handleClick(item)">
+                <div v-for="(item,index) in videoList" class="item pointer" @click="handleClick(item)" :key="index"> 
                     <img class="" :src="item.videoImg">
                     <div class="info">
                         <h2>{{ item.videoName }} </h2>
@@ -41,7 +41,6 @@
             </div>
         </div>
 
-
     </div>
 </template>
 
@@ -51,6 +50,7 @@ import Banner from "@/components/Banner.vue"
 import VideoPlay from "@/components/video.vue"
 import { queryVideoList, queryTopVideoList } from "@/api/index"
 import { queryBannerImg } from "@/utils/index"
+import { _isMobile } from '@/utils/index'
 
 const bannerImg = ref('')
 const videoList = ref([])
@@ -108,7 +108,7 @@ const changeVideoObj = (obj) => {
     videoObj.value = toRaw(obj)
     nextTick(async () => {
         await window.scrollTo({
-            top: 400,
+            top: _isMobile() ? 0 : 400,
             behavior: "smooth"
         });
 
@@ -280,6 +280,165 @@ const handleClick = (obj) => {
                 &.is-active {
                     box-shadow: 0px 2px 5px rgba(220, 220, 220, 0.5), inset 0px -1px 4px rgba(0, 75, 146, 0.65);
                     backdrop-filter: blur(21.75px);
+                }
+            }
+        }
+    }
+}
+.mobile-video-center {
+    .video-list {
+        margin: 60px 80px 30px 80px;
+        width: calc(100% - 160px);
+
+        .carousel {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+
+            .left {
+                width: calc(75% - 4px);
+                background-color: rgb(248, 248, 248);
+                font-family: AliPuHui55;
+
+
+                .video {
+                    width: 100%;
+                    border-radius: 4px;
+                    overflow: hidden;
+                }
+
+                .info {
+                    margin-left: 16px;
+                    padding-bottom: 23px;
+
+                    h2 {
+                        margin-top: 16px;
+                        margin-bottom: 7px;
+                        color: rgb(62, 73, 84);
+                        font-size: 48px;
+                        font-weight: 500;
+                        line-height: 60px;
+                    }
+
+                    // p {
+                    //     color: rgb(108, 123, 139);
+                    //     font-size: 34px;
+                    //     font-weight: 400;
+                    //     line-height: 20px;
+                    // }
+                }
+            }
+
+            .right {
+                width: calc(25% - 20px);
+                font-family: AliPuHui55;
+
+                .item {
+                    position: relative;
+                    // width: calc(25vw - 18px);
+                    height: 158px;
+                    background-color: aliceblue;
+                    margin-bottom: 24px;
+                    border-radius: 4px;
+                    background-repeat: no-repeat;
+                    background-size: 100% 158px;
+
+                    .name {
+                        box-sizing: border-box;
+                        position: absolute;
+                        bottom: 0;
+                        width: 100%;
+                        height: 50px;
+                        padding: 11px 6px;
+                        background: linear-gradient(180.00deg, rgba(39, 44, 54, 1), rgb(53, 61, 79) 154%);
+                        backdrop-filter: blur(5.44px);
+                        border-radius: 4px;
+                        color: rgb(255, 255, 255);
+                        font-size: 28px;
+                        font-weight: 500;
+                        line-height: 28px;
+                        zoom: 0.63;
+                    }
+                }
+            }
+        }
+
+        .list {
+            margin-top: 56px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+
+            .item {
+
+                width: calc(50% - 12px);
+                height: 420px;
+                margin-bottom: 24px;
+                margin-right: 24px;
+                background: rgba(246, 246, 250, 0.5);
+                overflow: hidden;
+
+                &:nth-of-type(2n+0) {
+                    margin-right: 0;
+                }
+
+                img {
+                    border-radius: 4px;
+
+                    width: 100%;
+                    height: 336px;
+                }
+
+                .info {
+                    margin-left: 16px;
+
+                    h2 {
+                        margin-top: 16px;
+                        margin-bottom: 8px;
+                        color: rgb(62, 73, 84);
+                        font-size: 36px !important;
+                        font-weight: 500;
+                        line-height: 50px;
+                        font-family: AliPuHui55;
+                    }
+
+                    p {
+                        color: rgb(108, 123, 139);
+                        font-size: 34px;
+                        font-weight: 400;
+                        line-height: 20px;
+                        font-family: AliPuHui55;
+                        padding-bottom: 16px;
+                    }
+                }
+
+            }
+        }
+
+        ._pagination {
+            height: 82px;
+            line-height: 82px;
+            margin-top: 30px;
+
+            :deep(.el-pagination.is-background .btn-prev),
+            :deep(.el-pagination.is-background .btn-next),
+            :deep(.el-pager li) {
+                width:8vw;
+                height: 72px;
+                line-height: 56px;
+                font-size: 44px !important;
+                color: rgb(62, 73, 84);
+                background: rgb(255, 255, 255);
+                border: none;
+                box-shadow: 0px 2px 5px rgba(220, 220, 220, 0.5),
+                inset 0px -1px 4px rgba(0, 0, 0, 0.15);
+                backdrop-filter: blur(21.75px);
+                padding: 6px 16px;
+
+                &.is-active {
+                box-shadow: 0px 2px 5px rgba(220, 220, 220, 0.5),
+                inset 0px -1px 4px rgba(0, 75, 146, 0.65);
+                backdrop-filter: blur(21.75px);
                 }
             }
         }

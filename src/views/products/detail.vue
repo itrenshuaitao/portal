@@ -1,5 +1,5 @@
 <template>
-    <div class="detail-wrapper">
+    <div class="detail-wrapper" :class="{'mobile-detail-wrapper':_isMobile()}">
         <p v-html="content.productsDetail"></p>
     </div>
 </template>
@@ -8,6 +8,7 @@
 import { ref, onMounted } from "vue"
 import { useRoute } from 'vue-router'
 import { queryProductsById } from "@/api/index"
+import { _isMobile } from '@/utils/index'
 const route = useRoute()
 const content = ref('')
 onMounted(() => {

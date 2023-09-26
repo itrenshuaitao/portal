@@ -1,9 +1,9 @@
 
 <template>
     <div id="certify">
-        <div class="swiper-container">
+        <div class="swiper-container" >
             <div class="swiper-wrapper">
-                <div class="swiper-slide">
+                <div class="swiper-slide"  :class="{'mobile-swiper-slide':_isMobile()}">
                     <div class="text">
                         <h2>UJ-PMS智能加工过程监控系统</h2>
                         <p> 通过采集机床NC运行数据（程序号、刀具号、转速、进给倍率等）以及传感器数据（功率、振动），进行综合数据分析，提取每把刀具每次加工的加工曲线（去除主轴加减速以及不同转速下的摩擦力）进行实时监控
@@ -17,7 +17,7 @@
 
 
                 </div>
-                <div class="swiper-slide">
+                <div class="swiper-slide" :class="{'mobile-swiper-slide':_isMobile()}">
 
                     <div class="text">
                         <h2>UJ-TOM刀具管理系统</h2>
@@ -30,7 +30,7 @@
 
 
                 </div>
-                <div class="swiper-slide">
+                <div class="swiper-slide" :class="{'mobile-swiper-slide':_isMobile()}">
 
 
                     <div class="text">
@@ -59,6 +59,7 @@ import Swiper from "swiper"
 import SwiperCore, { Autoplay } from 'swiper/core';
 import 'swiper/css';
 import 'swiper/css/navigation';
+import { _isMobile } from '@/utils/index'
 const emits = defineEmits(['slideChange']);
 SwiperCore.use([Autoplay]);
 var certifySwiper = {}
@@ -139,16 +140,10 @@ defineExpose({
         height: 379px;
         background: #fff;
 
-        // &.swiper-slide-duplicate-next,
-        // &.swiper-slide-duplicate,
-        // swiper-slide-duplicate swiper-slide-duplicate-active
-        // &.swiper-slide-duplicate-prev {
-        //     opacity: 0 !important;
-        // }
 
         .text {
             position: absolute;
-            padding: 100px 45px;
+            padding: 80px 45px;
             z-index: 1;
 
             h2 {
@@ -164,6 +159,52 @@ defineExpose({
                 font-size: 14px;
                 font-weight: 400;
                 line-height: 20px;
+            }
+        }
+
+        .img {
+            width: 100%;
+            height: 100%;
+            border-radius: 4px;
+
+
+        }
+
+        .dimback {
+            width: 100%;
+            height: 100%;
+            background: #000000;
+
+            .img {
+                opacity: 0.5;
+            }
+        }
+    }
+    .mobile-swiper-slide {
+        width: 675px;
+        height: 479px;
+        background: #fff;
+
+
+        .text {
+            position: absolute;
+            padding: 40px 30px;
+            z-index: 1;
+
+            h2 {
+                color: rgb(241, 241, 241);
+                font-size: 40px;
+                font-weight: 500;
+                line-height: 40px;
+                margin-bottom: 14px;
+            }
+
+            p {
+                color: rgb(241, 241, 241);
+                font-size: 32px !important;
+                font-weight: 400;
+                line-height: 50px;
+                zoom: 0.83;
             }
         }
 

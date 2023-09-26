@@ -79,6 +79,9 @@ letter-spacing: 2px;
       transform: translate(-50%, 0);
   }
 }
+.mobile-page-title{
+  font-size: 62px;
+}
 
 
 .detail-wrapper {
@@ -89,6 +92,16 @@ letter-spacing: 2px;
   //     height: 100% !important;
   // }
 }
+// .mobile-detail-wrapper {
+//   margin-top: 60px;
+//   padding: 0 120px;
+//   overflow: auto;
+//   img{
+//       width: 280% !important;
+//       // height: 100% !important;
+//   }
+// }
+
 
 .pointer {
   cursor: pointer;

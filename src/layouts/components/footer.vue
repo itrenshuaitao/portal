@@ -1,6 +1,6 @@
 <template>
   <div v-if="router.currentRoute.value?.matched[1]?.path !== '/home'" class="footer-booking"
-    :style="`background-image: url(${footerData.bottomObj?.bottomImg});`">
+    :style="`background-image: url(${footerData.bottomObj?.bottomImg});`" :class="{'mobile-footer-booking':_isMobile()}">
     <div class="box">
       <!-- <div class="box-top">
         <div>
@@ -15,7 +15,7 @@
       </div>
     </div>
   </div>
-  <el-footer class="footer  clearfix" v-show="isShow">
+  <el-footer class="footer  clearfix" v-show="isShow" :class="{'mobile-footer':_isMobile()}">
 
     <div class="footer-content">
       <ul class="content-nav">
@@ -51,11 +51,10 @@
           <span @click="proxy.$router.push('/about/contact')">联系我们</span>
         </li>
       </ul>
-      <div class="line"></div>
+      <div class="line" v-if="!_isMobile()"></div>
+      <el-divider v-if="_isMobile()"></el-divider>
       <div class="info">
         <div class="top">
-
-
           <img :src="footerData.info?.contactBottomQrcode" alt />
           <p class="tel">{{ footerData.info?.contactBottomPhone }}</p>
           <p class="email">{{ footerData.info?.contactBottomEmail }}</p>
@@ -86,6 +85,7 @@ import { onMounted, reactive, getCurrentInstance, computed } from "vue"
 import { useRouter } from 'vue-router';
 import { useStore } from "vuex"
 import { queryContactList, queryBottomList } from "@/api/index"
+import { _isMobile } from '@/utils/index'
 
 const { proxy } = getCurrentInstance()
 const store = useStore();
@@ -160,6 +160,7 @@ onMounted(() => {
 
     .box-footer {
       .booking-button {
+        background-color: pink;
         width: 112px;
         height: 36px;
 
@@ -183,6 +184,19 @@ onMounted(() => {
       font-size: 14px;
       font-weight: 400;
       line-height: 20px;
+    }
+  }
+}
+.mobile-footer-booking {
+  height: 138px;
+  line-height: 138px;
+  background-size: 100% 100%;
+  .box-footer{
+    .booking-button{
+      width: 300px !important;
+      height: 100px !important;
+      line-height: 100px !important;
+      font-size: 40px !important;
     }
   }
 }
@@ -324,4 +338,117 @@ onMounted(() => {
 
 
   }
-}</style>
+}
+.mobile-footer{
+  .footer-content{
+    margin: 6PX 10PX;
+    display: block;
+    .content-nav {
+      display: flex;
+      justify-content: space-around;
+      color: #FFFFFF;
+      flex-grow: 0.3;
+      line-height: 19px;
+
+      li {
+        display: flex;
+        flex-direction: column;
+        padding: 0 20px;
+        //justify-content: center;
+        margin-right: 44px;
+        align-items: flex-start;
+        // font-family: AliPuHui55;
+
+        &:nth-child(4) {
+          margin-right: 0;
+        }
+
+        p {
+          font-size: 34px !important;
+          font-weight: 600;
+          padding: 12px 0;
+        }
+
+        span {
+          padding: 7px 0;
+          line-height: 60px;
+          transition: 0.3s;
+          cursor: pointer;
+          font-size: 28px !important;
+
+          &:hover {
+            color: #148FFA;
+            transform: translateX(5px);
+          }
+        }
+      }
+    }
+    .info {
+      flex-grow: 0.3;
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: space-between;
+      align-items: flex-start;
+      color: rgb(255, 255, 255);
+
+      .top {
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .tel {
+          font-size: 32px;
+          font-weight: 400;
+          line-height: 50px;
+
+          margin-bottom: 6px;
+        }
+
+        .email {
+          font-size: 32px;
+          font-weight: 400;
+          line-height: 50px;
+        }
+
+        img {
+          margin-bottom: 10px;
+          // margin-top: 36px;
+          width: 100px;
+          height: 100px;
+          padding: 10px;
+        }
+      }
+
+      .bottom {
+        color: rgb(255, 255, 255);
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 17px;
+        margin: 10px 30px;
+
+        :nth-child(1) {
+          margin-top: 12px;
+        }
+
+        p {
+          font-weight: 600;
+          margin-top: 30px;
+          margin-bottom: 38px;
+          font-size: 34px;
+          line-height: 30px;
+          letter-spacing: 0px;
+        }
+
+        span {
+          font-size: 28px;
+          line-height: 60px;
+        }
+
+      }
+
+
+    }
+  }
+}
+</style>

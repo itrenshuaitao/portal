@@ -1,5 +1,5 @@
 <template>
-    <div class="core-data">
+    <div class="core-data" :class="{'mobile-core-data':_isMobile()}">
         <div v-for="item in props.coreDataList">
             <!-- <number class="number" :ref="'number' + 1" :from="1000" :to="1000" :duration="5" easing="Power1.easeOut"
                 animationPaused /> -->
@@ -14,6 +14,7 @@
   
 <script setup>
 import { ref, onMounted, onUnmounted, getCurrentInstance } from "vue"
+import { _isMobile } from '@/utils/index'
 const { proxy } = getCurrentInstance()
 
 const number1 = ref(null)
@@ -94,5 +95,36 @@ const showDiv = () => {
     }
 
 
+}
+.mobile-core-data{
+    width: 90%;
+    div {
+        width: 50%;
+        text-align: center;
+        padding: 30px 0;
+        display: flex;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+
+
+        span {
+            color: rgb(108, 123, 139);
+            font-family: PingFang SC;
+            font-size: 30px;
+            font-weight: 400;
+            line-height: 22px;
+            margin-top: 14px;
+        }
+
+        .number {
+            color: rgb(0, 75, 146);
+            font-family: DIN;
+            font-size: 40px;
+            font-weight: 500;
+            line-height: 36px;
+            margin-bottom: 20px;
+        }
+    }
 }
 </style>

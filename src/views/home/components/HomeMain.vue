@@ -1,6 +1,6 @@
 <template>
     <div class="main-container">
-        <div class="tab"
+        <div class="tab" :class="{'mobile-tab':_isMobile()}"
             v-if="productsList[0]?.productsShow === 0 || newsList[0]?.newsType === 0 || partnerList[0] && partnerList[0][0]?.partnerType === 0">
             <el-button v-if="productsList[0]?.productsShow === 0" plain link
                 :class="active == 'products' && 'active'" @click="() => handleTabClick('products')">产品概览</el-button>
@@ -10,19 +10,19 @@
                 :class="active == 'partners' && 'active'" @click="() => handleTabClick('partners')">合作伙伴</el-button>
         </div>
         <template v-if="productsList[0]?.productsShow === 0">
-            <div class="page-title title-products">
+            <div class="page-title title-products" :class="{'mobile-page-title':_isMobile()}">
                 <span data-desc="product summary"></span>
                 产品概览
             </div>
 
-            <div class="products-main">
+            <div class="products-main" :class="{'mobile-products-main':_isMobile()}">
                 <div class="products">
-                    <img v-for="(item, index) in productsList" :class="activeProducts == index && 'active'"
-                        :src="item.productsImg">
+                    <img v-for="(item, index) in productsList" :key="index" :class="activeProducts == index && 'active'"
+                        :src="item.productsImg" mode="widthFix">
 
                 </div>
                 <ul class="products-slide">
-                    <li v-for="(item, index) in productsList" @mouseover="activeProducts = index">
+                    <li v-for="(item, index) in productsList" :key="index" @mouseover="activeProducts = index">
                         <div>
                             <h2>{{ item.productsName }}</h2>
                             <P>{{ item.productsSubtitle }}</P>
@@ -39,14 +39,14 @@
         <!-- 核心数据 -->
         <CoreData v-if="coreDataList[0]?.coredataType === 0" :coreDataList="coreDataList" />
         <template v-if="newsList[0]?.newsType === 0">
-            <div class="page-title title-news">
+            <div class="page-title title-news" :class="{'mobile-page-title':_isMobile()}">
                 <span data-desc="press center"></span>
                 新闻中心
             </div>
             <NewsCenter :newsList="newsList" />
         </template>
         <template v-if="partnerList[0] && partnerList[0][0]?.partnerType === 0">
-            <div class="page-title title-partners">
+            <div class="page-title title-partners" :class="{'mobile-page-title':_isMobile()}">
                 <span data-desc="partner"></span>
                 合作伙伴
             </div>
@@ -65,6 +65,7 @@ import NewsCenter from './NewsCenter.vue';
 import Partners from './Partners.vue';
 import { getHomeProductsList, getHomeCoreDataList, getHomeNewsList, getHomePartnerList } from "@/api/index"
 import { handleArraySort } from "@/utils/index"
+import { _isMobile } from '@/utils/index'
 
 const router = useRouter()
 const active = ref("products")
@@ -108,7 +109,6 @@ const getPartnerList = () => {
             }
 
             partnerList.value = res;
-            console.log(partnerList.value);
 
         }
     })
@@ -213,14 +213,35 @@ const handleMouseover = (e) => {
             margin: 20px;
         }
     }
+    .mobile-tab{
+        height: 80px;
+        background: rgba(0, 75, 146, 0.05);
+        padding: 10px 120px;
+        color: #3E4954;
+        line-height: 80px;
+
+        .active {
+            font-size: 32px;
+            color: #0054A7;
+            line-height: 18px;
+        }
+
+        .el-button {
+            font-size: 30px;
+            font-weight: 600;
+            font-family: AliPuHui55 !important;
+            margin: 20px 0;
+        }
+
+        .news {
+            margin: 20px;
+        }
+    }
 
 
 
     .products-main {
         position: relative;
-
-
-
         .products {
 
             position: relative;
@@ -319,11 +340,103 @@ const handleMouseover = (e) => {
         }
     }
 
+    .mobile-products-main{
+        .products {
+            position: relative;
+            height: 24vh;
+
+            img {
+                display: block;
+                position: absolute;
+                visibility: hidden;
+                opacity: 0;
+                width: 100%;
+                height: 24vh;
+                transition: all 2s;
+
+                &.active {
+                    visibility: visible;
+                    opacity: 1;
+
+                }
+
+            }
+        }
+        .products-slide {
+            position: absolute;
+            top: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            font-size: 40px;
+
+
+            li {
+                overflow: hidden;
+                position: relative;
+                height: 100%;
+                display: inline-block;
+                width: 20%;
+
+                &:hover {
+                    div {
+                        top: -10%;
+                    }
+
+                    background-image: linear-gradient(to bottom, transparent, #0168e0);
+
+
+                }
+
+                div {
+                    position: relative;
+                    top: 0%;
+                    color: #fff;
+                    text-align: center;
+                    transition: all .3s;
 
 
 
+                    h2 {
+                        font-size: 32px;
+                        font-weight: bold;
+                        margin-top: 50%;
+                        margin-bottom: 20%;
+                    }
 
+                    p {
+                        margin: 0 16% 12% 16%;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        line-height: 1.5;
+                        /* 超出部分省略号 */
+                        word-break: break-all;
+                        /* break-all(允许在单词内换行。) */
+                        display: -webkit-box;
+                        /* 对象作为伸缩盒子模型显示 */
+                        -webkit-box-orient: vertical;
+                        /* 设置或检索伸缩盒对象的子元素的排列方式 */
+                        -webkit-line-clamp: 2;
+                        /* 显示的行数 */
 
+                    }
+
+                    .to-detail {
+                        display: inline-block;
+                        padding: 10px 40px;
+                        line-height: 55px;
+                        background-color: #ffffff;
+                        -webkit-border-radius: 28px;
+                        border-radius: 28px;
+                        margin-top: 90px;
+                        font-size: 32px;
+                        color: #004B92;
+                        
+                    }
+                }
+            }
+        }
+    }
 
 }
 </style>

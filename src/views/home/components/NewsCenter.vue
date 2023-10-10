@@ -6,8 +6,8 @@
                     <p class="news-title">
                         {{ item.newsName }}
                     </p>
-                    <p class="news-desc">
-                        {{ item.detail }} </p>
+                    <p class="news-desc" v-html="item.detail">
+                         </p>
                     <p class="time">
                         {{ item.newsTime.replace(/-/g,"/") }}
                     </p>
